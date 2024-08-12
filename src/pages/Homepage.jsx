@@ -1,63 +1,15 @@
-// import React from "react";
-// import { useState } from "react";
-// import Sidebar from "../components/Sidebar";
-// import { FaAngleUp, FaAngleDown } from "react-icons/fa";
-
-// export default function Homepage() {
-//   const options = ["For you", "Following", "Liked", "Save"];
-
-//   const [open, setopen] = useState(false);
-//   const [selectOption, setSelectOption] = useState("For you");
-
-//   return (
-//     <>
-//       <div>
-//         <Sidebar />
-//         <div>
-//           <h3>{selectOption}</h3>
-//           <button
-//             onClick={() => setopen((prev) => !prev)}
-//             className="bg-blue-500
-//           text-white
-//           py-2
-//           px-4
-//           m-2
-//           rounded
-//           "
-//           >
-//             {open ? <FaAngleUp /> : <FaAngleDown />}
-//           </button>
-//           {open && (
-//             <div>
-//               {options.map((items) => (
-//                 <button
-//                   key={items}
-//                   onClick={() => {
-//                     setSelectOption(items);
-//                     setopen(false);
-//                   }}
-//                   className="block text-left w-full py-2 px-4 hover:bg-gray-200"
-//                 >
-//                   {items}
-//                 </button>
-//               ))}
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import Sidebar from "../components/Sidebar";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+// import AppContext from "../AppContext";
+import { useApp } from "../AppContext";
 
 export default function HomePage() {
   const [open, setOpen] = useState(false);
+  const { theme, setTheme } = useApp();
   const [selectOption, setSelectOption] = useState("For you");
   const options = ["For you", "Following", "Liked", "Saved"];
-  // const menuRef = useRef();
+
   const btnRef = useRef();
   const dropdownRef = useRef();
 
@@ -79,33 +31,19 @@ export default function HomePage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  // useEffect(() => {
-  //   function handleClickOutside(e) {
-  //     if (btnRef.current !== e.target) {
-  //       setOpen(false);
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen dark:bg-gray-950 dark:text-white">
       <Sidebar />
 
       <div className="hidden md:flex md:flex-col items-center justify-center absolute top-0 left-0 right-0 mt-4">
         <div className="flex gap-5 items-center ">
-          <h3>{selectOption}</h3>
+          <h3 className="dark:text-white">{selectOption}</h3>
 
           <button
             ref={btnRef}
             onClick={() => setOpen((prev) => !prev)}
-            className="
-          "
+            className="dark:text-white"
           >
             {open ? (
               <FaAngleUp size={30} className="santru" />

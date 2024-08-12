@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
-// import Homepage from "./pages/Homepage";
+import { AppProvider } from "./AppContext";
 import Signup from "./pages/Signup";
 import Homepage from "./pages/Homepage";
-// import { AppProvider } from "./AppContext";
+import Reportproblem from "./components/Reportproblem";
+import Settings from "./components/Settings";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,13 +18,21 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path: "/Report",
+    element: <Reportproblem />,
+  },
+  {
+    path: "/Settings",
+    element: <Settings />,
+  },
 ]);
 
 function App() {
   return (
-    <div>
+    <AppProvider>
       <RouterProvider router={router} />
-    </div>
+    </AppProvider>
   );
 }
 

@@ -58,6 +58,17 @@
   .santru {
     @apply border rounded-full p-2;
   }
+  .appearence-btns {
+    @apply w-[122px] h-[60px] flex items-center justify-center rounded-md  hover:bg-gray-400;
+  }
+
+  .setting-buttons {
+    @apply h-12 w-[205px] border-b border-b-gray-400 text-gray-400;
+  }
+
+  .settings-pah-m-styles {
+    @apply flex h-10 items-center justify-between p-3 rounded-md;
+  }
 }
 
 @keyframes slide-up {

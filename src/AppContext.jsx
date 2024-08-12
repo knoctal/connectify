@@ -1,24 +1,32 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [confirmMessage, setConfirmMessage] = useState("");
+  const [theme, setTheme] = useState(null);
+
+  useEffect(() => {
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      const isDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  }, [theme]);
 
   return (
     <AppContext.Provider
       value={{
-        email,
-        setEmail,
-        password,
-        setPassword,
-        error,
-        setError,
-        confirmMessage,
-        setConfirmMessage,
+        theme,
+        setTheme,
       }}
     >
       {children}
@@ -26,4 +34,10 @@ export const AppProvider = ({ children }) => {
   );
 };
 
-export default AppContext;
+export function useApp() {
+  const data = useContext(AppContext);
+  if (!data) {
+    throw new Error("chin tapak dam dam");
+  }
+  return data;
+}
