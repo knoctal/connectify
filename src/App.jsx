@@ -1,17 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./Pages/LogInPage";
 import { AppProvider } from "./AppContext";
-import Signup from "./pages/Signup";
-import Homepage from "./pages/Homepage";
+import Signup from "./Pages/SinUpPage";
+import Homepage from "./Pages/HomePage";
 import Reportproblem from "./components/Reportproblem";
 import Settings from "./components/Settings";
+import ProfilePage from "./Pages/ProiflePage";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
   },
   {
-    path: "/Home",
+    path: "/home",
     element: <Homepage />,
   },
   {
@@ -19,11 +21,15 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/Report",
+    path: "/profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "/report",
     element: <Reportproblem />,
   },
   {
-    path: "/Settings",
+    path: "/settings",
     element: <Settings />,
   },
 ]);
