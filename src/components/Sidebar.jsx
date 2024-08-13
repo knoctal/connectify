@@ -106,9 +106,12 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="mt-2 pl-2 flex flex-col gap-16 relative">
-      <div className="flex items-center justify-between mt-4 md:justify-start md:mt-2 md:pl-3 relative w-full">
-        <FaConnectdevelop size={35} className="fixed mt-5 md:ml-0 mx-auto" />
+    <div className="mt-2 pl-2 flex flex-col gap-24 relative">
+      <div className=" flex items-center justify-between md:justify-start md:mt-2 md:pl-3 relative w-full">
+        <FaConnectdevelop
+          size={35}
+          className="md:fixed md:mt-6 md:ml-0 mx-auto"
+        />
         <div className="md:hidden">
           <BiMenuAltLeft size={35} />
         </div>
@@ -116,14 +119,17 @@ export default function Sidebar() {
 
       {/* Sidebar content for larger screens */}
       <div className="hidden md:flex md:flex-col md:gap-5">
-        <div className="fixed md:flex md:flex-col md:gap-5 py-3 z-50">
+        <div className="fixed md:flex md:flex-col md:gap-6 py-3 z-50">
           <div onClick={() => navigate("/home")} className="hover-effect">
             <GoHome size={30} />
           </div>
-          <div onClick={() => setSelected("search")} className="hover-effect">
+          <div onClick={() => navigate("/search")} className="hover-effect">
             <FiSearch size={30} />
           </div>
-          <div onClick={() => setSelected("heart")} className="hover-effect">
+          <div
+            onClick={() => navigate("/notifications")}
+            className="hover-effect"
+          >
             <FaRegHeart size={28} />
           </div>
           <div onClick={() => navigate("/profile")} className="hover-effect">
@@ -148,13 +154,16 @@ export default function Sidebar() {
         <div onClick={() => navigate("/home")} className="hover-effect">
           <GoHome size={26} />
         </div>
-        <div onClick={() => setSelected("search")} className="hover-effect">
+        <div onClick={() => navigate("/search")} className="hover-effect">
           <FiSearch size={26} />
         </div>
         <div onClick={handlePlusClick} className="hover-effect">
           <FaRegEdit size={26} />
         </div>
-        <div onClick={() => setSelected("heart")} className="hover-effect">
+        <div
+          onClick={() => navigate("/notifications")}
+          className="hover-effect"
+        >
           <FaRegHeart size={24} />
         </div>
         <div onClick={() => navigate("/profile")} className="hover-effect">

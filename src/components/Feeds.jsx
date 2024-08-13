@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> b65ab2b792807905e028ee3513e523f1a0f78a8d
 import { useState, useRef, useEffect } from "react";
 import { MdOutlineModeComment } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";

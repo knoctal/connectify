@@ -1,9 +1,29 @@
+import { useRef, useEffect } from "react";
+
 export default function ProfileForm({ section, onClose, onSectionChange }) {
+  const formRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (formRef.current && !formRef.current.contains(event.target)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const renderFormContent = () => {
     switch (section) {
       case "profile":
         return (
-          <form className="w-full md:p-4 rounded-2xl md:max-w-lg bg-white">
+          <form
+            ref={formRef}
+            className="w-full md:p-4 rounded-2xl md:max-w-lg bg-white"
+          >
             <div className="flex items-center justify-between mb-4 border-b border-gray-400 md:mb-0 md:border-none">
               <button
                 className="text-gray-500 hover:text-gray-700 md:hidden"
@@ -73,13 +93,6 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               type="submit"
             >
               Done
-            </button>
-            <button
-              className="ml-2 mt-4 text-gray-500 hover:text-gray-700 md:block hidden"
-              type="button"
-              onClick={onClose}
-            >
-              Cancel
             </button>
           </form>
         );
