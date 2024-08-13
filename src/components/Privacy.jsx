@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { CiLock } from "react-icons/ci";
 import { GoMention } from "react-icons/go";
@@ -17,7 +17,12 @@ export default function Privacy() {
           <CiLock size={22} />
           <h2>Private profile</h2>
         </div>
-        <button className="h-8 w-14 border-none shadow-lg ">
+        <button
+          className="h-8 w-14 border-none shadow-lg "
+          onClick={() => {
+            setIsPrivate(!isPrivate);
+          }}
+        >
           {isPrivate ? "ON" : "OFF"}
         </button>
       </div>

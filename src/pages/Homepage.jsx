@@ -1,8 +1,8 @@
 import Sidebar from "../components/Sidebar";
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-// import AppContext from "../AppContext";
 import { useApp } from "../AppContext";
+import Feeds from "../components/Feeds";
 
 export default function HomePage() {
   const [open, setOpen] = useState(false);
@@ -33,17 +33,17 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen dark:bg-gray-950 dark:text-white">
+    <div className="relative min-h-screen ">
       <Sidebar />
 
-      <div className="hidden md:flex md:flex-col items-center justify-center absolute top-0 left-0 right-0 mt-4">
-        <div className="flex gap-5 items-center ">
-          <h3 className="dark:text-white">{selectOption}</h3>
+      <div className="hidden md:flex md:flex-col items-center justify-center absolute top-0 left-0 right-0 mt-4 z-50">
+        <div className="fixed flex gap-5 items-center ">
+          <h3 className=" text-black">{selectOption}</h3>
 
           <button
             ref={btnRef}
             onClick={() => setOpen((prev) => !prev)}
-            className="dark:text-white"
+            className="bg-white"
           >
             {open ? (
               <FaAngleUp size={30} className="santru" />
@@ -54,7 +54,7 @@ export default function HomePage() {
         </div>
         {open && (
           <div
-            className="border rounded-2xl border-stone-200 w-64 p-2"
+            className="border rounded-2xl bg-white border-stone-200 w-64 p-2"
             ref={dropdownRef}
           >
             {options.map((items) => (
@@ -72,6 +72,9 @@ export default function HomePage() {
             ))}
           </div>
         )}
+      </div>
+      <div className=" md:flex md:flex-col items-center justify-center absolute top-10 left-0 right-0 mt-4">
+        <Feeds />
       </div>
     </div>
   );
