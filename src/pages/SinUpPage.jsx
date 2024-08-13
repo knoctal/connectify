@@ -46,7 +46,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col items-center justify-center">
+    <div className=" min-h-screen flex flex-col items-center justify-center  bg-slate-50  ">
       <div className="block md:hidden">
         <FaConnectdevelop size={40} />
       </div>
@@ -88,7 +88,7 @@ export default function Signup() {
           <hr className="border-t border-gray-300 w-32" />
         </div>
         <div className="md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center">
-          <h5>Already have an account?</h5>
+          <h5 className=" ">Already have an account?</h5>
           <Link className="text-blue-500" to="/">
             Log In
           </Link>
