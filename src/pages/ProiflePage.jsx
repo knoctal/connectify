@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
+=======
+
+import { useState } from "react";
+>>>>>>> b65ab2b792807905e028ee3513e523f1a0f78a8d
 import Sidebar from "../components/Sidebar";
 import ProfileInfo from "../components/ProfileInfo";
 import ProfileForm from "../components/ProfileForm";
