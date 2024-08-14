@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../AppContext";
 
-export default function () {
+export default function Problem() {
   const navigate = useNavigate();
 
   const { theme, setTheme } = useApp();

@@ -1,6 +1,10 @@
 export default function ProfileInfo({ onEditClick }) {
   return (
+<<<<<<< HEAD
     <div className="width-height mt-0 dark:bg-gray-950 dark:text-white">
+=======
+    <div className="width-height mt-0">
+>>>>>>> db7a1641b0e9db66a649dff5d0c4f2d54721b4d1
       <div className="flex p-4 justify-between md:gap-x-96">
         <div className="flex flex-col items-start">
           <h1 className="font-bold text-2xl">Full name</h1>
