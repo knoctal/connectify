@@ -8,7 +8,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { CiLight } from "react-icons/ci";
 import { IoIosArrowRoundBack } from "react-icons/io";
-// import AppContext from "../AppContext";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import ThreadForm from "./ThreadForm";
@@ -17,7 +17,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submenu, setSubmenu] = useState(null);
+  const [submenu, setSubmenu] = useState();
   const { theme, setTheme } = useApp();
 
   async function signOut() {
@@ -39,7 +39,7 @@ export default function Sidebar() {
             key={index}
             type="button"
             onClick={() => handleMenuItemClick(option)}
-            className=" text-left h-16 w-60 p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
+            className="text-left h-16 w-60 p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
           >
             {option}
           </button>
@@ -82,12 +82,9 @@ export default function Sidebar() {
   }
 
   function handleMenuItemClick(option) {
-    console.log("Clicked menu option:", option);
-
     switch (option) {
-      case "Appearence":
-        console.log("Appearance py click krnay ka abhi koi faida nhi");
-        setSubmenu("Appearence");
+      case "Appearance":
+        setSubmenu("Appearance");
         break;
       case "Settings":
         navigate("/Settings");
@@ -104,12 +101,17 @@ export default function Sidebar() {
     setMenuOpen(false);
   }
 
+  const handlePlusClick = () => {
+    setIsFormVisible(!isFormVisible);
+    console.log("Plus button clicked, isFormVisible:", !isFormVisible);
+  };
+
   return (
-    <div className="md:pt-3 pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
-      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative h-10 w-full fixed dark:bg-black dark:bg-opacity-90 ">
+    <div className="pt-3 pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
+      <div className="flex items-center justify-between md:justify-start p-2 relative h-2 w-full ">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-2 mx-auto"
+          className="md:fixed md:mt-6 md:ml-0 mx-auto"
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
@@ -200,7 +202,7 @@ export default function Sidebar() {
         </div>
         <div
           onClick={handlePlusClick}
-          className="hover-effect dark:hover:bg-stone-900 "
+          className="hover-effect dark:hover:bg-stone-900"
         >
           <FaRegEdit size={26} />
         </div>

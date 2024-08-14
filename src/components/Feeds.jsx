@@ -4,7 +4,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { GoPaperAirplane } from "react-icons/go";
 import ThreadForm from "./ThreadForm";
-import Dropdown from "../components/DropDown";
+import Dropdown from "../components/Dropdown";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);

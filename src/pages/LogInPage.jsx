@@ -54,7 +54,7 @@ export default function LogIn() {
       </div>
 
       <div className="absolute -top-20 left-[-480px] -right-0 h-14 z-0 md:block hidden">
-        <img src="/frontPic.webp" alt="Front" />
+        <img src="/frontPic.svg" alt="Front" />
       </div>
       <div className="flex flex-col items-center justify-center gap-4 z-10 md:w-2/5 md:min-h-[90svh] mr-2">
         <h1 className="font-bold text-xl md:block">Log in</h1>

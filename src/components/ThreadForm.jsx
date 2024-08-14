@@ -102,7 +102,7 @@ export default function ThreadForm({ toggleForm }) {
     >
       <div className="flex items-center justify-between md:justify-center p-6 relative h-6 w-full ">
         <button
-          className="font-bold text-white"
+          className="md:hidden font-bold text-white"
           onClick={() => setShowConfirmation(true)}
         >
           Cancel
