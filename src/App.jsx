@@ -5,10 +5,6 @@ import Signup from "./Pages/SinUpPage";
 import Homepage from "./Pages/HomePage";
 import Reportproblem from "./components/Reportproblem";
 import Settings from "./components/Settings";
-import ProfilePage from "./Pages/ProiflePage";
-import Notifications from "./Pages/Notifications";
-import SearchPage from "./Pages/SearchPage";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +17,18 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "/search",
+    element: <SearchPage />,
+  },
+  {
+    path: "/notifications",
+    element: <Notifications />,
   },
   {
     path: "/profile",

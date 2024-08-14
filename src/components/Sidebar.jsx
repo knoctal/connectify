@@ -8,7 +8,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { CiLight } from "react-icons/ci";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+// import AppContext from "../AppContext";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import ThreadForm from "./ThreadForm";
@@ -18,7 +18,7 @@ export default function Sidebar() {
   const [selected, setSelected] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submenu, setSubmenu] = useState();
+  const [submenu, setSubmenu] = useState(null);
   const { theme, setTheme } = useApp();
 
   async function signOut() {
@@ -34,13 +34,13 @@ export default function Sidebar() {
 
   function handleMenuItems() {
     return (
-      <div className="absolute bottom-16 left-16 w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
+      <div className="absolute bottom-0 left-16  w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
         {menuOptions.map((option, index) => (
           <button
             key={index}
             type="button"
             onClick={() => handleMenuItemClick(option)}
-            className="text-left h-16 w-60 p-2 rounded-md hover:bg-gray-400"
+            className=" text-left h-16 w-60 p-2 rounded-md hover:bg-gray-400 "
           >
             {option}
           </button>
@@ -80,10 +80,14 @@ export default function Sidebar() {
       </div>
     );
   }
+
   function handleMenuItemClick(option) {
+    console.log("Clicked menu option:", option);
+
     switch (option) {
-      case "Appearance":
-        setSubmenu("Appearance");
+      case "Appearence":
+        console.log("Appearance py click krnay ka abhi koi faida nhi");
+        setSubmenu("Appearence");
         break;
       case "Settings":
         navigate("/Settings");
@@ -100,41 +104,26 @@ export default function Sidebar() {
     setMenuOpen(false);
   }
 
-  const handlePlusClick = () => {
-    setIsFormVisible(!isFormVisible);
-    console.log("Plus button clicked, isFormVisible:", !isFormVisible);
-  };
-
   return (
-    <div className="mt-2 pl-2 flex flex-col gap-24 relative">
-      <div className=" flex items-center justify-between md:justify-start md:mt-2 md:pl-3 relative w-full">
-        <FaConnectdevelop
-          size={35}
-          className="md:fixed md:mt-6 md:ml-0 mx-auto"
-        />
+    <div className="mt-2 pl-2 flex flex-col gap-16 relative   bg-white dark:bg-gray-950 text-black dark:text-white">
+      <div className="flex items-center justify-between mt-4 md:justify-start md:mt-2 md:pl-3 relative w-full">
+        <FaConnectdevelop size={35} className="md:ml-0 mx-auto" />
         <div className="md:hidden">
           <BiMenuAltLeft size={35} />
         </div>
       </div>
-
-      {/* Sidebar content for larger screens */}
-      <div className="hidden md:flex md:flex-col md:gap-5">
-        <div className="fixed md:flex md:flex-col md:gap-6 py-3 z-50">
-          <div onClick={() => navigate("/home")} className="hover-effect">
-            <GoHome size={30} />
-          </div>
-          <div onClick={() => navigate("/search")} className="hover-effect">
-            <FiSearch size={30} />
-          </div>
-          <div
-            onClick={() => navigate("/notifications")}
-            className="hover-effect"
-          >
-            <FaRegHeart size={28} />
-          </div>
-          <div onClick={() => navigate("/profile")} className="hover-effect">
-            <FaRegUser size={28} />
-          </div>
+      <div className="hidden md:flex md:flex-col md:gap-5 ">
+        <div onClick={() => navigate("/Home")} className="hover-effect">
+          <GoHome size={30} />
+        </div>
+        <div onClick={() => setSelected("search")} className="hover-effect">
+          <FiSearch size={30} />
+        </div>
+        <div onClick={() => setSelected("heart")} className="hover-effect">
+          <FaRegHeart size={28} />
+        </div>
+        <div onClick={() => setSelected("account")} className="hover-effect">
+          <FaRegUser size={28} />
         </div>
       </div>
 
@@ -146,8 +135,20 @@ export default function Sidebar() {
           onClick={() => setMenuOpen(!menuOpen)}
           className="cursor-pointer"
         />
-        {menuOpen && handleMenuItems()}
-        {submenu && handleAppearence()}
+        {menuOpen && (
+          <div className="absolute z-10 bottom-5 left-16 w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
+            {menuOptions.map((option, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleMenuItemClick(option)}
+                className="text-left h-16 w-60 p-2 rounded-md hover:bg-gray-500/10 "
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       {/* Fixed bottom bar for mobile */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-3 md:hidden z-50 border-t border-gray-200">
@@ -170,20 +171,6 @@ export default function Sidebar() {
           <FaRegUser size={24} />
         </div>
       </div>
-
-      {/* FaPlus icon positioned at bottom-right */}
-      <div className="hidden  md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
-        <FaPlus
-          size={27}
-          onClick={handlePlusClick}
-          className="border border-gray-300 shadow-md rounded-2xl w-20 h-16 p-5 cursor-pointer"
-        />
-      </div>
-
-      {/* Conditionally render ThreadForm */}
-      {isFormVisible && (
-        <ThreadForm toggleForm={() => setIsFormVisible(false)} />
-      )}
     </div>
   );
 }
