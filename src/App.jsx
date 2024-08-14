@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Pages/LogInPage";
 import { AppProvider } from "./AppContext";
-import Signup from "./Pages/SinUpPage";
+import Signup from "./Pages/SignUpPage";
 import Homepage from "./Pages/HomePage";
 import Reportproblem from "./components/Reportproblem";
 import Settings from "./components/Settings";
 import ProfilePage from "./Pages/ProiflePage";
 import Notifications from "./Pages/Notifications";
 import SearchPage from "./Pages/SearchPage";
+import ThreadForm from "./components/ThreadForm";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings />,
+  },
+  {
+    path: "/post",
+    element: <ThreadForm />,
   },
 ]);
 

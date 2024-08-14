@@ -15,7 +15,6 @@ import ThreadForm from "./ThreadForm";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenu, setSubmenu] = useState();
@@ -34,13 +33,13 @@ export default function Sidebar() {
 
   function handleMenuItems() {
     return (
-      <div className="absolute bottom-16 left-16 w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
+      <div className="w-64 h-60 rounded-lg font-semibold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100 bg-white text-black dark:bg-black dark:text-white dark:border dark:border-neutral-700">
         {menuOptions.map((option, index) => (
           <button
             key={index}
             type="button"
             onClick={() => handleMenuItemClick(option)}
-            className="text-left h-16 w-60 p-2 rounded-md hover:bg-gray-400"
+            className=" text-left h-16 w-60 p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
           >
             {option}
           </button>
@@ -48,20 +47,21 @@ export default function Sidebar() {
       </div>
     );
   }
-  function handleAppearence() {
+
+  function handleAppearance() {
     return (
-      <div className="absolute bottom-0 left-16  w-96 h-32 rounded-xl font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-200 bg-white dark:bg-gray-950 text-black dark:text-white ">
-        <div className="flex items-start justify-between p-2 w-[220px] h-10 rounded-md ">
+      <div className="md:w-96 h-32 w-64 rounded-xl font-semibold flex flex-col gap-1 items-start justify-center p-1 border border-gray-200 bg-white text-black dark:bg-black dark:text-white dark:border-neutral-700 ">
+        <div className="flex items-start justify-between p-2 w-[220px] h-10 rounded-md">
           <IoIosArrowRoundBack
             size={26}
             onClick={() => {
               setSubmenu(null);
             }}
           />
-          <h3 className="text-l">Appearence</h3>
+          <h3 className="text-l dark:bg-black dark:text-white">Appearance</h3>
         </div>
-        <div className="flex justify-between items-center w-[365px] h-[60px] rounded-lg  bg-gray-100/50">
-          <div className=" appearence-btns" onClick={() => setTheme("light")}>
+        <div className="flex justify-around items-center md:w-[365px] h-[60px] w-54 rounded-lg bg-gray-100/50 dark:bg-black dark:text-white">
+          <div className="appearence-btns" onClick={() => setTheme("light")}>
             <CiLight size={25} />
           </div>
           <div className="appearence-btns" onClick={() => setTheme("dark")}>
@@ -80,6 +80,7 @@ export default function Sidebar() {
       </div>
     );
   }
+
   function handleMenuItemClick(option) {
     switch (option) {
       case "Appearance":
@@ -106,77 +107,125 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="mt-2 pl-2 flex flex-col gap-24 relative">
-      <div className=" flex items-center justify-between md:justify-start md:mt-2 md:pl-3 relative w-full">
+    <div className="md:pt-3 pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
+      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative h-10 w-full fixed dark:bg-black dark:bg-opacity-90 ">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-0 mx-auto"
+          className="md:fixed md:mt-6 md:ml-2 mx-auto"
         />
-        <div className="md:hidden">
+        <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
         </div>
       </div>
 
       {/* Sidebar content for larger screens */}
-      <div className="hidden md:flex md:flex-col md:gap-5">
+      <div className="hidden md:flex md:flex-col md:gap-5 ">
         <div className="fixed md:flex md:flex-col md:gap-6 py-3 z-50">
-          <div onClick={() => navigate("/home")} className="hover-effect">
+          <div
+            onClick={() => navigate("/home")}
+            className="hover-effect dark:hover:bg-stone-900"
+          >
             <GoHome size={30} />
           </div>
-          <div onClick={() => navigate("/search")} className="hover-effect">
+          <div
+            onClick={() => navigate("/search")}
+            className="hover-effect dark:hover:bg-stone-900"
+          >
             <FiSearch size={30} />
           </div>
           <div
             onClick={() => navigate("/notifications")}
-            className="hover-effect"
+            className="hover-effect dark:hover:bg-stone-900"
           >
             <FaRegHeart size={28} />
           </div>
-          <div onClick={() => navigate("/profile")} className="hover-effect">
+          <div
+            onClick={() => navigate("/profile")}
+            className="hover-effect dark:hover:bg-stone-900"
+          >
             <FaRegUser size={28} />
           </div>
         </div>
       </div>
 
-      {/* <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10 "> */}
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10">
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10  z-50">
         <VscPinned size={30} />
-        <BiMenuAltLeft
-          size={30}
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="cursor-pointer"
-        />
-        {menuOpen && handleMenuItems()}
-        {submenu && handleAppearence()}
+        <div className="relative">
+          <div
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="cursor-pointer"
+          >
+            <BiMenuAltLeft size={35} />
+          </div>
+          {/* Render the menu items when menuOpen is true */}
+          {menuOpen && (
+            <div className="absolute bottom-12 right-0 left-0 z-50">
+              {handleMenuItems()}
+            </div>
+          )}
+          {/* Render the appearance submenu if submenu state is "Appearance" */}
+          {submenu === "Appearance" && (
+            <div className="absolute bottom-12 right-0 left-0 z-50 ">
+              {handleAppearance()}
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="fixed top-0 left-4 w-full h-full z-50 bg-black/50 md:hidden">
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="text-xl font-bold mb-6"
+          >
+            &times;
+          </button>
+          {handleMenuItems()}
+          {submenu && handleAppearance()}
+        </div>
+      )}
+
       {/* Fixed bottom bar for mobile */}
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-3 md:hidden z-50 border-t border-gray-200">
-        <div onClick={() => navigate("/home")} className="hover-effect">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
+        <div
+          onClick={() => navigate("/home")}
+          className="hover-effect dark:hover:bg-stone-900"
+        >
           <GoHome size={26} />
         </div>
-        <div onClick={() => navigate("/search")} className="hover-effect">
+        <div
+          onClick={() => navigate("/search")}
+          className="hover-effect dark:hover:bg-stone-900"
+        >
           <FiSearch size={26} />
         </div>
-        <div onClick={handlePlusClick} className="hover-effect">
+        <div
+          onClick={handlePlusClick}
+          className="hover-effect dark:hover:bg-stone-900 "
+        >
           <FaRegEdit size={26} />
         </div>
         <div
           onClick={() => navigate("/notifications")}
-          className="hover-effect"
+          className="hover-effect dark:hover:bg-stone-900"
         >
           <FaRegHeart size={24} />
         </div>
-        <div onClick={() => navigate("/profile")} className="hover-effect">
+        <div
+          onClick={() => navigate("/profile")}
+          className="hover-effect dark:hover:bg-stone-900"
+        >
           <FaRegUser size={24} />
         </div>
       </div>
 
       {/* FaPlus icon positioned at bottom-right */}
-      <div className="hidden  md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
+      <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
         <FaPlus
           size={27}
           onClick={handlePlusClick}
-          className="border border-gray-300 shadow-md rounded-2xl w-20 h-16 p-5 cursor-pointer"
+          className="border border-gray-300 shadow-md rounded-2xl w-20 h-16 p-5 cursor-pointer dark:border dark:border-neutral-700"
         />
       </div>
 
