@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaConnectdevelop } from "react-icons/fa";
+import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
 import { supabase } from "../supabaseClient";
 import { useApp } from "../AppContext";
 
@@ -11,12 +11,13 @@ export default function LogIn() {
     content: "",
     visible: false,
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     setMessage({ type: "", content: "", visible: false });
-
+    setLoading(true);
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
@@ -28,6 +29,7 @@ export default function LogIn() {
       });
       if (error) {
         setMessage({ type: "error", content: error.message, visible: true });
+        document.getElementById("password-input").value = "";
       } else {
         console.log("User logged in:", data);
         setMessage({
@@ -45,6 +47,7 @@ export default function LogIn() {
         visible: true,
       });
     } finally {
+      setLoading(false);
       setTimeout(() => setMessage({ ...message, visible: false }), 3000);
     }
   }
@@ -73,19 +76,24 @@ export default function LogIn() {
             type="email"
             name="email"
             placeholder="Enter your Email"
-            className="input"
+            className="input "
           />
           <input
             type="password"
+            id="password-input"
             name="password"
             placeholder="Password"
-            className="input"
+            className="input   "
           />
           <button
-            className="text-gray-300 bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-white dark:text-black"
+            className="text-gray-300 flex items-center justify-center bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-white dark:text-black"
             type="submit"
           >
-            Login
+            {loading ? (
+              <FaSpinner className="animate-spin dark:text-black " size={15} />
+            ) : (
+              "Log in"
+            )}
           </button>
         </form>
 
