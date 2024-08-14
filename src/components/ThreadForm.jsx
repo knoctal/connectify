@@ -57,11 +57,6 @@ export default function ThreadForm({ toggleForm }) {
     setPollOptions(newOptions);
   };
 
-  const handleRemovePoll = () => {
-    setShowPoll(false);
-    setPollOptions(["Yes", "No"]);
-  };
-
   const handleOutsideClick = (e) => {
     if (
       formRef.current &&
@@ -83,10 +78,6 @@ export default function ThreadForm({ toggleForm }) {
     }
   };
 
-  const handleCancelClick = () => {
-    setShowConfirmation(true);
-  };
-
   const handleDiscardClick = () => {
     setShowConfirmation(false);
     toggleForm();
@@ -105,16 +96,24 @@ export default function ThreadForm({ toggleForm }) {
 
   return (
     <div
-      className={`fixed bg-white inset-0 flex flex-col items-center justify-center md:bg-black md:bg-opacity-70 z-50 ${
+      className={`fixed   inset-0 flex flex-col items-center justify-center md:bg-black md:bg-opacity-70 z-50  bg-neutral-900  ${
         showPoll ? "md:h-auto" : "md:h-auto"
       }`}
     >
-      <h1 className="md:text-white text-black font-bold text-lg mb-4">
-        New Thread
-      </h1>
+      <div className="flex items-center justify-between md:justify-center p-6 relative h-6 w-full ">
+        <button
+          className="font-bold text-white"
+          onClick={() => setShowConfirmation(true)}
+        >
+          Cancel
+        </button>
+        <h1 className="md:text-white text-white font-bold text-lg md:mb-4 ">
+          New Thread
+        </h1>
+      </div>
       <div
         ref={formRef}
-        className={`bg-white p-6 rounded-2xl shadow-lg md:w-full md:max-w-[630px] ${
+        className={`bg-white p-6 md:rounded-2xl md:shadow-lg md:w-full md:max-w-[630px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${
           showPoll ? "md:h-auto" : "md:h-auto"
         } w-full h-full md:h-fit flex flex-col`}
       >
@@ -127,7 +126,7 @@ export default function ThreadForm({ toggleForm }) {
           <div className="flex flex-col m-0 p-0 items-start flex-grow">
             <h4 className="font-semibold">mansub_hafeez</h4>
             <textarea
-              className="w-full font-gray-500 rounded-lg resize-none outline-none"
+              className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
               rows={1}
               placeholder="Start a thread..."
               value={threadText}
@@ -143,7 +142,7 @@ export default function ThreadForm({ toggleForm }) {
                     value={option}
                     onChange={(e) => handleOptionChange(index, e.target.value)}
                     placeholder={index === 0 ? "Yes" : "No"}
-                    className="block mt-2 w-96 p-2 border rounded-md outline-none text-gray-500"
+                    className="block mt-2 w-[500px] p-2 border rounded-2xl outline-none text-gray-500 dark:bg-neutral-900 dark:border-neutral-700"
                   />
                 ))}
                 <button
@@ -167,7 +166,7 @@ export default function ThreadForm({ toggleForm }) {
             {showEmojiPicker && (
               <div
                 ref={emojiPickerRef}
-                className="absolute z-50"
+                className="absolute z-50 dark:bg-black "
                 style={{ width: "200px", height: "200px" }}
               >
                 <EmojiPicker onEmojiClick={handleEmojiClick} />
@@ -185,27 +184,47 @@ export default function ThreadForm({ toggleForm }) {
             </label>
           </div>
           <div className="relative flex items-center gap-2">
-            <button onClick={handlePollToggle} className="text-gray-400">
+            <button
+              onClick={handlePollToggle}
+              className="text-gray-400 dark:bg-neutral-900 "
+            >
               <BiMenuAltLeft size={22} />
             </button>
           </div>
         </div>
+        <div className="flex gap-2 m-2">
+          <img
+            className="rounded-full w-6 h-6"
+            src="/audii.jpg"
+            alt="Profile"
+          />
+          <textarea
+            className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
+            rows={1}
+            placeholder="Add to thread..."
+            onClick={handlePostClick}
+            disabled={!threadText.trim()}
+          />
+        </div>
 
-        <div className="relative flex flex-row gap-5 items-center justify-between md:justify-between md:gap-4 md:mt-6">
-          <div className="relative">
-            <button onClick={handleDropdownToggle} className="text-gray-400">
+        <div className="relative flex flex-row gap-5 items-center justify-between md:justify-between md:gap-4 md:top-0 bottom-0 top-80 md:mt-6 ">
+          <div className="">
+            <button
+              onClick={handleDropdownToggle}
+              className="text-gray-400 dark:bg-neutral-900"
+            >
               {dropdownOption}
             </button>
             {dropdownOpen && (
               <div
                 ref={dropdownRef}
-                className={`absolute md:top-full md:left-0 md:mt-2 md:border md:w-64 md:p-2 top-10 left-0 mt-2 border rounded-2xl hover:bg-gray-300 bg-white border-stone-200`}
+                className={` md:top-full absolute  md:left-0 md:mt-2 md:border md:w-64 md:p-2 top-10 left-0 mt-2 border rounded-2xl hover:bg-gray-300 bg-white border-stone-200 dark:bg-neutral-900 dark:border-gray-800`}
               >
                 <button
                   onClick={() =>
                     handleDropdownOptionSelect("Anyone can reply & quote")
                   }
-                  className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200"
+                  className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
                 >
                   Anyone
                 </button>
@@ -213,7 +232,7 @@ export default function ThreadForm({ toggleForm }) {
                   onClick={() =>
                     handleDropdownOptionSelect("Profiles you follow can reply")
                   }
-                  className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200"
+                  className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
                 >
                   Profiles you follow
                 </button>
@@ -223,7 +242,7 @@ export default function ThreadForm({ toggleForm }) {
                       "Profiles you mentioned can reply"
                     )
                   }
-                  className="block text-left w-full p-2 rounded-xl hover:bg-gray-200"
+                  className="block text-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
                 >
                   Mentioned Only
                 </button>
@@ -233,10 +252,10 @@ export default function ThreadForm({ toggleForm }) {
 
           <div className="flex md:justify-between md:gap-4 md:mt-6">
             <button
-              className={`border border-gray-100 px-4 py-2 rounded-md ${
+              className={`border border-gray-100 px-4 py-2 rounded-xl dark:border-neutral-700  ${
                 threadText.trim()
-                  ? "text-gray-800"
-                  : "text-gray-400 cursor-not-allowed"
+                  ? "text-white "
+                  : "text-gray-500 cursor-not-allowed"
               }`}
               onClick={handlePostClick}
               disabled={!threadText.trim()}
@@ -247,17 +266,22 @@ export default function ThreadForm({ toggleForm }) {
         </div>
       </div>
       {showConfirmation && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-60">
-          <div className="bg-white p-4 rounded-2xl shadow-lg w-[200px] md:w-full max-w-[290px] h-28 text-center">
-            <h2 className="font-bold text-black">Discard thread ?</h2>
-            <div className="mt-8 flex justify-around  ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-60  ">
+          <div className="bg-white p-4 rounded-2xl shadow-lg w-[200px] md:w-full max-w-[290px] h-28 text-center dark:bg-black dark:border  dark:border-gray-800">
+            <h2 className="font-bold text-black dark:text-white">
+              Discard thread ?
+            </h2>
+            <div className="mt-8 flex justify-around   ">
               <button
                 onClick={handleConfirmationCancel}
-                className="text-gray-500 "
+                className="text-white "
               >
                 Cancel
               </button>
-              <button onClick={handleDiscardClick} className="text-red-500">
+              <button
+                onClick={handleDiscardClick}
+                className=" font-bold text-red-500 dark:text-red-600 "
+              >
                 Discard
               </button>
             </div>

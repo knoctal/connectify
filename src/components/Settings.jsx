@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { GoMention } from "react-icons/go";
@@ -9,11 +9,9 @@ import Privacy from "./Privacy";
 import Account from "./Account";
 import Help from "./Help";
 import { useNavigate } from "react-router-dom";
-import { useApp } from "../AppContext";
 import Sidebar from "./Sidebar";
 
 export default function Settings() {
-  const { theme, setTheme } = useApp();
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(true);
@@ -46,7 +44,7 @@ export default function Settings() {
             </div>
             {/* for beneath */}
             <div className="flex flex-col gap-2 h-[685px]   w-[650px] p-3 border  rounded-xl border-gray-200  ">
-              <div className="h-14">
+              <div className="h-14 flex justify-around items-center">
                 <button
                   type="button"
                   onClick={() => {

@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-=======
-
 import { useState } from "react";
->>>>>>> b65ab2b792807905e028ee3513e523f1a0f78a8d
 import Sidebar from "../components/Sidebar";
 import ProfileInfo from "../components/ProfileInfo";
 import ProfileForm from "../components/ProfileForm";
@@ -27,12 +22,10 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen dark:bg-black dark:text-white">
       <Sidebar />
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h3 className="md:font-semibold mt-4 md:p-2 hidden md:block">
-          Profile
-        </h3>
+      <div className="md:fixed md:flex md:flex-col items-center justify-center top-0 left-0 right-0 mt-4 dark:bg-black dark:text-white">
+        <h3 className="md:font-semibold md:p-2 hidden md:block">Profile</h3>
         <ProfileInfo onEditClick={handleEditClick} />
         {isEditing && (
           <ProfileForm

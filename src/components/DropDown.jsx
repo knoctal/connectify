@@ -28,14 +28,16 @@ export default function Dropdown() {
     };
   }, []);
   return (
-    <div className=" fixed hidden md:flex md:flex-col items-center justify-center  top-0 left-0 right-0 mt-4 z-50">
-      <div className="m flex gap-5 items-center ">
-        <h3 className=" text-black">{selectOption}</h3>
+    <div className="dark:bg-black dark:text-white w-32 fixed hidden md:flex flex-col items-center justify-center top-0 left-[44%]  mt-4  z-50">
+      <div className=" flex gap-5 items-center ">
+        <h3 className="dark:text-white dark:bg-black text-black">
+          {selectOption}
+        </h3>
 
         <button
           ref={btnRef}
           onClick={() => setOpen((prev) => !prev)}
-          className="bg-white"
+          className="bg-white dark:bg-black dark:text-white"
         >
           {open ? (
             <FaAngleUp size={30} className="santru" />
@@ -46,7 +48,7 @@ export default function Dropdown() {
       </div>
       {open && (
         <div
-          className="border rounded-2xl bg-white border-stone-200 w-64 p-2"
+          className="border rounded-2xl bg-white border-stone-200 w-64 p-2 dark:bg-black dark:text-white dark:border dark:border-neutral-700"
           ref={dropdownRef}
         >
           {options.map((items) => (
@@ -56,7 +58,7 @@ export default function Dropdown() {
                 setSelectOption(items);
                 setOpen(false);
               }}
-              className="block text-left w-60 p-2  rounded-xl hover:bg-gray-200"
+              className="block text-left w-60 p-2  rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
             >
               {items}
               {selectOption === items && <span className="ml-28">✓</span>}
