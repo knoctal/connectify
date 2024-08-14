@@ -80,11 +80,7 @@ export default function LogIn() {
             className="input"
           />
           <button
-<<<<<<< HEAD
             className="text-gray-300 flex items-center justify-center bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-white dark:text-gray-800"
-=======
-            className="text-gray-300 bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-white dark:text-black"
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
             type="submit"
           >
             Login
@@ -97,13 +93,8 @@ export default function LogIn() {
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-<<<<<<< HEAD
         <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between dark:bg-black dark:text-white dark:border dark:border-neutral-700">
           <h5 className="">Don&apos;t have an account?</h5>
-=======
-        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between">
-          <h5 className="dark:text-black">Don&apos;t have an account?</h5>
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
           <Link to="/Signup">
             <h4 className="text-blue-500">Sign Up</h4>
           </Link>
