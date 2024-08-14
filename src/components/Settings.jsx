@@ -9,7 +9,6 @@ import Privacy from "./Privacy";
 import Account from "./Account";
 import Help from "./Help";
 import { useNavigate } from "react-router-dom";
-import { useApp } from "../AppContext";
 import Sidebar from "./Sidebar";
 
 export default function Settings() {
