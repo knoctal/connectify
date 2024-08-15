@@ -17,31 +17,40 @@ export default function SearchPage() {
   return (
     <div className="relative min-h-screen dark:bg-black dark:text-white">
       <Sidebar />
-      <div className="md:fixed inset-0 flex flex-col items-center justify-center d">
+      <div className=" md:fixed inset-0 flex flex-col items-center justify-center">
         <h3 className="md:font-semibold md:mt-12 md:p-1 hidden md:block">
           Search
         </h3>
         <div className="centered-div mt-0">
-          {/* Fixed height and scrollable content */}
-          <div className="width-height mt-0 ">
-            <div className="p-4 mt-4">
-              <div className="ml-4 p-3 border border-gray-300 bg-gray-100 rounded-2xl flex items-center gap-4 relative dark:bg-neutral-900 dark:border-neutral-700">
-                <LuSearch className="ml-4" color="gray" />
+          <div className="width-height mt-0">
+            <div className="md:p-4 md:mt-6 p-2 mt-10 flex items-center">
+              <div
+                className={` p-3 border border-gray-300 bg-gray-100 rounded-2xl flex items-center gap-4 dark:bg-neutral-900 dark:border-neutral-700 `}
+              >
+                <LuSearch size={25} color="black" />
                 <input
                   type="text"
                   placeholder="Search"
                   value={searchTerm}
                   onChange={handleChange}
-                  className="outline-none bg-transparent flex-grow"
+                  className="outline-none bg-transparent md:w-[550px] w-full"
                 />
                 {searchTerm && (
                   <IoClose
                     onClick={clearSearch}
-                    className=" right-4 cursor-pointer  rounded-full  "
-                    color="gray dark:white"
+                    className="cursor-pointer rounded-full dark:text-white"
+                    color="gray"
+                    size={20}
                   />
                 )}
               </div>
+              {/* Always show the Cancel button on mobile */}
+              <button
+                onClick={clearSearch}
+                className="ml-4 text-gray-700 md:hidden dark:text-white"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

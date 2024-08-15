@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-export default function Dropdown() {
+export default function Dropdown({ options }) {
   const [open, setOpen] = useState(false);
-  const [selectOption, setSelectOption] = useState("For you");
-  const options = ["For you", "Following", "Liked", "Saved"];
+  const [selectOption, setSelectOption] = useState(options[0]);
+  const option = options;
 
   const btnRef = useRef();
   const dropdownRef = useRef();
@@ -51,14 +51,14 @@ export default function Dropdown() {
           className="border rounded-2xl bg-white border-stone-200 w-64 p-2 dark:bg-black dark:text-white dark:border dark:border-neutral-700"
           ref={dropdownRef}
         >
-          {options.map((items) => (
+          {option.map((items) => (
             <button
               key={items}
               onClick={() => {
                 setSelectOption(items);
                 setOpen(false);
               }}
-              className="block text-left w-60 p-2  rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
+              className="block text-left w-60 p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
             >
               {items}
               {selectOption === items && <span className="ml-28">✓</span>}

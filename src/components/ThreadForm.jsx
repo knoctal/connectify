@@ -274,7 +274,7 @@ export default function ThreadForm({ toggleForm }) {
             <div className="mt-8 flex justify-around   ">
               <button
                 onClick={handleConfirmationCancel}
-                className="text-white "
+                className="text-gray-600 dark:text-white "
               >
                 Cancel
               </button>

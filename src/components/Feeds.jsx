@@ -31,10 +31,12 @@ export default function Feeds() {
     };
   }, []);
 
+  const dropdownOptions = ["For you", "Following", "Liked", "Saved"];
+
   return (
     <div className="centered-div bg-white dark:bg-black dark:text-white ">
       {/* Fixed height and scrollable content */}
-      <Dropdown />
+      <Dropdown options={dropdownOptions} />
       <div className="width-height mt-0 ">
         {/* Hidden on mobile */}
         <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">
@@ -72,13 +74,17 @@ export default function Feeds() {
         <hr className="hidden md:block border-t border-gray-300 dark:border-neutral-700" />
 
         {/* Show on mobile: For You and Following options */}
-        <div className="w-full flex justify-between items-center p-4 md:hidden">
-          <button className="text-gray-300 font-semibold ">For You</button>
-          <button className="text-gray-300 font-semibold">Following</button>
+        <div className="setting-buttons w-full flex justify-around items-center  md:hidden mt-4">
+          <button className="text-black dark:text-white font-semibold ">
+            For You
+          </button>
+          <button className="text-black dark:text-white font-semibold">
+            Following
+          </button>
         </div>
 
         {/* Feed items */}
-        <div className="flex flex-col gap-4 p-4">
+        <div className="mt-4 flex flex-col gap-4 md:p-4">
           {[1, 2, 3, 4, 5].map((item) => (
             <div key={item} className="flex flex-col gap-4">
               <div className="flex items-center gap-2">

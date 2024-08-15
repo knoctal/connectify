@@ -107,11 +107,11 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="pt-3 pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
-      <div className="flex items-center justify-between md:justify-start p-2 relative h-2 w-full ">
+    <div className="md:pt-3 pl-2 flex flex-col gap-20 relative dark:bg-black dark:text-white ">
+      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-0 mx-auto"
+          className="md:fixed md:mt-6 md:ml-1 mx-auto"
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
@@ -120,7 +120,7 @@ export default function Sidebar() {
 
       {/* Sidebar content for larger screens */}
       <div className="hidden md:flex md:flex-col md:gap-5 ">
-        <div className="fixed md:flex md:flex-col md:gap-6 py-3 z-50">
+        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
           <div
             onClick={() => navigate("/home")}
             className="hover-effect dark:hover:bg-stone-900"
@@ -148,7 +148,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10  z-50">
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
         <VscPinned size={30} />
         <div className="relative">
           <div
@@ -174,7 +174,7 @@ export default function Sidebar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-4 w-full h-full z-50 bg-black/50 md:hidden">
+        <div className="fixed top-0 left-4 w-full h-full z-50 md:bg-black/50 md:hidden">
           <button
             onClick={() => setMenuOpen(false)}
             className="text-xl font-bold mb-6"
@@ -186,7 +186,7 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* Fixed bottom bar for mobile */}
+      {/* Fixed bottom  for mobile */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
