@@ -32,6 +32,9 @@
     @apply flex h-10 items-center justify-between p-3 rounded-md;
   }
 
+  .setting-buttons {
+    @apply h-12 w-[205px] border-b border-b-gray-400 text-gray-400;
+  }
 
 
 }

@@ -39,7 +39,7 @@ export default function ProfileInfo({ onEditClick }) {
           <div>Repost</div>
         </div>
         <hr className="border-t border-gray-300 w-full dark:border-neutral-700" />
-        <div className="flex flex-col items-center justify-center mt-12">
+        <div className="flex flex-col items-center justify-center mt-12 p-2">
           No Post Yet ...
         </div>
       </div>

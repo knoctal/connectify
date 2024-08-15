@@ -8,7 +8,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { CiLight } from "react-icons/ci";
 import { IoIosArrowRoundBack } from "react-icons/io";
-// import AppContext from "../AppContext";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import ThreadForm from "./ThreadForm";
@@ -17,7 +17,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submenu, setSubmenu] = useState(null);
+  const [submenu, setSubmenu] = useState();
   const { theme, setTheme } = useApp();
 
   async function signOut() {
@@ -33,21 +33,13 @@ export default function Sidebar() {
 
   function handleMenuItems() {
     return (
-<<<<<<< HEAD
       <div className="w-64 h-60 rounded-lg font-semibold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100 bg-white text-black dark:bg-black dark:text-white dark:border dark:border-neutral-700">
-=======
-      <div className="absolute bottom-0 left-16  w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
         {menuOptions.map((option, index) => (
           <button
             key={index}
             type="button"
             onClick={() => handleMenuItemClick(option)}
-<<<<<<< HEAD
-            className=" text-left h-16 w-60 p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
-=======
-            className=" text-left h-16 w-60 p-2 rounded-md hover:bg-gray-400 "
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
+            className="text-left h-16 w-60 p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-900"
           >
             {option}
           </button>
@@ -90,12 +82,9 @@ export default function Sidebar() {
   }
 
   function handleMenuItemClick(option) {
-    console.log("Clicked menu option:", option);
-
     switch (option) {
-      case "Appearence":
-        console.log("Appearance py click krnay ka abhi koi faida nhi");
-        setSubmenu("Appearence");
+      case "Appearance":
+        setSubmenu("Appearance");
         break;
       case "Settings":
         navigate("/Settings");
@@ -112,13 +101,17 @@ export default function Sidebar() {
     setMenuOpen(false);
   }
 
+  const handlePlusClick = () => {
+    setIsFormVisible(!isFormVisible);
+    console.log("Plus button clicked, isFormVisible:", !isFormVisible);
+  };
+
   return (
-<<<<<<< HEAD
-    <div className="md:pt-3 pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
-      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative h-10 w-full fixed dark:bg-black dark:bg-opacity-90 ">
+    <div className="md:pt-3 pl-2 flex flex-col gap-20 relative dark:bg-black dark:text-white ">
+      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-2 mx-auto"
+          className="md:fixed md:mt-6 md:ml-1 mx-auto"
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
@@ -127,7 +120,7 @@ export default function Sidebar() {
 
       {/* Sidebar content for larger screens */}
       <div className="hidden md:flex md:flex-col md:gap-5 ">
-        <div className="fixed md:flex md:flex-col md:gap-6 py-3 z-50">
+        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
           <div
             onClick={() => navigate("/home")}
             className="hover-effect dark:hover:bg-stone-900"
@@ -152,33 +145,11 @@ export default function Sidebar() {
           >
             <FaRegUser size={28} />
           </div>
-=======
-    <div className="mt-2 pl-2 flex flex-col gap-16 relative   bg-white dark:bg-gray-950 text-black dark:text-white">
-      <div className="flex items-center justify-between mt-4 md:justify-start md:mt-2 md:pl-3 relative w-full">
-        <FaConnectdevelop size={35} className="md:ml-0 mx-auto" />
-        <div className="md:hidden">
-          <BiMenuAltLeft size={35} />
-        </div>
-      </div>
-      <div className="hidden md:flex md:flex-col md:gap-5 ">
-        <div onClick={() => navigate("/Home")} className="hover-effect">
-          <GoHome size={30} />
-        </div>
-        <div onClick={() => setSelected("search")} className="hover-effect">
-          <FiSearch size={30} />
-        </div>
-        <div onClick={() => setSelected("heart")} className="hover-effect">
-          <FaRegHeart size={28} />
-        </div>
-        <div onClick={() => setSelected("account")} className="hover-effect">
-          <FaRegUser size={28} />
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10  z-50">
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
         <VscPinned size={30} />
-<<<<<<< HEAD
         <div className="relative">
           <div
             onClick={() => setMenuOpen(!menuOpen)}
@@ -199,32 +170,11 @@ export default function Sidebar() {
             </div>
           )}
         </div>
-=======
-        <BiMenuAltLeft
-          size={30}
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="cursor-pointer"
-        />
-        {menuOpen && (
-          <div className="absolute z-10 bottom-5 left-16 w-64 h-60 rounded-lg font-bold flex flex-col gap-1 items-start justify-center p-2 border border-gray-100">
-            {menuOptions.map((option, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => handleMenuItemClick(option)}
-                className="text-left h-16 w-60 p-2 rounded-md hover:bg-gray-500/10 "
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        )}
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-4 w-full h-full z-50 bg-black/50 md:hidden">
+        <div className="fixed top-0 left-4 w-full h-full z-50 md:bg-black/50 md:hidden">
           <button
             onClick={() => setMenuOpen(false)}
             className="text-xl font-bold mb-6"
@@ -236,7 +186,7 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* Fixed bottom bar for mobile */}
+      {/* Fixed bottom  for mobile */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
@@ -252,7 +202,7 @@ export default function Sidebar() {
         </div>
         <div
           onClick={handlePlusClick}
-          className="hover-effect dark:hover:bg-stone-900 "
+          className="hover-effect dark:hover:bg-stone-900"
         >
           <FaRegEdit size={26} />
         </div>
@@ -269,7 +219,6 @@ export default function Sidebar() {
           <FaRegUser size={24} />
         </div>
       </div>
-<<<<<<< HEAD
 
       {/* FaPlus icon positioned at bottom-right */}
       <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
@@ -284,8 +233,6 @@ export default function Sidebar() {
       {isFormVisible && (
         <ThreadForm toggleForm={() => setIsFormVisible(false)} />
       )}
-=======
->>>>>>> 8af30eecfbdc80eb701ac6db0319cee287b9099a
     </div>
   );
 }

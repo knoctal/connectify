@@ -22,9 +22,9 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
         return (
           <form
             ref={formRef}
-            className="w-full md:p-4 rounded-2xl md:max-w-lg bg-white dark:bg-neutral-900 dark:text-white"
+            className="w-full h-full md:p-4 rounded-2xl md:max-w-lg bg-white dark:bg-neutral-900 dark:text-white"
           >
-            <div className="flex items-center justify-between mb-4 border-b border-gray-400 md:mb-0 md:border-none">
+            <div className="p-2 flex items-center justify-between mb-4 border-b border-gray-400 md:mb-0 md:border-none">
               <button
                 className="text-gray-500 hover:text-gray-700 md:hidden"
                 type="button"
@@ -42,9 +42,9 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                 Done
               </button>
             </div>
-            <div className="m-4 border rounded-3xl p-4 md:m-0 md:border-none md:rounded-none">
+            <div className="m-8 w-fit border rounded-3xl p-4 md:m-0 md:border-none md:rounded-none dark:border-neutral-700">
               <div className="flex flex-row gap-14 md:flex-row ">
-                <div className="flex flex-col gap-4 mb-4 md:mb-0 md:w-96 ">
+                <div className="flex flex-col gap-4 mb-4 md:mb-0 md:w-80 ">
                   <label
                     className="block text-gray-700 font-semibold mb-2 dark:text-white"
                     htmlFor="fullName"
@@ -102,8 +102,8 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
         );
       case "bio":
         return (
-          <div className="md:bg-transparent bg-white h-full w-full">
-            <div className="flex items-center justify-between mb-4">
+          <div className="md:bg-transparent bg-white h-full w-full dark:bg-black dark:text-white">
+            <div className="flex  items-center justify-between mb-4 border-b border-gray-400 p-2 md:border-none">
               <button
                 className="text-gray-500 hover:text-gray-700"
                 type="button"
@@ -111,7 +111,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               >
                 Cancel
               </button>
-              <h2 className="text-xl text-black md:text-white font-bold">
+              <h2 className="text-xl text-black md:text-white font-bold dark:text-white">
                 Edit Bio
               </h2>
               <button
@@ -122,10 +122,10 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               </button>
             </div>
             <form>
-              <div className="mb-4 pb-6 bg-white rounded-3xl dark:bg-neutral-900 dark:border dark:border-neutral-700">
-                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-neutral-900">
+              <div className="mb-4 pb-6 bg-white md:rounded-3xl  dark:bg-black">
+                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
                   <input
-                    className="md:w-[200%] w-full outline-none dark:bg-neutral-900"
+                    className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="text"
                     id="bio"
                     placeholder="Enter your bio"
@@ -137,8 +137,8 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
         );
       case "link":
         return (
-          <div className="md:bg-transparent bg-white h-full w-full ">
-            <div className="flex items-center justify-between md:mb-1 md:w-full md:h-20 ">
+          <div className="md:bg-transparent bg-white h-full w-full dark:bg-black dark:text-white">
+            <div className="flex items-center justify-between md:mb-1 md:w-full md:h-20 border-b border-gray-400 p-2 md:border-none">
               <button
                 className="text-gray-500 hover:text-gray-700"
                 type="button"
@@ -146,7 +146,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               >
                 Cancel
               </button>
-              <h2 className="text-xl text-black font-bold md:text-white">
+              <h2 className="text-xl text-black font-bold md:text-white dark:text-white">
                 Edit Link
               </h2>
               <button
@@ -157,10 +157,10 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               </button>
             </div>
             <form>
-              <div className="mb-4 pb-6 bg-white rounded-3xl dark:bg-neutral-900 dark:border dark:border-neutral-700 ">
-                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-neutral-900">
+              <div className="mb-4 pb-6 bg-white md:rounded-3xl  dark:bg-black">
+                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
                   <input
-                    className="md:w-[200%] w-full outline-none dark:bg-neutral-900"
+                    className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="url"
                     id="link"
                     placeholder="Enter your link"
