@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import ProfileInfo from "../components/ProfileInfo";
+import { useApp } from "../AppContext";
 import ProfileForm from "../components/ProfileForm";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editSection, setEditSection] = useState("profile");
-
+  const { userName, fullName, bio, link } = useApp();
   const handleEditClick = () => {
     setIsEditing(true);
     setEditSection("profile");
@@ -28,12 +29,22 @@ export default function ProfilePage() {
         <h3 className="md:font-semibold md:p-2 hidden md:block mt-4">
           Profile
         </h3>
-        <ProfileInfo onEditClick={handleEditClick} />
+        <ProfileInfo
+          onEditClick={handleEditClick}
+          userName={userName}
+          fullName={fullName}
+          bio={bio}
+          link={link}
+        />
         {isEditing && (
           <ProfileForm
             section={editSection}
             onClose={closeForm}
             onSectionChange={handleSectionClick}
+            userName={userName}
+            fullName={fullName}
+            bio={bio}
+            link={link}
           />
         )}
       </div>

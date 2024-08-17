@@ -4,10 +4,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { GoPaperAirplane } from "react-icons/go";
 import ThreadForm from "./ThreadForm";
+import { useApp } from "../AppContext";
 import Dropdown from "../components/Dropdown";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
+  const { userName } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -93,7 +95,7 @@ export default function Feeds() {
                   src="/audii.jpg"
                   alt="Profile"
                 />
-                <h3>profile_name</h3>
+                <h3>{userName}</h3>
               </div>
               <div className="flex flex-col gap-2">
                 <p>Chin tapak dam dam</p>

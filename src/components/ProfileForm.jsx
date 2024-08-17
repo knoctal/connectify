@@ -1,7 +1,11 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useApp } from "../AppContext";
+import { supabase } from "../supabaseClient";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
+  const { userName, fullName, bio, link, setBio, setLink } = useApp();
+  const [loading, setLoading] = useState(false);
 
   const handleClickOutside = (event) => {
     if (formRef.current && !formRef.current.contains(event.target)) {
@@ -15,6 +19,45 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(event.target);
+    const updatedBio = formData.get("bio");
+    const updatedLink = formData.get("link");
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      const updates = {};
+      if (section === "bio") {
+        updates.user_bio = updatedBio;
+        setBio(updatedBio);
+      } else if (section === "link") {
+        updates.user_link = updatedLink;
+        setLink(updatedLink);
+      }
+
+      const { data, error } = await supabase
+        .from("usersDetails")
+        .update(updates)
+        .eq("user_id", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      onSectionChange("profile"); // Update the profile view after saving
+    } catch (error) {
+      console.error("Error updating user details:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const renderFormContent = () => {
     switch (section) {
@@ -39,7 +82,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                 className="text-blue-600 p-2 rounded-lg md:hidden"
                 type="submit"
               >
-                Done
+                {loading ? "Saving..." : "Done"}
               </button>
             </div>
             <div className="m-8 w-fit border rounded-3xl p-4 md:m-0 md:border-none md:rounded-none dark:border-neutral-700">
@@ -50,7 +93,9 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                     htmlFor="fullName"
                   >
                     Name
-                    <p>Full Name & user_name</p>
+                    <p>
+                      {fullName || "Loading ..."} & {userName || "Loading..."}
+                    </p>
                   </label>
                   <hr className="md:hidden mt-4 border-t border-gray-600 w-[120px] md:w-[500px]" />
                 </div>
@@ -72,7 +117,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   className="text-black dark:text-white"
                   onClick={() => onSectionChange("bio")}
                 >
-                  This is user bio
+                  {bio || "Loading ..."}
                 </button>
                 <hr className="mt-4 mr-2 border-t border-gray-600 w-full md:w-[480px]" />
               </div>
@@ -88,7 +133,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   onClick={() => onSectionChange("link")}
                   className="text-blue-500"
                 >
-                  youtube.com
+                  {link || "Loading ..."}
                 </button>
               </div>
             </div>
@@ -96,14 +141,14 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               className="ml-2 bg-black text-white p-3 rounded-lg w-full md:block hidden dark:bg-white dark:text-black"
               type="submit"
             >
-              Done
+              {loading ? "Saving..." : "Done"}
             </button>
           </form>
         );
       case "bio":
         return (
           <div className="md:bg-transparent bg-white h-full w-full dark:bg-black dark:text-white">
-            <div className="flex  items-center justify-between mb-4 border-b border-gray-400 p-2 md:border-none">
+            <div className="flex items-center justify-between mb-4 border-b border-gray-400 p-2 md:border-none">
               <button
                 className="text-gray-500 hover:text-gray-700"
                 type="button"
@@ -117,17 +162,19 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               <button
                 className="text-blue-500 hover:text-blue-700 font-semibold"
                 type="submit"
+                form="bioForm"
               >
-                Done
+                {loading ? "Saving..." : "Done"}
               </button>
             </div>
-            <form>
-              <div className="mb-4 pb-6 bg-white md:rounded-3xl  dark:bg-black">
+            <form id="bioForm" onSubmit={handleSubmit}>
+              <div className="mb-4 pb-6 bg-white md:rounded-3xl dark:bg-black">
                 <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
                   <input
                     className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="text"
-                    id="bio"
+                    name="bio"
+                    defaultValue={bio || ""}
                     placeholder="Enter your bio"
                   />
                 </div>
@@ -152,17 +199,19 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               <button
                 className="text-blue-500 hover:text-blue-700 font-semibold"
                 type="submit"
+                form="linkForm"
               >
-                Done
+                {loading ? "Saving..." : "Done"}
               </button>
             </div>
-            <form>
-              <div className="mb-4 pb-6 bg-white md:rounded-3xl  dark:bg-black">
+            <form id="linkForm" onSubmit={handleSubmit}>
+              <div className="mb-4 pb-6 bg-white md:rounded-3xl dark:bg-black">
                 <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
                   <input
                     className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="url"
-                    id="link"
+                    name="link"
+                    defaultValue={link || ""}
                     placeholder="Enter your link"
                   />
                 </div>

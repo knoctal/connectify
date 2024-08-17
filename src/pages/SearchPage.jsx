@@ -33,7 +33,7 @@ export default function SearchPage() {
                   placeholder="Search"
                   value={searchTerm}
                   onChange={handleChange}
-                  className="outline-none bg-transparent md:w-[550px] w-full"
+                  className="outline-none bg-transparent md:w-[530px] w-full"
                 />
                 {searchTerm && (
                   <IoClose
