@@ -30,33 +30,6 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
-  // useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //     const {
-  //       data: { user },
-  //     } = await supabase.auth.getUser();
-
-  //     const { data, error } = await supabase
-  //       .from("usersDetails")
-  //       .select("*")
-  //       .eq("user_id", user.id)
-  //       .single();
-
-  //     if (error) {
-  //       console.error("Error fetching user details:", error.message);
-  //     } else {
-  //       setUserName(data.user_name);
-  //       setFullName(data.full_name);
-  //       setBio(data.user_bio);
-  //       setLink(data.user_link);
-  //       setProfilePic(data.profile_url);
-
-  //     }
-
-  //   };
-
-  //   fetchUserDetails();
-  // }, []);
   useEffect(() => {
     const fetchUserDetails = async () => {
       const {
