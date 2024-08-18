@@ -5,11 +5,7 @@
 
 @layer components {
   .input {
-<<<<<<< HEAD
-    @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-transparent border border-gray-400/25;
-=======
     @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-black dark:border dark:border-gray-800 dark:text-white
->>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
   }
 
   .message {
@@ -59,9 +55,6 @@
   .width-height {
     @apply md:dark:bg-neutral-900 dark:bg-black dark:text-white dark:border-gray-800 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
   }
-=======
-
->>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
 }
 
 @keyframes slide-up {
@@ -94,7 +87,7 @@
 .hover-effect:hover {
   background-color: #ebe9e9;
 }
-<<<<<<< HEAD
+
 scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
@@ -103,8 +96,6 @@ scrollbar-hidden::-webkit-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-=======
-
 
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
@@ -116,4 +107,3 @@ scrollbar-hidden::-webkit-scrollbar {
   scrollbar-width: none;
 
 }
->>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
