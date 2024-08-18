@@ -33,12 +33,20 @@ export default function SearchPage() {
                   placeholder="Search"
                   value={searchTerm}
                   onChange={handleChange}
+<<<<<<< HEAD
                   className="outline-none bg-transparent md:w-[550px] w-full"
+=======
+                  className="outline-none bg-transparent md:w-[530px] w-full"
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
                 />
                 {searchTerm && (
                   <IoClose
                     onClick={clearSearch}
+<<<<<<< HEAD
                     className="cursor-pointer rounded-full"
+=======
+                    className="cursor-pointer rounded-full dark:text-white"
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
                     color="gray"
                     size={20}
                   />
@@ -47,7 +55,11 @@ export default function SearchPage() {
               {/* Always show the Cancel button on mobile */}
               <button
                 onClick={clearSearch}
+<<<<<<< HEAD
                 className="ml-4 text-gray-700 md:hidden"
+=======
+                className="ml-4 text-gray-700 md:hidden dark:text-white"
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
               >
                 Cancel
               </button>

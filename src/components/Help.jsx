@@ -1,8 +1,4 @@
-import React from "react";
-import { CiLock } from "react-icons/ci";
-import { GoMention } from "react-icons/go";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { BiHide } from "react-icons/bi";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 
 export default function Help() {

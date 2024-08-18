@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import Sidebar from "../components/Sidebar";
 
 // export default function Notifications() {
@@ -21,6 +22,8 @@
 //   );
 // }
 
+=======
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
 import Sidebar from "../components/Sidebar";
 import Dropdown from "../components/Dropdown";
 

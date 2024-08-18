@@ -15,11 +15,16 @@ export default function ProfileInfo({
             <p>{userName || "Loading..."}</p>
           </div>
           <div className="md:flex w-20 h-20">
-            <img
+            {/* <img
               className="rounded-full w-20 h-20"
-              src={profilePic}
+              src={profilePic || "Loading..."}
               alt="Profile"
-            />
+            /> */}
+            {profilePic ? (
+              <img src={profilePic} alt="Profile" />
+            ) : (
+              <p>Loading ...</p>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-6 w-60 ml-4 items-start md:w-96">

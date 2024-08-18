@@ -36,15 +36,9 @@ export default function Feeds() {
   const dropdownOptions = ["For you", "Following", "Liked", "Saved"];
 
   return (
-    <div className=" flex flex-col  gap-2    justify-center items-center  dark:bg-gray-950  dark:text-white z-10">
-      {/* flex flex-col  gap-2    justify-center items-center  dark:bg-gray-950  dark:text-white z-10 " */}
-      {/* centered-div bg-white dark:bg-black dark:text-white  */}
+    <div className="centered-div bg-white dark:bg-black dark:text-white ">
       {/* Fixed height and scrollable content */}
-      {/* <Dropdown options={dropdownOptions} /> */}
-      <div className="md:w-[800px]   h-14 flex items-center justify-center    z-10">
-        {/* <Dropdown /> */}
-        <Dropdown options={dropdownOptions} />
-      </div>
+      <Dropdown options={dropdownOptions} />
       <div className="width-height mt-0 ">
         {/* Hidden on mobile */}
         <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">

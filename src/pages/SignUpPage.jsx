@@ -62,9 +62,8 @@ export default function Signup() {
       setTimeout(() => setMessage({ ...message, visible: false }), 3000);
     }
   }
-
   return (
-    <div className=" min-h-screen flex flex-col items-center justify-center  bg-slate-50 dark:bg-gray-950 text-black dark:text-white ">
+    <div className=" min-h-screen flex flex-col items-center justify-center  bg-slate-50 dark:bg-black dark:text-white ">
       <div className="block md:hidden">
         <FaConnectdevelop size={40} />
       </div>
@@ -105,13 +104,13 @@ export default function Signup() {
             Sign Up
           </button>
         </form>
-        <div className="flex items-center w-auto mt-4">
+        <div className="flex items-center w-auto mt-4 ">
           <hr className="border-t border-gray-300 w-32" />
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-        <div className="md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center">
-          <h5 className=" dark:text-black ">Already have an account?</h5>
+        <div className="md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center dark:bg-black dark:text-white dark:border dark:border-neutral-700">
+          <h5 className=" ">Already have an account?</h5>
           <Link className="text-blue-500" to="/">
             Log In
           </Link>
