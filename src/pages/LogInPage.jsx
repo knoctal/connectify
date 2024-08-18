@@ -106,7 +106,7 @@ export default function LogIn() {
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between dark:bg-black dark:text-white dark:border dark:border-neutral-700">
+        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center text-xs lg:text-sm md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between dark:bg-black dark:text-white dark:border dark:border-neutral-700">
           <h5 className="">Don&apos;t have an account?</h5>
           <Link to="/Signup">
             <h4 className="text-blue-500">Sign Up</h4>
