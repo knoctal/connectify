@@ -1,3 +1,29 @@
+<<<<<<< HEAD
+// import Sidebar from "../components/Sidebar";
+
+// export default function Notifications() {
+//   return (
+//     <div>
+//       <div className="relative min-h-screen dark:bg-black dark:text-white">
+//         <Sidebar />
+//         <div className="md:fixed absolute top-0 left-20 inset-0 flex flex-col items-center justify-center">
+//           <h3 className="md:font-semibold mt-12 md:p-1 hidden md:block">
+//             Activity
+//           </h3>
+//           <div className="centered-div mt-0">
+//             {/* Fixed height and scrollable content */}
+//             <div className="width-height mt-0 p-4">
+//               <p>NOTHING TO SHOW</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+=======
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
 import Sidebar from "../components/Sidebar";
 import Dropdown from "../components/Dropdown";
 

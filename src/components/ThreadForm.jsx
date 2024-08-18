@@ -183,6 +183,10 @@ export default function ThreadForm({ toggleForm }) {
               <input
                 type="file"
                 className="hidden"
+<<<<<<< HEAD
+                id="input-files"
+=======
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
                 onChange={handleFileChange}
               />
             </label>
@@ -278,7 +282,11 @@ export default function ThreadForm({ toggleForm }) {
             <div className="mt-8 flex justify-around   ">
               <button
                 onClick={handleConfirmationCancel}
+<<<<<<< HEAD
+                className="text-white "
+=======
                 className="text-gray-600 dark:text-white "
+>>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
               >
                 Cancel
               </button>
