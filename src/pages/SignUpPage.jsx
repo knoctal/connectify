@@ -17,6 +17,8 @@ export default function Signup() {
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
+    const username = formData.get("username");
+    const fullname = formData.get("fullname");
 
     try {
       let { data, error } = await supabase.auth.signUp({
@@ -27,6 +29,22 @@ export default function Signup() {
         setMessage({ type: "error", content: error.message, visible: true });
       } else {
         console.log("User signed up successfully:", data);
+
+        const { user } = data; // Get the user object that includes the user ID
+
+        // Insert only username and user_id into userDetail table
+        const { error: insertError } = await supabase
+          .from("usersDetails")
+          .insert([
+            { user_id: user.id, user_name: username, full_name: fullname },
+          ]);
+
+        if (insertError) {
+          console.error("Insert error:", insertError);
+        } else {
+          console.log("Username inserted successfully!");
+        }
+
         setMessage({
           type: "success",
           content:
@@ -56,7 +74,12 @@ export default function Signup() {
           <div className="message">{message.content || message.type}</div>
         )}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <input type="text" name="name" placeholder="Name" className="input" />
+          <input
+            type="text"
+            name="fullname"
+            placeholder="Name"
+            className="input"
+          />
           <input
             type="email"
             name="email"
