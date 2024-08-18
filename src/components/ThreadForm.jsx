@@ -44,7 +44,11 @@ export default function ThreadForm({ toggleForm }) {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      console.log("Name:", selectedFile.name);
+    }
   };
 
   const handlePollToggle = () => {

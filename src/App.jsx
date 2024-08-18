@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Pages/LogInPage";
+import Login from "./pages/LogInPage";
 import { AppProvider } from "./AppContext";
-import Signup from "./Pages/SignUpPage";
-import Homepage from "./Pages/Homepage";
+import Signup from "./pages/SignUpPage";
+import Homepage from "./pages/Homepage";
 import Reportproblem from "./components/Reportproblem";
 import Settings from "./components/Settings";
-import ProfilePage from "./Pages/ProiflePage";
-import Notifications from "./Pages/Notifications";
-import SearchPage from "./Pages/SearchPage";
+import ProfilePage from "./pages/ProfilePage";
+import Notifications from "./pages/Notifications";
+import SearchPage from "./pages/SearchPage";
 import ThreadForm from "./components/ThreadForm";
 
 const router = createBrowserRouter([
