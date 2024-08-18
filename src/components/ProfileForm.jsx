@@ -4,7 +4,8 @@ import { supabase } from "../supabaseClient";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
-  const { userName, fullName, bio, link, setBio, setLink } = useApp();
+  const { userName, fullName, bio, link, setBio, setLink, profilePic } =
+    useApp();
   const [loading, setLoading] = useState(false);
 
   const handleClickOutside = (event) => {
@@ -99,11 +100,16 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   </label>
                   <hr className="md:hidden mt-4 border-t border-gray-600 w-[120px] md:w-[500px]" />
                 </div>
-                <img
+                {/* <img
                   className="rounded-full w-14 h-14"
-                  src="/audii.jpg"
+                  src={profilePic || "Loading"}
                   alt="Profile"
-                />
+                /> */}
+                {profilePic ? (
+                  <img src={profilePic} alt="Profile" />
+                ) : (
+                  <p>Loading profile picture...</p>
+                )}{" "}
               </div>
               <div className="my-4">
                 <label
