@@ -30,7 +30,7 @@ export default function UpdateProfile() {
 
       // Upload file to Supabase storage
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("profile_picture")
+        .from("profile_picutre")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
@@ -41,7 +41,7 @@ export default function UpdateProfile() {
 
       // Retrieve the public URL for the uploaded file
       const { data: publicURLData, error: urlError } = supabase.storage
-        .from("profile_picture")
+        .from("profile_picutre")
         .getPublicUrl(filePath);
 
       if (urlError) {

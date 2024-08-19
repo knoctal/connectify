@@ -61,6 +61,8 @@ export const AppProvider = ({ children }) => {
         data: { user },
       } = await supabase.auth.getUser();
 
+      if (!user) return;
+
       const { data, error } = await supabase
         .from("usersDetails")
         .select("*")
@@ -126,16 +128,6 @@ export const AppProvider = ({ children }) => {
       value={{
         theme,
         setTheme,
-        userName,
-        setUserName,
-        fullName,
-        setFullName,
-        bio,
-        setBio,
-        link,
-        setLink,
-        profilePic,
-        setProfilePic,
         userName,
         setUserName,
         fullName,

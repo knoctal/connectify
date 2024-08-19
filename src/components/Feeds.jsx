@@ -3,13 +3,14 @@ import { MdOutlineModeComment } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { GoPaperAirplane } from "react-icons/go";
+import { CgProfile } from "react-icons/cg";
 import ThreadForm from "./ThreadForm";
 import { useApp } from "../AppContext";
 import Dropdown from "../components/Dropdown";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
-  const { userName } = useApp();
+  const { userName, profilePic } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -43,11 +44,15 @@ export default function Feeds() {
         {/* Hidden on mobile */}
         <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">
           <div className="flex gap-4">
-            <img
-              className="rounded-full w-10 h-10"
-              src="/audii.jpg"
-              alt="Profile"
-            />
+            {profilePic ? (
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="rounded-full w-10 h-10"
+              />
+            ) : (
+              <CgProfile size={30} className="rounded-full w-10 h-10" />
+            )}
             <button
               onClick={toggleForm}
               className="outline-none w-full text-gray-500"
@@ -90,11 +95,15 @@ export default function Feeds() {
           {[1, 2, 3, 4, 5].map((item) => (
             <div key={item} className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <img
-                  className="rounded-full w-10 h-10"
-                  src="/audii.jpg"
-                  alt="Profile"
-                />
+                {profilePic ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile"
+                    className="rounded-full w-10 h-10"
+                  />
+                ) : (
+                  <CgProfile size={30} className="rounded-full w-10 h-10" />
+                )}
                 <h3>{userName}</h3>
               </div>
               <div className="flex flex-col gap-2">
