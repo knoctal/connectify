@@ -40,14 +40,6 @@
     @apply flex h-10 items-center justify-between p-3 rounded-md;
   }
 
-  /* .centered-div {
-    @apply md:w-[800px] w-fit h-full flex justify-center  scrollbar-hidden;
-  }
-
-  .width-height {
-    @apply md:w-full md:max-w-[650px] w-fit md:h-[700px] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
-  } */
-
   .centered-div {
     @apply dark:bg-black dark:text-white dark:border-gray-800 w-full h-full flex justify-center p-4 scrollbar-hidden;
   }

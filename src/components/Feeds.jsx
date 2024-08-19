@@ -1,16 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { MdOutlineModeComment } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
-import { AiOutlineRetweet } from "react-icons/ai";
-import { GoPaperAirplane } from "react-icons/go";
-import { CgProfile } from "react-icons/cg";
 import ThreadForm from "./ThreadForm";
 import { useApp } from "../AppContext";
+import { CgProfile } from "react-icons/cg";
+import { FaRegHeart } from "react-icons/fa";
 import Dropdown from "../components/Dropdown";
+import { GoPaperAirplane } from "react-icons/go";
+import { AiOutlineRetweet } from "react-icons/ai";
+import { useState, useRef, useEffect } from "react";
+import { MdOutlineModeComment } from "react-icons/md";
 
 export default function Feeds() {
-  const [showForm, setShowForm] = useState(false);
   const { userName, profilePic } = useApp();
+  const [showForm, setShowForm] = useState(false);
 
   const formContainerRef = useRef(null);
 
@@ -48,7 +48,7 @@ export default function Feeds() {
               <img
                 src={profilePic}
                 alt="Profile"
-                className="rounded-full w-10 h-10"
+                className="rounded-full w-9 h-9 object-cover"
               />
             ) : (
               <CgProfile size={30} className="rounded-full w-10 h-10" />
@@ -99,7 +99,7 @@ export default function Feeds() {
                   <img
                     src={profilePic}
                     alt="Profile"
-                    className="rounded-full w-10 h-10"
+                    className="rounded-full w-9 h-9 object-cover"
                   />
                 ) : (
                   <CgProfile size={30} className="rounded-full w-10 h-10" />

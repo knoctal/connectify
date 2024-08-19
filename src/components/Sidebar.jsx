@@ -1,24 +1,24 @@
 import { useState } from "react";
+import ThreadForm from "./ThreadForm";
+import { useApp } from "../AppContext";
 import { GoHome } from "react-icons/go";
-import { FaRegHeart, FaRegUser, FaRegEdit, FaPlus } from "react-icons/fa";
-import { FaConnectdevelop } from "react-icons/fa";
+import { CiLight } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { VscPinned } from "react-icons/vsc";
+import { supabase } from "../supabaseClient";
+import { useNavigate } from "react-router-dom";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
-import { CiLight } from "react-icons/ci";
+import { FaConnectdevelop } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { useApp } from "../AppContext";
-import { supabase } from "../supabaseClient";
-import ThreadForm from "./ThreadForm";
+import { FaRegHeart, FaRegUser, FaRegEdit, FaPlus } from "react-icons/fa";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [submenu, setSubmenu] = useState();
   const { theme, setTheme } = useApp();
+  const [submenu, setSubmenu] = useState();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   async function signOut() {
     let { error } = await supabase.auth.signOut();
@@ -111,7 +111,7 @@ export default function Sidebar() {
       <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-1 mx-auto"
+          className="md:fixed md:mt-6 md:ml-1 mx-auto "
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
@@ -120,7 +120,7 @@ export default function Sidebar() {
 
       {/* Sidebar content for larger screens */}
       <div className="hidden md:flex md:flex-col md:gap-5 ">
-        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
+        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-20">
           <div
             onClick={() => navigate("/home")}
             className="hover-effect dark:hover:bg-stone-900"
@@ -148,7 +148,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-20">
         <VscPinned size={30} />
         <div className="relative">
           <div
@@ -174,7 +174,7 @@ export default function Sidebar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-4 w-full h-full z-50 md:bg-black/50 md:hidden">
+        <div className="fixed top-0 left-4 w-full h-full z-20 md:bg-black/50 md:hidden">
           <button
             onClick={() => setMenuOpen(false)}
             className="text-xl font-bold mb-6"
@@ -187,7 +187,7 @@ export default function Sidebar() {
       )}
 
       {/* Fixed bottom  for mobile */}
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-20 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
           className="hover-effect dark:hover:bg-stone-900"
@@ -221,7 +221,7 @@ export default function Sidebar() {
       </div>
 
       {/* FaPlus icon positioned at bottom-right */}
-      <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
+      <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-20">
         <FaPlus
           size={27}
           onClick={handlePlusClick}

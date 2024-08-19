@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useApp } from "../AppContext";
+import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
-import { supabase } from "../supabaseClient";
-import { useApp } from "../AppContext";
 
 export default function LogIn() {
   const { theme, setTheme } = useApp();

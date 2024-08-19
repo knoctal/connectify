@@ -1,13 +1,11 @@
-import { useRef, useEffect, useState } from "react";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
+import { useRef, useEffect, useState } from "react";
 import UpdateProfile from "../components/UpdateProfile";
-import { CgProfile } from "react-icons/cg";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
-  const { userName, fullName, bio, link, setBio, setLink, profilePic } =
-    useApp();
+  const { userName, fullName, bio, link, setBio, setLink } = useApp();
   const [loading, setLoading] = useState(false);
 
   const handleClickOutside = (event) => {
@@ -103,7 +101,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   <hr className="md:hidden mt-4 border-t border-gray-600 w-[120px] md:w-[500px]" />
                 </div>
 
-                <UpdateProfile className="rounded-full w-10 h-10" />
+                <UpdateProfile className="rounded-full w-10 h-10 object-cover" />
               </div>
               <div className="my-4">
                 <label
