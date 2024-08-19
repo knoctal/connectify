@@ -5,11 +5,12 @@ import { AiOutlineRetweet } from "react-icons/ai";
 import { GoPaperAirplane } from "react-icons/go";
 import ThreadForm from "./ThreadForm";
 import { useApp } from "../AppContext";
+import { CgProfile } from "react-icons/cg";
 import Dropdown from "../components/Dropdown";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
-  const { userName } = useApp();
+  const { userName, profilePic } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -39,15 +40,22 @@ export default function Feeds() {
     <div className="centered-div bg-white dark:bg-black dark:text-white ">
       {/* Fixed height and scrollable content */}
       <Dropdown options={dropdownOptions} />
-      <div className="width-height mt-0 ">
+      <div className="width-height  ">
         {/* Hidden on mobile */}
         <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">
           <div className="flex gap-4">
-            <img
-              className="rounded-full w-10 h-10"
-              src="/audii.jpg"
-              alt="Profile"
-            />
+            <div>
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className="rounded-full w-10 h-10"
+                />
+              ) : (
+                <CgProfile size={30} className="rounded-full w-10 h-10" />
+              )}
+            </div>
+
             <button
               onClick={toggleForm}
               className="outline-none w-full text-gray-500"
@@ -76,7 +84,7 @@ export default function Feeds() {
         <hr className="hidden md:block border-t border-gray-300 dark:border-neutral-700" />
 
         {/* Show on mobile: For You and Following options */}
-        <div className="setting-buttons w-full flex justify-around items-center  md:hidden mt-4">
+        <div className="setting-buttons w-full flex justify-around items-center  md:hidden mt-10">
           <button className="text-black dark:text-white font-semibold ">
             For You
           </button>
@@ -90,15 +98,24 @@ export default function Feeds() {
           {[1, 2, 3, 4, 5].map((item) => (
             <div key={item} className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <img
-                  className="rounded-full w-10 h-10"
-                  src="/audii.jpg"
-                  alt="Profile"
-                />
-                <h3>{userName}</h3>
+                <div>
+                  {profilePic ? (
+                    <img
+                      src={profilePic}
+                      alt="Profile"
+                      className="rounded-full w-12 h-12"
+                    />
+                  ) : (
+                    <CgProfile size={30} className="rounded-full w-12 h-12" />
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <h3>{userName}</h3>
+                  <p>Chin tapak dam dam</p>
+                </div>
               </div>
               <div className="flex flex-col gap-2">
-                <p>Chin tapak dam dam</p>
                 <img
                   src="/IMG_0850.JPG"
                   alt="Bio Image"

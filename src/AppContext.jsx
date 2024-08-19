@@ -1,7 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
-import { createContext, useState, useEffect, useContext } from "react";
-import { supabase } from "./supabaseClient";
 
 const AppContext = createContext();
 
@@ -101,16 +99,6 @@ export const AppProvider = ({ children }) => {
       value={{
         theme,
         setTheme,
-        userName,
-        setUserName,
-        fullName,
-        setFullName,
-        bio,
-        setBio,
-        link,
-        setLink,
-        profilePic,
-        setProfilePic,
         userName,
         setUserName,
         fullName,

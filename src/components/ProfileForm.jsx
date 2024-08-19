@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
+import UpdateProfile from "../components/UpdateProfile";
+import { CgProfile } from "react-icons/cg";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
@@ -100,16 +102,8 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   </label>
                   <hr className="md:hidden mt-4 border-t border-gray-600 w-[120px] md:w-[500px]" />
                 </div>
-                {/* <img
-                  className="rounded-full w-14 h-14"
-                  src={profilePic || "Loading"}
-                  alt="Profile"
-                /> */}
-                {profilePic ? (
-                  <img src={profilePic} alt="Profile" />
-                ) : (
-                  <p>Loading profile picture...</p>
-                )}{" "}
+
+                <UpdateProfile className="rounded-full w-10 h-10" />
               </div>
               <div className="my-4">
                 <label

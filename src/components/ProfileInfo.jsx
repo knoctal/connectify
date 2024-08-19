@@ -1,11 +1,8 @@
-export default function ProfileInfo({
-  onEditClick,
-  userName,
-  fullName,
-  bio,
-  link,
-  profilePic,
-}) {
+import { useApp } from "../AppContext";
+import { CgProfile } from "react-icons/cg";
+
+export default function ProfileInfo({ onEditClick }) {
+  const { userName, fullName, bio, link, profilePic } = useApp();
   return (
     <div className="width-height mt-0 dark:bg-gray-950 dark:text-white">
       <div className="width-height mt-0">
@@ -15,15 +12,14 @@ export default function ProfileInfo({
             <p>{userName || "Loading..."}</p>
           </div>
           <div className="md:flex w-20 h-20">
-            {/* <img
-              className="rounded-full w-20 h-20"
-              src={profilePic || "Loading..."}
-              alt="Profile"
-            /> */}
             {profilePic ? (
-              <img src={profilePic} alt="Profile" />
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="rounded-full w-20 h-20"
+              />
             ) : (
-              <p>Loading ...</p>
+              <CgProfile size={30} className="rounded-full w-20 h-20" />
             )}
           </div>
         </div>

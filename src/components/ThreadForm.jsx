@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { BsFiletypeGif } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
 import { BiMenuAltLeft } from "react-icons/bi";
 
@@ -8,6 +10,7 @@ export default function ThreadForm({ toggleForm }) {
   const [threadText, setThreadText] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [file, setFile] = useState(null);
+  const { profilePic } = useApp();
   const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -122,11 +125,15 @@ export default function ThreadForm({ toggleForm }) {
         } w-full h-full md:h-fit flex flex-col`}
       >
         <div className="flex gap-2 mb-2">
-          <img
-            className="rounded-full w-10 h-10"
-            src="/audii.jpg"
-            alt="Profile"
-          />
+          {profilePic ? (
+            <img
+              src={profilePic}
+              alt="Profile"
+              className="rounded-full w-10 h-10"
+            />
+          ) : (
+            <CgProfile size={30} className="rounded-full w-10 h-10" />
+          )}
           <div className="flex flex-col m-0 p-0 items-start flex-grow">
             <h4 className="font-semibold">mansub_hafeez</h4>
             <textarea
@@ -183,10 +190,7 @@ export default function ThreadForm({ toggleForm }) {
               <input
                 type="file"
                 className="hidden"
-<<<<<<< HEAD
                 id="input-files"
-=======
->>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
                 onChange={handleFileChange}
               />
             </label>
@@ -201,11 +205,15 @@ export default function ThreadForm({ toggleForm }) {
           </div>
         </div>
         <div className="flex gap-2 m-2">
-          <img
-            className="rounded-full w-6 h-6"
-            src="/audii.jpg"
-            alt="Profile"
-          />
+          {profilePic ? (
+            <img
+              src={profilePic}
+              alt="Profile"
+              className="rounded-full w-6 h-6"
+            />
+          ) : (
+            <CgProfile size={30} className="rounded-full w-6 h-6" />
+          )}
           <textarea
             className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
             rows={1}
@@ -282,11 +290,7 @@ export default function ThreadForm({ toggleForm }) {
             <div className="mt-8 flex justify-around   ">
               <button
                 onClick={handleConfirmationCancel}
-<<<<<<< HEAD
                 className="text-white "
-=======
-                className="text-gray-600 dark:text-white "
->>>>>>> 8ff739b6af1d6162c3986123a37764aac0612fd4
               >
                 Cancel
               </button>
