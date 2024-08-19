@@ -60,7 +60,7 @@ export default function Sidebar() {
           />
           <h3 className="text-l dark:bg-black dark:text-white">Appearance</h3>
         </div>
-        <div className="flex justify-around items-center md:w-[365px] h-[60px] w-52 rounded-lg bg-gray-100/50 dark:bg-black dark:text-white">
+        <div className="flex justify-around items-center md:w-[365px] h-[60px] w-54 rounded-lg bg-gray-100/50 dark:bg-black dark:text-white">
           <div className="appearence-btns" onClick={() => setTheme("light")}>
             <CiLight size={25} />
           </div>
@@ -107,25 +107,19 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="md:pt-3 md:pl-2 md:flex md:flex-col  md:gap-16 md:relative dark:bg-black dark:text-white h-0 ">
-      <div className=" flex md:flex md:items-center md:justify-between md:p-4 md:h-16 md:w-full">
-        {/* Icon for larger screens */}
+    <div className="md:pt-3 pl-2 flex flex-col gap-20 relative dark:bg-black dark:text-white ">
+      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-0 mx-auto"
+          className="md:fixed md:mt-6 md:ml-1 mx-auto"
         />
-
-        {/* Menu icon for mobile screens */}
-        <div
-          className="md:hidden cursor-pointer"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
+        <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
         </div>
       </div>
 
       {/* Sidebar content for larger screens */}
-      <div className="hidden md:flex md:flex-col md:gap-3 ">
+      <div className="hidden md:flex md:flex-col md:gap-5 ">
         <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
           <div
             onClick={() => navigate("/home")}
@@ -154,7 +148,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-10  z-50">
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
         <VscPinned size={30} />
         <div className="relative">
           <div
@@ -180,7 +174,7 @@ export default function Sidebar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-4 w-full h-full z-50 bg-black/50 md:hidden">
+        <div className="fixed top-0 left-4 w-full h-full z-50 md:bg-black/50 md:hidden">
           <button
             onClick={() => setMenuOpen(false)}
             className="text-xl font-bold mb-6"
@@ -192,37 +186,37 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* Fixed bottom b ar for mobile */}
-      <div className="fixed  flex-row   bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
+      {/* Fixed bottom  for mobile */}
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <GoHome size={20} />
+          <GoHome size={26} />
         </div>
         <div
           onClick={() => navigate("/search")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FiSearch size={20} />
+          <FiSearch size={26} />
         </div>
         <div
           onClick={handlePlusClick}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegEdit size={20} />
+          <FaRegEdit size={26} />
         </div>
         <div
           onClick={() => navigate("/notifications")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegHeart size={20} />
+          <FaRegHeart size={24} />
         </div>
         <div
           onClick={() => navigate("/profile")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegUser size={20} />
+          <FaRegUser size={24} />
         </div>
       </div>
 

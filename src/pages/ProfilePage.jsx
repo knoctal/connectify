@@ -25,28 +25,32 @@ export default function ProfilePage() {
   return (
     <div className="relative min-h-screen dark:bg-black dark:text-white">
       <Sidebar />
-      <div className="md:fixed md:flex md:flex-col items-center justify-center mt-10 md:mt-0 top-0 left-0 right-0 dark:bg-black dark:text-white">
-        <h3 className="md:font-semibold md:p-2 hidden md:block mt-4">
+      <div className=" md:fixed inset-0 flex flex-col items-center justify-center">
+        <h3 className="md:font-semibold md:mt-12 md:p-1 hidden md:block">
           Profile
         </h3>
-        <ProfileInfo
-          onEditClick={handleEditClick}
-          userName={userName}
-          fullName={fullName}
-          bio={bio}
-          link={link}
-        />
-        {isEditing && (
-          <ProfileForm
-            section={editSection}
-            onClose={closeForm}
-            onSectionChange={handleSectionClick}
-            userName={userName}
-            fullName={fullName}
-            bio={bio}
-            link={link}
-          />
-        )}
+        <div className="centered-div mt-0">
+          <div className="width-height mt-0">
+            <ProfileInfo
+              onEditClick={handleEditClick}
+              userName={userName}
+              fullName={fullName}
+              bio={bio}
+              link={link}
+            />
+            {isEditing && (
+              <ProfileForm
+                section={editSection}
+                onClose={closeForm}
+                onSectionChange={handleSectionClick}
+                userName={userName}
+                fullName={fullName}
+                bio={bio}
+                link={link}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
