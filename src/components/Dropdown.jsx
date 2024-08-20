@@ -29,7 +29,7 @@ export default function Dropdown({ options }) {
   }, []);
 
   return (
-    <div className="dark:bg-black dark:text-white w-32 fixed hidden md:flex flex-col items-center justify-center top-0 left-[44%]  mt-4  z-50">
+    <div className="dark:bg-black dark:text-white w-32 fixed hidden md:flex flex-col items-center justify-center top-0 mt-4 z-50">
       <div className=" flex gap-5 items-center ">
         <h3 className="dark:text-white dark:bg-black text-black">
           {selectOption}

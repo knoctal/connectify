@@ -34,46 +34,6 @@ export const AppProvider = ({ children }) => {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from("usersDetails")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
-
-      if (error) {
-        console.error("Error fetching user details:", error.message);
-      } else {
-        setUserName(data.user_name);
-        setFullName(data.full_name);
-        setBio(data.user_bio);
-        setLink(data.user_link);
-
-        const { publicURL, error: urlError } = supabase.storage
-          .from("profile_picture") // Replace with your actual bucket name
-          .getPublicUrl(data.profile_url);
-
-        if (urlError) {
-          console.error(
-            "Error fetching profile picture URL:",
-            urlError.message
-          );
-        } else {
-          setProfilePic(publicURL);
-          console.log("Profile Picture URL:", profilePic);
-        }
-      }
-    };
-
-    fetchUserDetails();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
 
       const { data, error } = await supabase
         .from("usersDetails")
