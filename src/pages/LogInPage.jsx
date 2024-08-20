@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
-import { supabase } from "../supabaseClient";
-import { useApp } from "../AppContext";
 
 export default function LogIn() {
   const { theme, setTheme } = useApp();
@@ -59,6 +57,7 @@ export default function LogIn() {
       <div className="top-0 ml-[-70vh] mt-[-12vh] absolute z-0 md:block hidden object-cover">
         <img src="/Back-Image.webp" alt="Front" className="object-cover" />
       </div>
+
       <div className="flex flex-col items-center justify-center gap-4 z-10 md:w-2/5 md:min-h-[90svh] mr-2">
         <h1 className="font-bold text-xl md:block">Log in</h1>
         {message.visible && (

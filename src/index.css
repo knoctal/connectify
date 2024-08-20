@@ -4,7 +4,8 @@
 
 @layer components {
   .input {
-    @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-black dark:border dark:border-gray-800 dark:text-white dark:hover:border-neutral-700;
+    <<<<<<< HEAD @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-transparent border border-gray-400/25;
+    =======@apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-black dark:border dark:border-gray-800 dark:text-white>>>>>>>8ff739b6af1d6162c3986123a37764aac0612fd4
   }
 
   .message {

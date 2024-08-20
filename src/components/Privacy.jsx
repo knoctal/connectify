@@ -1,11 +1,10 @@
 import { useState } from "react";
-
 import { CiLock } from "react-icons/ci";
-import { GoMention } from "react-icons/go";
-import { MdKeyboardArrowRight, MdOutlineBlock } from "react-icons/md";
 import { BiHide } from "react-icons/bi";
+import { GoMention } from "react-icons/go";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import { IoHeartDislikeOutline } from "react-icons/io5";
+import { MdKeyboardArrowRight, MdOutlineBlock } from "react-icons/md";
 
 export default function Privacy() {
   const [isPrivate, setIsPrivate] = useState(false);

@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import { CiLock } from "react-icons/ci";
-import { GoMention } from "react-icons/go";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { BiHide } from "react-icons/bi";
-import { BsBoxArrowUpRight } from "react-icons/bs";
+import Help from "./Help";
 import Privacy from "./Privacy";
 import Account from "./Account";
-import Help from "./Help";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { useState } from "react";
+import { BiHide } from "react-icons/bi";
+import { CiLock } from "react-icons/ci";
+import { GoMention } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function Settings() {
   const navigate = useNavigate();
+  const [openHelp, setOpenHelp] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(true);
   const [openAccount, setOpenAccount] = useState(false);
-  const [openHelp, setOpenHelp] = useState(false);
   const [activeBtn, setActiveBtn] = useState("Privacy");
 
   return (

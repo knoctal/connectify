@@ -1,24 +1,24 @@
 import { useState } from "react";
+import ThreadForm from "./ThreadForm";
+import { useApp } from "../AppContext";
 import { GoHome } from "react-icons/go";
-import { FaRegHeart, FaRegUser, FaRegEdit, FaPlus } from "react-icons/fa";
-import { FaConnectdevelop } from "react-icons/fa";
+import { CiLight } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { VscPinned } from "react-icons/vsc";
+import { supabase } from "../supabaseClient";
+import { useNavigate } from "react-router-dom";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
-import { CiLight } from "react-icons/ci";
+import { FaConnectdevelop } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { useApp } from "../AppContext";
-import { supabase } from "../supabaseClient";
-import ThreadForm from "./ThreadForm";
+import { FaRegHeart, FaRegUser, FaPlus, FaRegEdit } from "react-icons/fa";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [submenu, setSubmenu] = useState();
   const { theme, setTheme } = useApp();
+  const [submenu, setSubmenu] = useState();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   async function signOut() {
     let { error } = await supabase.auth.signOut();
@@ -111,7 +111,7 @@ export default function Sidebar() {
       <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-1 mx-auto"
+          className="md:fixed md:mt-6 md:ml-1 mx-auto "
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <BiMenuAltLeft size={35} />
@@ -138,12 +138,6 @@ export default function Sidebar() {
             className="hover-effect dark:hover:bg-stone-900"
           >
             <FaRegHeart size={28} />
-          </div>
-          <div
-            onClick={() => navigate("/profile")}
-            className="hover-effect dark:hover:bg-stone-900"
-          >
-            <FaRegUser size={28} />
           </div>
         </div>
       </div>
@@ -221,7 +215,7 @@ export default function Sidebar() {
       </div>
 
       {/* FaPlus icon positioned at bottom-right */}
-      <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-50">
+      <div className="hidden md:block bottom-16 right-4 md:bottom-6 fixed md:right-6 z-20">
         <FaPlus
           size={27}
           onClick={handlePlusClick}

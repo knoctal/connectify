@@ -1,4 +1,3 @@
-import { useRef, useEffect, useState } from "react";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import UpdateProfile from "../components/UpdateProfile";
@@ -6,8 +5,7 @@ import { CgProfile } from "react-icons/cg";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
-  const { userName, fullName, bio, link, setBio, setLink, profilePic } =
-    useApp();
+  const { userName, fullName, bio, link, setBio, setLink } = useApp();
   const [loading, setLoading] = useState(false);
 
   const handleClickOutside = (event) => {
