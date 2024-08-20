@@ -147,7 +147,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
       <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-20">
         <VscPinned size={30} />
         <div className="relative">
@@ -216,7 +215,7 @@ export default function Sidebar() {
           onClick={() => navigate("/profile")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegUser size={24} />
+          <FaRegUser size={20} />
         </div>
       </div>
 

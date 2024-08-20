@@ -34,6 +34,7 @@ export const AppProvider = ({ children }) => {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
+      if (!user) return;
 
       const { data, error } = await supabase
         .from("usersDetails")
