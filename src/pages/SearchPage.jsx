@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { LuSearch } from "react-icons/lu";
-import { IoClose } from "react-icons/io5";
-import { LuSearch } from "react-icons/lu";
 import Sidebar from "../components/Sidebar";
 
 export default function SearchPage() {
