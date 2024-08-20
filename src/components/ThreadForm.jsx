@@ -2,6 +2,7 @@ import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import EmojiPicker from "emoji-picker-react";
+import { supabase } from "../supabaseClient";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useState, useRef, useEffect } from "react";
@@ -28,10 +29,82 @@ export default function ThreadForm({ toggleForm }) {
     setThreadText(e.target.value);
   };
 
-  const handlePostClick = () => {
-    console.log("Post button clicked");
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      setFile(selectedFile);
+      console.log("Name:", selectedFile.name);
+    }
   };
 
+  const handlePostClick = async () => {
+    console.log("Post button clicked");
+
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+
+    try {
+      // Upload the file to the Supabase storage bucket
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      const user = userData?.user;
+
+      if (userError || !user) {
+        console.error(
+          "User not authenticated or error getting user data:",
+          userError
+        );
+        return;
+      }
+
+      const filePath = `${user.id}_${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage
+        .from("posts_images")
+        .upload(filePath, file);
+
+      if (error) {
+        console.error("Error uploading file:", error.message);
+        return;
+      }
+
+      console.log("File uploaded successfully:", data.Key);
+
+      // Get the public URL of the uploaded file
+      const { data: publicURLData, error: urlError } = supabase.storage
+        .from("posts_images")
+        .getPublicUrl(filePath);
+
+      if (urlError) {
+        console.error("Failed to generate public URL:", urlError.message);
+        return;
+      }
+      const publicURL = publicURLData?.publicUrl;
+      console.log("Public URL of the uploaded file:", publicURL);
+
+      if (!publicURL) {
+        console.error("Public URL is not available.");
+        return;
+      }
+
+      // Insert the file URL and thread text into the 'posts' table
+      const { data: postData, error: postError } = await supabase
+        .from("posts")
+        .insert([
+          { post_image: publicURL, post_text: threadText, post_id: user.id },
+        ]);
+
+      if (postError) {
+        console.error("Error inserting post:", postError.message);
+      } else {
+        console.log("Post added successfully:", postData);
+      }
+    } catch (err) {
+      console.error("Error during post creation:", err);
+    }
+  };
   const handleEmojiClick = (emojiObject) => {
     setThreadText((prevText) => prevText + emojiObject.emoji);
     setShowEmojiPicker(false);
@@ -44,14 +117,6 @@ export default function ThreadForm({ toggleForm }) {
   const handleDropdownOptionSelect = (option) => {
     setDropdownOption(option);
     setDropdownOpen(false);
-  };
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      console.log("Name:", selectedFile.name);
-    }
   };
 
   const handlePollToggle = () => {
@@ -143,7 +208,15 @@ export default function ThreadForm({ toggleForm }) {
               value={threadText}
               onChange={handleTextChange}
             />
-
+            {/* {publicURL && (
+              <div
+                className="mt-2 p-2 border rounded-lg overflow-auto"
+                style={{ maxHeight: "200px" }}
+              >
+                <h4>Selected File:</h4>
+                <p>{publicURL}</p>
+              </div>
+            )}  */}
             {showPoll && (
               <div ref={pollRef} className="mt-2">
                 {pollOptions.map((option, index) => (
