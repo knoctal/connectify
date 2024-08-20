@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
   const { userName, fullName, bio, link, setBio, setLink } = useApp();
+  const { userName, fullName, bio, link, setBio, setLink } = useApp();
   const [loading, setLoading] = useState(false);
 
   const handleClickOutside = (event) => {

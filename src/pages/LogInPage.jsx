@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useApp } from "../AppContext";
+import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
 
