@@ -20,8 +20,6 @@ export default function Notifications() {
           <Dropdown options={dropdownOptions} />
           <div className="md:fixed md:flex md:flex-col items-center justify-center top-10 left-0 right-0 mt-4 dark:bg-black dark:text-white">
             <div className="width-height mt-0 p-5 ">
-              {/* Hidden on mobile */}
-              {/* Fixed height and scrollable content */}
               <p>NOTHING TO SHOW</p>
             </div>
           </div>

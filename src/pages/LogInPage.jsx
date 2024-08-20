@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useApp } from "../AppContext";
+import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
-import { supabase } from "../supabaseClient";
-import { useApp } from "../AppContext";
 
 export default function LogIn() {
   const { theme, setTheme } = useApp();
@@ -56,9 +56,10 @@ export default function LogIn() {
       <div className="block md:hidden">
         <FaConnectdevelop size={40} />
       </div>
-      <div className="absolute -top-20 left-[-480px] -right-0 h-14 z-0 md:block hidden">
-        <img src="/frontPic.webp" alt="Front" />
+      <div className=" -top-20 left-[-480px]  w-[1800px] fixed h-14 z-0 md:block hidden">
+        <img src="/Back-Image.webp" alt="Front" />
       </div>
+
       <div className="flex flex-col items-center justify-center gap-4 z-10 md:w-2/5 md:min-h-[90svh] mr-2">
         <h1 className="font-bold text-xl md:block">Log in</h1>
         {message.visible && (
@@ -83,11 +84,7 @@ export default function LogIn() {
             placeholder="Password"
             className="input   "
           />
-          <button
-            // className="text-gray-300 bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-white dark:text-black"
-            // className="text-gray-300 flex items-center justify-center bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-md md:p-4 dark:bg-white dark:text-black"
-            className="input"
-          />
+
           <button
             className="text-gray-300 flex items-center justify-center bg-black h-14 w-72 rounded-xl p-2 md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-white dark:text-gray-800"
             type="submit"
@@ -106,7 +103,7 @@ export default function LogIn() {
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center text-xs lg:text-sm md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between dark:bg-black dark:text-white dark:border dark:border-neutral-700">
+        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2  text-xs lg:text-sm md:h-14 md:w-80 md:rounded-md md:p-4 justify-between dark:bg-black dark:text-white dark:border dark:border-neutral-700">
           <h5 className="">Don&apos;t have an account?</h5>
           <Link to="/Signup">
             <h4 className="text-blue-500">Sign Up</h4>

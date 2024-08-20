@@ -1,15 +1,14 @@
+import { useApp } from "../AppContext";
+import { RxCross2 } from "react-icons/rx";
 import { useState, useEffect } from "react";
 import { GrAttachment } from "react-icons/gr";
-import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-import { useApp } from "../AppContext";
 
 export default function Problem() {
   const navigate = useNavigate();
-
   const { theme, setTheme } = useApp();
-  const [showMessage, setShowMessage] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     if (redirect) {

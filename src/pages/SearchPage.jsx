@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import { LuSearch } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { LuSearch } from "react-icons/lu";
+import Sidebar from "../components/Sidebar";
 
 export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,7 +38,7 @@ export default function SearchPage() {
                 {searchTerm && (
                   <IoClose
                     onClick={clearSearch}
-                    className="cursor-pointer rounded-full"
+                    className="cursor-pointer rounded-full dark:text-white"
                     color="gray"
                     size={20}
                   />
@@ -47,7 +47,7 @@ export default function SearchPage() {
               {/* Always show the Cancel button on mobile */}
               <button
                 onClick={clearSearch}
-                className="ml-4 text-gray-700 md:hidden"
+                className="ml-4 text-gray-700 md:hidden dark:text-white"
               >
                 Cancel
               </button>

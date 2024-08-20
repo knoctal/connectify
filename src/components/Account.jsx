@@ -1,5 +1,5 @@
-import { MdKeyboardArrowRight } from "react-icons/md";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function Account() {
   return (
