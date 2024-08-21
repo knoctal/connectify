@@ -52,12 +52,12 @@ export default function LogIn() {
     }
   }
   return (
-    <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black dark:text-white ">
+    <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black object-cover dark:text-white ">
       <div className="block md:hidden">
         <FaConnectdevelop size={40} />
       </div>
-      <div className="absolute -top-20 left-[-480px] -right-0 h-14 z-0 md:block hidden">
-        <img src="/Back-Image.webp" alt="Front" />
+      <div className="absolute top-0 ml-[-70vh] mt-[-12vh] z-0 md:block hidden object-cover">
+        <img src="/Back-Image.webp" alt="Front" className="object-cover" />
       </div>
       <div className="flex flex-col items-center justify-center gap-4 z-10 md:w-2/5 md:min-h-[90svh] mr-2">
         <h1 className="font-bold text-xl md:block">Log in</h1>

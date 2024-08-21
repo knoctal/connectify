@@ -4,17 +4,17 @@ import { BsFiletypeGif } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
-import { supabase } from "../supabaseClient";
 import { BiMenuAltLeft } from "react-icons/bi";
-
+import { supabase } from "../supabaseClient";
 export default function ThreadForm({ toggleForm }) {
-  const [threadText, setThreadText] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [file, setFile] = useState(null);
-  const { profilePic, userName } = useApp();
+  const [showUpload, setShowUpload] = useState(false);
+  const { profilePic, userName, threadText, setThreadText } = useApp();
   const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [callUpload, setCallUpload] = useState(false);
   const [fileUrl, setFileUrl] = useState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOption, setDropdownOption] = useState(
@@ -32,7 +32,6 @@ export default function ThreadForm({ toggleForm }) {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-
     if (selectedFile) {
       setFile(selectedFile);
       console.log("Name:", selectedFile.name);
@@ -41,6 +40,8 @@ export default function ThreadForm({ toggleForm }) {
 
   const handlePostClick = async () => {
     console.log("Post button clicked");
+
+    setShowUpload(true);
 
     if (!file) {
       console.error("No file selected");
@@ -94,7 +95,7 @@ export default function ThreadForm({ toggleForm }) {
       const { data: postData, error: postError } = await supabase
         .from("posts")
         .insert([
-          { post_image: publicURL, post_text: threadText, post_id: user.id },
+          { post_image: publicURL, post_text: threadText, user_id: user.id },
         ]);
 
       if (postError) {
