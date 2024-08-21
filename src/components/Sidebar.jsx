@@ -11,7 +11,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { FaConnectdevelop } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { FaRegHeart, FaRegUser, FaRegEdit, FaPlus } from "react-icons/fa";
+import { FaRegHeart, FaRegUser, FaPlus, FaRegEdit } from "react-icons/fa";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -120,7 +120,7 @@ export default function Sidebar() {
 
       {/* Sidebar content for larger screens */}
       <div className="hidden md:flex md:flex-col md:gap-5 ">
-        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-20">
+        <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
           <div
             onClick={() => navigate("/home")}
             className="hover-effect dark:hover:bg-stone-900"
@@ -139,15 +139,10 @@ export default function Sidebar() {
           >
             <FaRegHeart size={28} />
           </div>
-          <div
-            onClick={() => navigate("/profile")}
-            className="hover-effect dark:hover:bg-stone-900"
-          >
-            <FaRegUser size={28} />
-          </div>
         </div>
       </div>
-      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-20">
+
+      <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
         <VscPinned size={30} />
         <div className="relative">
           <div
@@ -173,7 +168,7 @@ export default function Sidebar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-4 w-full h-full z-20 md:bg-black/50 md:hidden">
+        <div className="fixed top-0 left-4 w-full h-full z-50 md:bg-black/50 md:hidden">
           <button
             onClick={() => setMenuOpen(false)}
             className="text-xl font-bold mb-6"
@@ -186,7 +181,7 @@ export default function Sidebar() {
       )}
 
       {/* Fixed bottom  for mobile */}
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-20 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
           className="hover-effect dark:hover:bg-stone-900"
@@ -215,7 +210,7 @@ export default function Sidebar() {
           onClick={() => navigate("/profile")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegUser size={20} />
+          <FaRegUser size={24} />
         </div>
       </div>
 

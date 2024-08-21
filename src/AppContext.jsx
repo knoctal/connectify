@@ -1,14 +1,13 @@
-import { supabase } from "./supabaseClient";
 import { createContext, useState, useEffect, useContext } from "react";
-
+import { supabase } from "./supabaseClient";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const [bio, setBio] = useState("");
+  const [link, setLink] = useState("");
   const [theme, setTheme] = useState(null);
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
-  const [bio, setBio] = useState("");
-  const [link, setLink] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
   useEffect(() => {
@@ -33,7 +32,47 @@ export const AppProvider = ({ children }) => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+
       if (!user) return;
+
+      const { data, error } = await supabase
+        .from("usersDetails")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+
+      if (error) {
+        console.error("Error fetching user details:", error.message);
+      } else {
+        setUserName(data.user_name);
+        setFullName(data.full_name);
+        setBio(data.user_bio);
+        setLink(data.user_link);
+
+        const { publicURL, error: urlError } = supabase.storage
+          .from("profile_picture") // Replace with your actual bucket name
+          .getPublicUrl(data.profile_url);
+
+        if (urlError) {
+          console.error(
+            "Error fetching profile picture URL:",
+            urlError.message
+          );
+        } else {
+          setProfilePic(publicURL);
+          console.log("Profile Picture URL:", profilePic);
+        }
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       const { data, error } = await supabase
         .from("usersDetails")

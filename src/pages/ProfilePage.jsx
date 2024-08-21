@@ -25,11 +25,11 @@ export default function ProfilePage() {
   return (
     <div className="relative min-h-screen dark:bg-black dark:text-white">
       <Sidebar />
-      <div className=" md:fixed inset-0 flex flex-col items-center justify-between md:justify-center">
+      <div className=" md:fixed inset-0 flex flex-col items-center justify-center">
         <h3 className="md:font-semibold md:mt-12 md:p-1 hidden md:block">
           Profile
         </h3>
-        <div className="centered-div md:mt-0 mt-9 ">
+        <div className="centered-div mt-0">
           <div className="width-height mt-0">
             <ProfileInfo
               onEditClick={handleEditClick}

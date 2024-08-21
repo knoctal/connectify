@@ -9,8 +9,8 @@ import { useState, useRef, useEffect } from "react";
 import { MdOutlineModeComment } from "react-icons/md";
 
 export default function Feeds() {
-  const { userName, profilePic } = useApp();
   const [showForm, setShowForm] = useState(false);
+  const { userName, profilePic } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -48,7 +48,7 @@ export default function Feeds() {
               <img
                 src={profilePic}
                 alt="Profile"
-                className="rounded-full w-9 h-9 object-cover"
+                className="rounded-full w-10 h-10"
               />
             ) : (
               <CgProfile size={30} className="rounded-full w-10 h-10" />
@@ -99,7 +99,7 @@ export default function Feeds() {
                   <img
                     src={profilePic}
                     alt="Profile"
-                    className="rounded-full w-9 h-9 object-cover"
+                    className="rounded-full w-10 h-10"
                   />
                 ) : (
                   <CgProfile size={30} className="rounded-full w-10 h-10" />
