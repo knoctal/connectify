@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaConnectdevelop } from "react-icons/fa";
 import { supabase } from "../supabaseClient";
+import { FaConnectdevelop } from "react-icons/fa";
 
 export default function Signup() {
   const [message, setMessage] = useState({

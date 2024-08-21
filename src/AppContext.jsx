@@ -1,14 +1,13 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
-
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const [bio, setBio] = useState("");
+  const [link, setLink] = useState("");
   const [theme, setTheme] = useState(null);
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
-  const [bio, setBio] = useState("");
-  const [link, setLink] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [threadText, setThreadText] = useState("");
   const [postPic, setPostPic] = useState("");

@@ -1,14 +1,14 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/LogInPage";
-import { AppProvider } from "./AppContext";
 import Signup from "./pages/SignUpPage";
 import Homepage from "./pages/Homepage";
-import Reportproblem from "./components/Reportproblem";
-import Settings from "./components/Settings";
+import { AppProvider } from "./AppContext";
 import SearchPage from "./pages/SearchPage";
+import Settings from "./components/Settings";
 import ProfilePage from "./pages/ProfilePage";
-import Notifications from "./pages/Notifications";
 import ThreadForm from "./components/ThreadForm";
+import Notifications from "./pages/Notifications";
+import Reportproblem from "./components/Reportproblem";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -42,18 +42,6 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings />,
-  },
-  {
-    path: "/notifications",
-    element: <Notifications />,
-  },
-  {
-    path: "/search",
-    element: <SearchPage />,
-  },
-  {
-    path: "/profile",
-    element: <ProfilePage />,
   },
   {
     path: "/post",

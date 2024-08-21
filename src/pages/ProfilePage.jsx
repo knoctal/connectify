@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useApp } from "../AppContext";
 import Sidebar from "../components/Sidebar";
 import ProfileInfo from "../components/ProfileInfo";
-import { useApp } from "../AppContext";
 import ProfileForm from "../components/ProfileForm";
 
 export default function ProfilePage() {

@@ -4,7 +4,7 @@
 
 @layer components {
   .input {
-    @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-black dark:border dark:border-gray-800 dark:text-white dark:hover:border-neutral-700;
+    @apply bg-gray-200 h-14 w-72 rounded-xl p-2 focus:outline-none md:h-14 md:w-80 md:rounded-xl md:p-4 dark:bg-black dark:border dark:border-neutral-800 dark:text-white dark:hover:border-neutral-700
   }
 
   .message {
@@ -33,6 +33,19 @@
 
   .setting-buttons {
     @apply h-12 w-[205px] border-b border-b-gray-400 text-gray-400;
+  }
+
+  .settings-pah-m-styles {
+    @apply flex h-10 items-center justify-between p-3 rounded-md;
+  }
+
+
+  .centered-div {
+    @apply dark:bg-black dark:text-white dark:border-gray-800 w-full h-full flex justify-center p-4 scrollbar-hidden;
+  }
+
+  .width-height {
+    @apply md:dark:bg-neutral-900 dark:bg-black dark:text-white dark:border-gray-800 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
   }
 }
 
