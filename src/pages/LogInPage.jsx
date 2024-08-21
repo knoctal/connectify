@@ -52,7 +52,7 @@ export default function LogIn() {
     }
   }
   return (
-    <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black dark:text-white ">
+    <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black object-cover dark:text-white ">
       <div className="block md:hidden">
         <FaConnectdevelop size={40} />
       </div>

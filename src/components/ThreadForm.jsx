@@ -8,12 +8,11 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { useState, useRef, useEffect } from "react";
 
 export default function ThreadForm({ toggleForm }) {
-  const { profilePic } = useApp();
-  const [file, setFile] = useState(null);
-  const [showPoll, setShowPoll] = useState(false);
-  const [threadText, setThreadText] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [file, setFile] = useState(null);
+  const [showUpload, setShowUpload] = useState(false);
+  const { profilePic, userName, threadText, setThreadText } = useApp();
+  const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [dropdownOption, setDropdownOption] = useState(
@@ -31,7 +30,6 @@ export default function ThreadForm({ toggleForm }) {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-
     if (selectedFile) {
       setFile(selectedFile);
       console.log("Name:", selectedFile.name);
@@ -40,6 +38,8 @@ export default function ThreadForm({ toggleForm }) {
 
   const handlePostClick = async () => {
     console.log("Post button clicked");
+
+    setShowUpload(true);
 
     if (!file) {
       console.error("No file selected");
@@ -93,7 +93,7 @@ export default function ThreadForm({ toggleForm }) {
       const { data: postData, error: postError } = await supabase
         .from("posts")
         .insert([
-          { post_image: publicURL, post_text: threadText, post_id: user.id },
+          { post_image: publicURL, post_text: threadText, user_id: user.id },
         ]);
 
       if (postError) {
@@ -208,15 +208,7 @@ export default function ThreadForm({ toggleForm }) {
               value={threadText}
               onChange={handleTextChange}
             />
-            {/* {publicURL && (
-              <div
-                className="mt-2 p-2 border rounded-lg overflow-auto"
-                style={{ maxHeight: "200px" }}
-              >
-                <h4>Selected File:</h4>
-                <p>{publicURL}</p>
-              </div>
-            )}  */}
+
             {showPoll && (
               <div ref={pollRef} className="mt-2">
                 {pollOptions.map((option, index) => (
