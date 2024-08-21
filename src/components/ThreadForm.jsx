@@ -8,7 +8,6 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { useState, useRef, useEffect } from "react";
 
 export default function ThreadForm({ toggleForm }) {
-  const [threadText, setThreadText] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [file, setFile] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
@@ -209,15 +208,7 @@ export default function ThreadForm({ toggleForm }) {
               value={threadText}
               onChange={handleTextChange}
             />
-            {/* {publicURL && (
-              <div
-                className="mt-2 p-2 border rounded-lg overflow-auto"
-                style={{ maxHeight: "200px" }}
-              >
-                <h4>Selected File:</h4>
-                <p>{publicURL}</p>
-              </div>
-            )}  */}
+
             {showPoll && (
               <div ref={pollRef} className="mt-2">
                 {pollOptions.map((option, index) => (
