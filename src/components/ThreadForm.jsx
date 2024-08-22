@@ -5,11 +5,14 @@ import EmojiPicker from "emoji-picker-react";
 import { supabase } from "../supabaseClient";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
 
 export default function ThreadForm({ toggleForm }) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [file, setFile] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
   const { profilePic, userName, threadText, setThreadText } = useApp();
   const [showPoll, setShowPoll] = useState(false);
@@ -32,10 +35,14 @@ export default function ThreadForm({ toggleForm }) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
-      console.log("Name:", selectedFile.name);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
-
   const handlePostClick = async () => {
     console.log("Post button clicked");
 
@@ -187,7 +194,7 @@ export default function ThreadForm({ toggleForm }) {
         ref={formRef}
         className={`bg-white p-6 md:rounded-2xl md:shadow-lg md:w-full md:max-w-[630px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${
           showPoll ? "md:h-auto" : "md:h-auto"
-        } w-full h-full md:h-fit flex flex-col`}
+        } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
       >
         <div className="flex gap-2 mb-2">
           {profilePic ? (
@@ -231,7 +238,26 @@ export default function ThreadForm({ toggleForm }) {
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2 ml-12 mb-2">
+
+        <div className="flex gap-2">
+          {imagePreviewUrl && (
+            <div className="relative w-full flex justify-center mt-4">
+              <img
+                src={imagePreviewUrl}
+                alt="Preview"
+                className="w-full max-w-[450px] object-contain rounded-md"
+              />
+              <button
+                className="absolute right-1 bg-black/80 mr-14 text-white rounded-full p-2 "
+                onClick={() => setImagePreviewUrl(null)}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className=" mt-2 flex items-center gap-2 ml-12 mb-2">
           <div className="relative flex items-center gap-2 h-auto">
             <button
               onClick={() => setShowEmojiPicker((prev) => !prev)}
@@ -254,7 +280,7 @@ export default function ThreadForm({ toggleForm }) {
               <CiFileOn size={22} />
               <input
                 type="file"
-                className="hidden"
+                className="hidden "
                 id="input-files"
                 onChange={handleFileChange}
               />
@@ -269,6 +295,7 @@ export default function ThreadForm({ toggleForm }) {
             </button>
           </div>
         </div>
+
         <div className="flex gap-2 m-2">
           {profilePic ? (
             <img
