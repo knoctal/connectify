@@ -10,7 +10,7 @@ import { MdOutlineModeComment } from "react-icons/md";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
-  const { userName, profilePic } = useApp();
+  const { userName, profilePic, threadText, postPic, userPosts } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -48,10 +48,13 @@ export default function Feeds() {
               <img
                 src={profilePic}
                 alt="Profile"
-                className="rounded-full w-10 h-10"
+                className="rounded-full w-10 h-10 object-cover"
               />
             ) : (
-              <CgProfile size={30} className="rounded-full w-10 h-10" />
+              <CgProfile
+                size={30}
+                className="rounded-full w-10 h-10 object-cover"
+              />
             )}
             <button
               onClick={toggleForm}
@@ -92,37 +95,43 @@ export default function Feeds() {
 
         {/* Feed items */}
         <div className="mt-4 flex flex-col gap-4 md:p-4">
-          {[1, 2, 3, 4, 5].map((item) => (
-            <div key={item} className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                {profilePic ? (
-                  <img
-                    src={profilePic}
-                    alt="Profile"
-                    className="rounded-full w-10 h-10"
-                  />
-                ) : (
-                  <CgProfile size={30} className="rounded-full w-10 h-10" />
-                )}
-                <h3>{userName}</h3>
-              </div>
-              <div className="flex flex-col gap-2">
-                <p>Chin tapak dam dam</p>
-                <img
-                  src="/IMG_0850.JPG"
-                  alt="Bio Image"
-                  className="border rounded-md w-full"
-                />
-                <div className="flex gap-8 mt-4">
-                  <FaRegHeart size={20} />
-                  <MdOutlineModeComment size={20} />
-                  <AiOutlineRetweet size={20} />
-                  <GoPaperAirplane size={20} />
+          {userPosts.length > 0 ? (
+            userPosts.map((post, index) => (
+              <div key={index} className="flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  {profilePic ? (
+                    <img
+                      src={profilePic}
+                      alt="Profile"
+                      className="rounded-full w-10 h-10 object-cover"
+                    />
+                  ) : (
+                    <CgProfile size={30} className="rounded-full w-10 h-10" />
+                  )}
+                  <h3>{userName}</h3>
                 </div>
+                <div className="flex flex-col gap-2">
+                  <p>{post.post_text}</p>
+                  {post.post_image && (
+                    <img
+                      src={post.post_image}
+                      alt="Post Image"
+                      className="border rounded-md w-full"
+                    />
+                  )}
+                  <div className="flex gap-8 mt-4">
+                    <FaRegHeart size={20} />
+                    <MdOutlineModeComment size={20} />
+                    <AiOutlineRetweet size={20} />
+                    <GoPaperAirplane size={20} />
+                  </div>
+                </div>
+                <hr className="border-t border-gray-300" />
               </div>
-              <hr className="border-t border-gray-300" />
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No posts available</p>
+          )}
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ export default function ProfilePage() {
         <h3 className="md:font-semibold md:mt-12 md:p-1 hidden md:block">
           Profile
         </h3>
-        <div className="centered-div mt-0">
+        <div className="centered-div mt-10 md:mt-0">
           <div className="width-height mt-0">
             <ProfileInfo
               onEditClick={handleEditClick}

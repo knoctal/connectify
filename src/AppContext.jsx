@@ -9,6 +9,9 @@ export const AppProvider = ({ children }) => {
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [threadText, setThreadText] = useState("");
+  const [postPic, setPostPic] = useState("");
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     if (theme === "light") {
@@ -95,6 +98,29 @@ export const AppProvider = ({ children }) => {
     fetchUserDetails();
   }, []);
 
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("posts")
+        .select("post_text, post_image")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error("Error fetching user posts:", error.message);
+      } else {
+        setUserPosts(data);
+      }
+    };
+
+    fetchUserPosts();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -110,6 +136,12 @@ export const AppProvider = ({ children }) => {
         setLink,
         profilePic,
         setProfilePic,
+        threadText,
+        setThreadText,
+        postPic,
+        setPostPic,
+        userPosts,
+        setUserPosts,
       }}
     >
       {children}

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useApp } from "../AppContext";
+import { CgProfile } from "react-icons/cg";
 import { supabase } from "../supabaseClient";
 
 export default function UpdateProfile() {
   const { profilePic, setProfilePic } = useApp();
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showFileInput, setShowFileInput] = useState(false);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -26,11 +28,11 @@ export default function UpdateProfile() {
         return;
       }
 
-      const filePath = `${user.id}_${Date.now()}_${file.name}`;
+      const filePath = ` ${user.id}_${Date.now()}_${file.name}`;
 
       // Upload file to Supabase storage
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("profile_picutre")
+        .from("profile_picture")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
@@ -41,7 +43,7 @@ export default function UpdateProfile() {
 
       // Retrieve the public URL for the uploaded file
       const { data: publicURLData, error: urlError } = supabase.storage
-        .from("profile_picutre")
+        .from("profile_picture")
         .getPublicUrl(filePath);
 
       if (urlError) {
@@ -67,6 +69,7 @@ export default function UpdateProfile() {
 
       // Update the profile picture in the app's state
       setProfilePic(publicURL);
+      setShowFileInput(false);
     } catch (error) {
       console.error("File upload error:", error.message);
       setErrorMessage("File upload failed, please try again.");
@@ -76,11 +79,30 @@ export default function UpdateProfile() {
   };
 
   return (
-    <div className="rounded-full w-14 h-14">
-      <input type="file" onChange={handleFileUpload} />
+    <div>
+      {profilePic ? (
+        <img
+          src={profilePic}
+          onClick={() => setShowFileInput((prev) => !prev)} // Show file input on image click
+          alt="Profile"
+          className=" w-14 h-14 rounded-full object-cover"
+        />
+      ) : (
+        <CgProfile size={30} className="rounded-full w-10 h-10 object-cover" />
+      )}
+
+      {/* Conditionally render the file input */}
+      {showFileInput && (
+        <input
+          type="file"
+          onChange={handleFileUpload}
+          className=" w-56 mt-3 absolute right-1 "
+        />
+      )}
+
+      {/* Upload status and error messages */}
       {uploading && <p>Uploading...</p>}
       {errorMessage && <p>{errorMessage}</p>}
-      {profilePic && <img src={profilePic} alt="Profile" />}
     </div>
   );
 }
