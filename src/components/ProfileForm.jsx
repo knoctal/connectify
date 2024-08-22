@@ -105,7 +105,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               </div>
               <div className="my-4">
                 <label
-                  className="block text-gray-700 font-semibold mb-2"
+                  className="block text-gray-700 font-semibold mb-2 dark:text-white"
                   htmlFor="bio"
                 >
                   Bio
@@ -121,7 +121,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               </div>
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 font-semibold mb-2"
+                  className="block text-gray-700 font-semibold mb-2 dark:text-white"
                   htmlFor="link"
                 >
                   Link

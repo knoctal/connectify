@@ -11,6 +11,7 @@ import { MdOutlineModeComment } from "react-icons/md";
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
   const { userName, profilePic, threadText, postPic, userPosts } = useApp();
+  const { userName, profilePic, threadText, postPic, userPosts } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -48,10 +49,13 @@ export default function Feeds() {
               <img
                 src={profilePic}
                 alt="Profile"
-                className="rounded-full w-10 h-10"
+                className="rounded-full w-10 h-10 object-cover"
               />
             ) : (
-              <CgProfile size={30} className="rounded-full w-10 h-10" />
+              <CgProfile
+                size={30}
+                className="rounded-full w-10 h-10 object-cover"
+              />
             )}
             <button
               onClick={toggleForm}
@@ -100,7 +104,7 @@ export default function Feeds() {
                     <img
                       src={profilePic}
                       alt="Profile"
-                      className="rounded-full w-10 h-10"
+                      className="rounded-full w-10 h-10 object-cover"
                     />
                   ) : (
                     <CgProfile size={30} className="rounded-full w-10 h-10" />

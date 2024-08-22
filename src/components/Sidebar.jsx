@@ -139,6 +139,12 @@ export default function Sidebar() {
           >
             <FaRegHeart size={28} />
           </div>
+          <div
+            onClick={() => navigate("/profile")}
+            className="hover-effect dark:hover:bg-stone-900"
+          >
+            <FaRegUser size={24} />
+          </div>
         </div>
       </div>
 

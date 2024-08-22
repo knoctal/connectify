@@ -15,12 +15,14 @@
     @apply border rounded-full p-2 dark:bg-black dark:text-white dark:border-gray-600;
   }
 
+
+
   .centered-div {
-    @apply dark:bg-black dark:text-white dark:border-gray-800 w-full h-full flex justify-center p-4 scrollbar-hidden;
+    @apply dark:bg-black dark:text-white dark:border-neutral-700 w-full h-full flex justify-center p-4 scrollbar-hidden;
   }
 
   .width-height {
-    @apply md:dark:bg-neutral-900 dark:bg-black dark:text-white dark:border-gray-800 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
+    @apply md:dark:bg-neutral-900 dark:bg-black dark:text-white dark:border-neutral-700 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
   }
 
   .appearence-btns {
