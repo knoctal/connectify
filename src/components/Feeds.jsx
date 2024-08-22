@@ -11,7 +11,6 @@ import { MdOutlineModeComment } from "react-icons/md";
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
   const { userName, profilePic, threadText, postPic, userPosts } = useApp();
-  const { userName, profilePic, threadText, postPic, userPosts } = useApp();
 
   const formContainerRef = useRef(null);
 
