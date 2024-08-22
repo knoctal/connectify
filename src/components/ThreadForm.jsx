@@ -6,6 +6,7 @@ import { supabase } from "../supabaseClient";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
 
 export default function ThreadForm({ toggleForm }) {
@@ -15,6 +16,11 @@ export default function ThreadForm({ toggleForm }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [file, setFile] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [showUpload, setShowUpload] = useState(false);
+  const { profilePic, userName, threadText, setThreadText } = useApp();
+  const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { profilePic, userName, threadText, setThreadText } = useApp();
@@ -41,10 +47,18 @@ export default function ThreadForm({ toggleForm }) {
         setImagePreviewUrl(reader.result);
       };
       reader.readAsDataURL(selectedFile);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
   const handlePostClick = async () => {
     console.log("Post button clicked");
+
+    setShowUpload(true);
 
     setShowUpload(true);
 
@@ -100,6 +114,7 @@ export default function ThreadForm({ toggleForm }) {
       const { data: postData, error: postError } = await supabase
         .from("posts")
         .insert([
+          { post_image: publicURL, post_text: threadText, user_id: user.id },
           { post_image: publicURL, post_text: threadText, user_id: user.id },
         ]);
 
@@ -195,6 +210,7 @@ export default function ThreadForm({ toggleForm }) {
         className={`bg-white p-6 md:rounded-2xl md:shadow-lg md:w-full md:max-w-[630px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${
           showPoll ? "md:h-auto" : "md:h-auto"
         } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
+        } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
       >
         <div className="flex gap-2 mb-2">
           {profilePic ? (
@@ -215,6 +231,7 @@ export default function ThreadForm({ toggleForm }) {
               value={threadText}
               onChange={handleTextChange}
             />
+
 
             {showPoll && (
               <div ref={pollRef} className="mt-2">
@@ -238,6 +255,26 @@ export default function ThreadForm({ toggleForm }) {
             )}
           </div>
         </div>
+
+        <div className="flex gap-2">
+          {imagePreviewUrl && (
+            <div className="relative w-full flex justify-center mt-4">
+              <img
+                src={imagePreviewUrl}
+                alt="Preview"
+                className="w-full max-w-[450px] object-contain rounded-md"
+              />
+              <button
+                className="absolute right-1 bg-black/80 mr-14 text-white rounded-full p-2 "
+                onClick={() => setImagePreviewUrl(null)}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className=" mt-2 flex items-center gap-2 ml-12 mb-2">
 
         <div className="flex gap-2">
           {imagePreviewUrl && (
@@ -295,6 +332,7 @@ export default function ThreadForm({ toggleForm }) {
             </button>
           </div>
         </div>
+
 
         <div className="flex gap-2 m-2">
           {profilePic ? (
