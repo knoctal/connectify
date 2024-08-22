@@ -8,7 +8,6 @@ export default function UpdateProfile() {
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showFileInput, setShowFileInput] = useState(false);
-  const [showFileInput, setShowFileInput] = useState(false);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -21,7 +20,6 @@ export default function UpdateProfile() {
     try {
       setUploading(true);
       setErrorMessage("");
-
       const { data: userData } = await supabase.auth.getUser();
       const user = userData?.user;
       if (!user) {
@@ -34,7 +32,6 @@ export default function UpdateProfile() {
       // Upload file to Supabase storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("profile_picture")
-        .from("profile_picture")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
@@ -45,7 +42,6 @@ export default function UpdateProfile() {
 
       // Retrieve the public URL for the uploaded file
       const { data: publicURLData, error: urlError } = supabase.storage
-        .from("profile_picture")
         .from("profile_picture")
         .getPublicUrl(filePath);
 
@@ -72,7 +68,6 @@ export default function UpdateProfile() {
 
       // Update the profile picture in the app's state
       setProfilePic(publicURL);
-      setShowFileInput(false);
       setShowFileInput(false);
     } catch (error) {
       console.error("File upload error:", error.message);
