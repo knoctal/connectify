@@ -1,17 +1,17 @@
-import { useState } from "react";
-import ThreadForm from "./ThreadForm";
-import { useApp } from "../AppContext";
-import { GoHome } from "react-icons/go";
-import { CiLight } from "react-icons/ci";
-import { FiSearch } from "react-icons/fi";
-import { VscPinned } from "react-icons/vsc";
-import { supabase } from "../supabaseClient";
-import { useNavigate } from "react-router-dom";
-import { BiMenuAltLeft } from "react-icons/bi";
-import { IoMoonOutline } from "react-icons/io5";
-import { FaConnectdevelop } from "react-icons/fa";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import { FaRegHeart, FaRegUser, FaPlus, FaRegEdit } from "react-icons/fa";
+import { useState } from 'react';
+import ThreadForm from './ThreadForm';
+import { useApp } from '../AppContext';
+import { GoHome } from 'react-icons/go';
+import { CiLight } from 'react-icons/ci';
+import { FiSearch } from 'react-icons/fi';
+import { VscPinned } from 'react-icons/vsc';
+import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { BiMenuAltLeft } from 'react-icons/bi';
+import { IoMoonOutline } from 'react-icons/io5';
+import { FaConnectdevelop } from 'react-icons/fa';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { FaRegHeart, FaRegUser, FaPlus, FaRegEdit } from 'react-icons/fa';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -23,13 +23,13 @@ export default function Sidebar() {
   async function signOut() {
     let { error } = await supabase.auth.signOut();
     if (error) {
-      console.log("Error in logging out");
+      console.log('Error in logging out');
     } else {
-      navigate("/");
+      navigate('/');
     }
   }
 
-  const menuOptions = ["Appearance", "Settings", "Report a problem", "Log out"];
+  const menuOptions = ['Appearance', 'Settings', 'Report a problem', 'Log out'];
 
   function handleMenuItems() {
     return (
@@ -53,6 +53,7 @@ export default function Sidebar() {
       <div className="md:w-96 h-32 w-64 rounded-xl font-semibold flex flex-col gap-1 items-start justify-center p-1 border border-gray-200 bg-white text-black dark:bg-black dark:text-white dark:border-neutral-700 ">
         <div className="flex items-start justify-between p-2 w-[220px] h-10 rounded-md">
           <IoIosArrowRoundBack
+            style={{ strokeWidth: '1' }}
             size={26}
             onClick={() => {
               setSubmenu(null);
@@ -61,17 +62,17 @@ export default function Sidebar() {
           <h3 className="text-l dark:bg-black dark:text-white">Appearance</h3>
         </div>
         <div className="flex justify-around items-center md:w-[365px] h-[60px] w-54 rounded-lg bg-gray-100/50 dark:bg-black dark:text-white">
-          <div className="appearence-btns" onClick={() => setTheme("light")}>
+          <div className="appearence-btns" onClick={() => setTheme('light')}>
             <CiLight size={25} />
           </div>
-          <div className="appearence-btns" onClick={() => setTheme("dark")}>
+          <div className="appearence-btns" onClick={() => setTheme('dark')}>
             <IoMoonOutline size={25} />
           </div>
           <div>
             <button
               type="button"
               className="appearence-btns"
-              onClick={() => setTheme("auto")}
+              onClick={() => setTheme('auto')}
             >
               Auto
             </button>
@@ -83,16 +84,16 @@ export default function Sidebar() {
 
   function handleMenuItemClick(option) {
     switch (option) {
-      case "Appearance":
-        setSubmenu("Appearance");
+      case 'Appearance':
+        setSubmenu('Appearance');
         break;
-      case "Settings":
-        navigate("/Settings");
+      case 'Settings':
+        navigate('/Settings');
         break;
-      case "Report a problem":
-        navigate("/Report");
+      case 'Report a problem':
+        navigate('/Report');
         break;
-      case "Log out":
+      case 'Log out':
         signOut();
         break;
       default:
@@ -103,7 +104,7 @@ export default function Sidebar() {
 
   const handlePlusClick = () => {
     setIsFormVisible(!isFormVisible);
-    console.log("Plus button clicked, isFormVisible:", !isFormVisible);
+    console.log('Plus button clicked, isFormVisible:', !isFormVisible);
   };
 
   return (
@@ -122,25 +123,25 @@ export default function Sidebar() {
       <div className="hidden md:flex md:flex-col md:gap-5 ">
         <div className="fixed md:flex md:flex-col md:gap-3 py-3 z-50">
           <div
-            onClick={() => navigate("/home")}
+            onClick={() => navigate('/home')}
             className="hover-effect dark:hover:bg-stone-900"
           >
             <GoHome size={30} />
           </div>
           <div
-            onClick={() => navigate("/search")}
+            onClick={() => navigate('/search')}
             className="hover-effect dark:hover:bg-stone-900"
           >
             <FiSearch size={30} />
           </div>
           <div
-            onClick={() => navigate("/notifications")}
+            onClick={() => navigate('/notifications')}
             className="hover-effect dark:hover:bg-stone-900"
           >
             <FaRegHeart size={28} />
           </div>
           <div
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate('/profile')}
             className="hover-effect dark:hover:bg-stone-900"
           >
             <FaRegUser size={24} />
@@ -164,7 +165,7 @@ export default function Sidebar() {
             </div>
           )}
           {/* Render the appearance submenu if submenu state is "Appearance" */}
-          {submenu === "Appearance" && (
+          {submenu === 'Appearance' && (
             <div className="absolute bottom-12 right-0 left-0 z-50 ">
               {handleAppearance()}
             </div>
@@ -189,13 +190,13 @@ export default function Sidebar() {
       {/* Fixed bottom  for mobile */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white py-0  md:hidden z-50 border-t border-gray-200 dark:bg-black dark:bg-opacity-90 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
-          onClick={() => navigate("/home")}
+          onClick={() => navigate('/home')}
           className="hover-effect dark:hover:bg-stone-900"
         >
           <GoHome size={26} />
         </div>
         <div
-          onClick={() => navigate("/search")}
+          onClick={() => navigate('/search')}
           className="hover-effect dark:hover:bg-stone-900"
         >
           <FiSearch size={26} />
@@ -207,13 +208,13 @@ export default function Sidebar() {
           <FaRegEdit size={26} />
         </div>
         <div
-          onClick={() => navigate("/notifications")}
+          onClick={() => navigate('/notifications')}
           className="hover-effect dark:hover:bg-stone-900"
         >
           <FaRegHeart size={24} />
         </div>
         <div
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate('/profile')}
           className="hover-effect dark:hover:bg-stone-900"
         >
           <FaRegUser size={24} />

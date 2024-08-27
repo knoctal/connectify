@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useApp } from "../AppContext";
-import { supabase } from "../supabaseClient";
-import { Link, useNavigate } from "react-router-dom";
-import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
+import { useState } from 'react';
+import { useApp } from '../AppContext';
+import { supabase } from '../supabaseClient';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaConnectdevelop, FaSpinner } from 'react-icons/fa';
 
 export default function LogIn() {
   const { theme, setTheme } = useApp();
   const [message, setMessage] = useState({
-    type: "",
-    content: "",
+    type: '',
+    content: '',
     visible: false,
   });
   const [loading, setLoading] = useState(false);
@@ -16,34 +16,34 @@ export default function LogIn() {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    setMessage({ type: "", content: "", visible: false });
+    setMessage({ type: '', content: '', visible: false });
 
     setLoading(true);
     const formData = new FormData(e.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = formData.get('email');
+    const password = formData.get('password');
     try {
       let { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
       if (error) {
-        setMessage({ type: "error", content: error.message, visible: true });
-        document.getElementById("password-input").value = "";
+        setMessage({ type: 'error', content: error.message, visible: true });
+        document.getElementById('password-input').value = '';
       } else {
-        console.log("User logged in:", data);
+        console.log('User logged in:', data);
         setMessage({
-          type: "success",
-          content: "Logged in successfully!",
+          type: 'success',
+          content: 'Logged in successfully!',
           visible: true,
         });
-        navigate("/Home");
+        navigate('/Home');
       }
     } catch (error) {
-      console.error("Unexpected error:", error.message);
+      console.error('Unexpected error:', error.message);
       setMessage({
-        type: "error",
-        content: "An unexpected error occurred. Please try again.",
+        type: 'error',
+        content: 'An unexpected error occurred. Please try again.',
         visible: true,
       });
     } finally {
@@ -51,6 +51,7 @@ export default function LogIn() {
       setTimeout(() => setMessage({ ...message, visible: false }), 3000);
     }
   }
+
   return (
     <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black object-cover dark:text-white ">
       <div className="block md:hidden">
@@ -92,7 +93,7 @@ export default function LogIn() {
             {loading ? (
               <FaSpinner className="animate-spin dark:text-black " size={15} />
             ) : (
-              "Log in"
+              'Log in'
             )}
           </button>
         </form>

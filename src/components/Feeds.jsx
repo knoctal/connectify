@@ -1,12 +1,15 @@
-import ThreadForm from "./ThreadForm";
-import { useApp } from "../AppContext";
-import { CgProfile } from "react-icons/cg";
-import { FaRegHeart } from "react-icons/fa";
-import Dropdown from "../components/Dropdown";
-import { GoPaperAirplane } from "react-icons/go";
-import { AiOutlineRetweet } from "react-icons/ai";
-import { useState, useRef, useEffect } from "react";
-import { MdOutlineModeComment } from "react-icons/md";
+import ThreadForm from './ThreadForm';
+import { useApp } from '../AppContext';
+import { CgProfile } from 'react-icons/cg';
+import { FaRegHeart } from 'react-icons/fa';
+import Dropdown from '../components/Dropdown';
+import { GoPaperAirplane } from 'react-icons/go';
+import { AiOutlineRetweet } from 'react-icons/ai';
+import { useState, useRef, useEffect } from 'react';
+import { MdOutlineModeComment } from 'react-icons/md';
+import { CiHeart } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
+import { Avatar, Comment, HeartOutline } from '../../lib/data/Icons';
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
@@ -28,13 +31,13 @@ export default function Feeds() {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
-  const dropdownOptions = ["For you", "Following", "Liked", "Saved"];
+  const dropdownOptions = ['For you', 'Following', 'Liked', 'Saved'];
 
   return (
     <div className="centered-div bg-white dark:bg-black dark:text-white ">
@@ -106,7 +109,7 @@ export default function Feeds() {
                       className="rounded-full w-10 h-10 object-cover"
                     />
                   ) : (
-                    <CgProfile size={30} className="rounded-full w-10 h-10" />
+                    <Avatar size={30} className="rounded-full w-10 h-10" />
                   )}
                   <h3>{userName}</h3>
                 </div>
@@ -120,8 +123,8 @@ export default function Feeds() {
                     />
                   )}
                   <div className="flex gap-8 mt-4">
-                    <FaRegHeart size={20} />
-                    <MdOutlineModeComment size={20} />
+                    <ActionButton Icon={HeartOutline} info={20} />
+                    <ActionButton Icon={Comment} info={24} />
                     <AiOutlineRetweet size={20} />
                     <GoPaperAirplane size={20} />
                   </div>
@@ -130,10 +133,24 @@ export default function Feeds() {
               </div>
             ))
           ) : (
-            <p>No posts available</p>
+            <div aria-hidden className="grid gap-3 animate-pulse">
+              <div className="space-y-2">
+                <div className="w-24 h-8 rounded-xl bg-gray-600" />
+                <div className="w-full h-8 rounded-xl bg-gray-700" />
+              </div>
+              <div className="w-full h-[500px] bg-gray-800 rounded-xl" />
+            </div>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function ActionButton({ Icon, info }) {
+  return (
+    <div className="flex cursor-pointer font-extralight text-base text-gray-300 items-center gap-2 py-1.5 px-2.5 rounded-full hover:bg-slate-800">
+      <Icon size={25} /> <div>{info}</div>
     </div>
   );
 }
