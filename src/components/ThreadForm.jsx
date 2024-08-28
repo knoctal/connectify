@@ -1,7 +1,7 @@
 import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
-import { CgProfile } from "react-icons/cg";
 import EmojiPicker from "emoji-picker-react";
+import { RenderProfilePic } from "./FeedItem";
 import { supabase } from "../supabaseClient";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
@@ -199,15 +199,7 @@ export default function ThreadForm({ toggleForm }) {
         } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
       >
         <div className="flex gap-2 mb-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-10 h-10 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-10 h-10" />
-          )}
+          {RenderProfilePic("w-10 h-10")}
           <div className="flex flex-col m-0 p-0 items-start flex-grow">
             <h4 className="font-semibold">{userName}</h4>
             <textarea
@@ -296,16 +288,8 @@ export default function ThreadForm({ toggleForm }) {
             </button>
           </div>
         </div>
-        <div className="flex gap-2 m-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-6 h-6 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-6 h-6" />
-          )}
+        <div className="flex gap-2 m-2 mt-4">
+          {RenderProfilePic("w-6 h-6")}
           <textarea
             className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
             rows={1}

@@ -1,17 +1,22 @@
 import { useState } from "react";
 import ThreadForm from "./ThreadForm";
+import { FaPlus } from "react-icons/fa";
 import { useApp } from "../AppContext";
-import { GoHome } from "react-icons/go";
-import { CiLight } from "react-icons/ci";
-import { FiSearch } from "react-icons/fi";
-import { VscPinned } from "react-icons/vsc";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { BiMenuAltLeft } from "react-icons/bi";
-import { IoMoonOutline } from "react-icons/io5";
 import { FaConnectdevelop } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { FaRegHeart, FaRegUser, FaPlus, FaRegEdit } from "react-icons/fa";
+import {
+  HeartOutline,
+  Light,
+  Dark,
+  Home,
+  Search,
+  Menu,
+  Pinned,
+  Profile,
+  Post,
+} from "../../lib/data/Icons";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -62,10 +67,10 @@ export default function Sidebar() {
         </div>
         <div className="flex justify-around items-center md:w-[365px] h-[60px] w-54 rounded-lg bg-gray-100/50 dark:bg-black dark:text-white">
           <div className="appearence-btns" onClick={() => setTheme("light")}>
-            <CiLight size={25} />
+            <Light />
           </div>
           <div className="appearence-btns" onClick={() => setTheme("dark")}>
-            <IoMoonOutline size={25} />
+            <Dark />
           </div>
           <div>
             <button
@@ -107,14 +112,14 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="md:pt-3 pl-2 flex flex-col gap-20 relative dark:bg-black dark:text-white ">
-      <div className="flex md:h-0 items-center justify-between md:justify-start p-2 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
+    <div className="md:pt-3 md:pl-2 flex flex-col gap-24 relative dark:bg-black dark:text-white ">
+      <div className="flex md:h-0 items-center justify-between md:justify-start pb-3 md:relative w-full fixed dark:bg-black dark:bg-opacity-90  bg-white  md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
-          className="md:fixed md:mt-6 md:ml-1 mx-auto "
+          className="md:fixed md:mt-7 md:ml-4 mx-auto "
         />
         <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-          <BiMenuAltLeft size={35} />
+          <Menu size={35} />
         </div>
       </div>
 
@@ -125,37 +130,37 @@ export default function Sidebar() {
             onClick={() => navigate("/home")}
             className="hover-effect dark:hover:bg-stone-900"
           >
-            <GoHome size={30} />
+            <Home />
           </div>
           <div
             onClick={() => navigate("/search")}
             className="hover-effect dark:hover:bg-stone-900"
           >
-            <FiSearch size={30} />
+            <Search />
           </div>
           <div
             onClick={() => navigate("/notifications")}
             className="hover-effect dark:hover:bg-stone-900"
           >
-            <FaRegHeart size={28} />
+            <HeartOutline size={28} />
           </div>
           <div
             onClick={() => navigate("/profile")}
             className="hover-effect dark:hover:bg-stone-900"
           >
-            <FaRegUser size={24} />
+            <Profile />
           </div>
         </div>
       </div>
 
       <div className="hidden md:flex flex-col gap-5 mt-auto pl-4 fixed bottom-6 z-50">
-        <VscPinned size={30} />
+        <Pinned size={30} />
         <div className="relative">
           <div
             onClick={() => setMenuOpen(!menuOpen)}
             className="cursor-pointer"
           >
-            <BiMenuAltLeft size={35} />
+            <Menu />
           </div>
           {/* Render the menu items when menuOpen is true */}
           {menuOpen && (
@@ -192,31 +197,31 @@ export default function Sidebar() {
           onClick={() => navigate("/home")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <GoHome size={26} />
+          <Home size={26} />
         </div>
         <div
           onClick={() => navigate("/search")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FiSearch size={26} />
+          <Search size={26} />
         </div>
         <div
           onClick={handlePlusClick}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegEdit size={26} />
+          <Post size={26} />
         </div>
         <div
           onClick={() => navigate("/notifications")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegHeart size={24} />
+          <HeartOutline size={24} />
         </div>
         <div
           onClick={() => navigate("/profile")}
           className="hover-effect dark:hover:bg-stone-900"
         >
-          <FaRegUser size={24} />
+          <Profile size={24} />
         </div>
       </div>
 
