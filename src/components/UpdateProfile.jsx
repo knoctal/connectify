@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../AppContext";
+import { CgProfile } from "react-icons/cg";
 import { supabase } from "../supabaseClient";
 
 export default function UpdateProfile() {
@@ -19,7 +20,6 @@ export default function UpdateProfile() {
     try {
       setUploading(true);
       setErrorMessage("");
-
       const { data: userData } = await supabase.auth.getUser();
       const user = userData?.user;
       if (!user) {
@@ -27,7 +27,7 @@ export default function UpdateProfile() {
         return;
       }
 
-      const filePath = `${user.id}_${Date.now()}_${file.name}`;
+      const filePath = ` ${user.id}_${Date.now()}_${file.name}`;
 
       // Upload file to Supabase storage
       const { data: uploadData, error: uploadError } = await supabase.storage
@@ -89,15 +89,16 @@ export default function UpdateProfile() {
         <CgProfile size={30} className="rounded-full w-10 h-10 object-cover" />
       )}
 
+      {/* Conditionally render the file input */}
       {showFileInput && (
         <input
           type="file"
           onChange={handleFileUpload}
-          className=" w-56
-           mt-3 absolute right-1 "
+          className=" w-56 mt-3 absolute right-1 "
         />
       )}
 
+      {/* Upload status and error messages */}
       {uploading && <p>Uploading...</p>}
       {errorMessage && <p>{errorMessage}</p>}
     </div>
