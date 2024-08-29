@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useApp } from '../AppContext';
-import { supabase } from '../supabaseClient';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaConnectdevelop, FaSpinner } from 'react-icons/fa';
+import { useState } from "react";
+import { useApp } from "../AppContext";
+import { supabase } from "../supabaseClient";
+import { Link, useNavigate } from "react-router-dom";
+import { FaConnectdevelop, FaSpinner } from "react-icons/fa";
 
 export default function LogIn() {
   const { theme, setTheme } = useApp();
   const [message, setMessage] = useState({
-    type: '',
-    content: '',
+    type: "",
+    content: "",
     visible: false,
   });
   const [loading, setLoading] = useState(false);
@@ -16,34 +16,33 @@ export default function LogIn() {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    setMessage({ type: '', content: '', visible: false });
+    setMessage({ type: "", content: "", visible: false });
 
     setLoading(true);
     const formData = new FormData(e.target);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get("email");
+    const password = formData.get("password");
     try {
       let { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
       if (error) {
-        setMessage({ type: 'error', content: error.message, visible: true });
-        document.getElementById('password-input').value = '';
+        setMessage({ type: "error", content: error.message, visible: true });
+        document.getElementById("password-input").value = "";
       } else {
-        console.log('User logged in:', data);
         setMessage({
-          type: 'success',
-          content: 'Logged in successfully!',
+          type: "success",
+          content: "Logged in successfully!",
           visible: true,
         });
-        navigate('/Home');
+        navigate("/Home");
       }
     } catch (error) {
-      console.error('Unexpected error:', error.message);
+      console.error("Unexpected error:", error.message);
       setMessage({
-        type: 'error',
-        content: 'An unexpected error occurred. Please try again.',
+        type: "error",
+        content: "An unexpected error occurred. Please try again.",
         visible: true,
       });
     } finally {
@@ -51,11 +50,10 @@ export default function LogIn() {
       setTimeout(() => setMessage({ ...message, visible: false }), 3000);
     }
   }
-
   return (
-    <div className=" flex flex-col items-center justify-center min-h-screen md:min-h-screen relative  bg-slate-50 dark:bg-gray-950 text-black object-cover dark:text-white ">
-      <div className="block md:hidden">
-        <FaConnectdevelop size={40} />
+    <div className=" flex flex-col items-center justify-center h-screen md:min-h-screen relative  bg-slate-50 dark:bg-neutral-900 text-black object-cover dark:text-white ">
+      <div className="block p-4 md:hidden">
+        <FaConnectdevelop size={50} />
       </div>
       <div className="top-0 ml-[-70vh] mt-[-12vh] absolute z-0 md:block hidden object-cover">
         <img src="/Back-Image.webp" alt="Front" className="object-cover" />
@@ -93,7 +91,7 @@ export default function LogIn() {
             {loading ? (
               <FaSpinner className="animate-spin dark:text-black " size={15} />
             ) : (
-              'Log in'
+              "Log in"
             )}
           </button>
         </form>
@@ -104,10 +102,10 @@ export default function LogIn() {
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-        <div className="bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between">
-          <h5 className="dark:text-black">Don&apos;t have an account?</h5>
+        <div className="border border-neutral-700 text-xs md:text-sm p-5 w-fit rounded-xl  flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-xl md:p-4 md:justify-between">
+          <h5 className=" dark:text-white">Don&apos;t have an account?</h5>
           <Link to="/Signup">
-            <h4 className="text-blue-500">Sign Up</h4>
+            <h4 className="text-blue-500">Signup</h4>
           </Link>
         </div>
       </div>

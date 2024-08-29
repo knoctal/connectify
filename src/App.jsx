@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "react-query";
 import Login from "./pages/LogInPage";
 import Signup from "./pages/SignUpPage";
 import Homepage from "./pages/Homepage";
@@ -10,6 +11,7 @@ import Notifications from "./pages/Notifications";
 import Reportproblem from "./components/Reportproblem";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,9 +53,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AppProvider>
-      <RouterProvider router={router} />
-    </AppProvider>
+    <QueryClientProvider client={queryClient}>
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -1,19 +1,10 @@
-import ThreadForm from './ThreadForm';
-import { useApp } from '../AppContext';
-import { CgProfile } from 'react-icons/cg';
-import { FaRegHeart } from 'react-icons/fa';
-import Dropdown from '../components/Dropdown';
-import { GoPaperAirplane } from 'react-icons/go';
-import { AiOutlineRetweet } from 'react-icons/ai';
-import { useState, useRef, useEffect } from 'react';
-import { MdOutlineModeComment } from 'react-icons/md';
-import { CiHeart } from 'react-icons/ci';
-import { Link } from 'react-router-dom';
-import { Avatar, Comment, HeartOutline } from '../../lib/data/Icons';
+import ThreadForm from "./ThreadForm";
+import Dropdown from "../components/Dropdown";
+import { useState, useRef, useEffect } from "react";
+import FeedItems, { RenderProfilePic } from "./FeedItem";
 
 export default function Feeds() {
   const [showForm, setShowForm] = useState(false);
-  const { userName, profilePic, threadText, postPic, userPosts } = useApp();
 
   const formContainerRef = useRef(null);
 
@@ -31,13 +22,13 @@ export default function Feeds() {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
 
-  const dropdownOptions = ['For you', 'Following', 'Liked', 'Saved'];
+  const dropdownOptions = ["For you", "Following", "Liked", "Saved"];
 
   return (
     <div className="centered-div bg-white dark:bg-black dark:text-white ">
@@ -45,31 +36,19 @@ export default function Feeds() {
       <Dropdown options={dropdownOptions} />
       <div className="width-height mt-0 ">
         {/* Hidden on mobile */}
-        <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">
+        <div
+          className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white "
+          onClick={toggleForm}
+        >
           <div className="flex gap-4">
-            {profilePic ? (
-              <img
-                src={profilePic}
-                alt="Profile"
-                className="rounded-full w-10 h-10 object-cover"
-              />
-            ) : (
-              <CgProfile
-                size={30}
-                className="rounded-full w-10 h-10 object-cover"
-              />
-            )}
-            <button
-              onClick={toggleForm}
-              className="outline-none w-full text-gray-500"
-            >
+            {RenderProfilePic("w-10 h-10")}
+            <button className="outline-none w-full text-gray-500">
               Start a thread...
             </button>
           </div>
           <div className="flex items-end justify-end">
             <button
-              onClick={toggleForm}
-              className="text-black font-semibold bg-white h-10 w-fit rounded-xl px-4 py-2 border border-gray-300 flex items-center justify-center dark:bg-black dark:text-white dark:border-neutral-700"
+              className="text-black font-semibold bg-white h-10 w-fit rounded-xl px-4 py-2 border border-gray-300 flex items-center justify-center dark:bg-neutral-900 dark:text-white dark:border-neutral-700"
               type="submit"
             >
               Post
@@ -95,62 +74,8 @@ export default function Feeds() {
             Following
           </button>
         </div>
-
-        {/* Feed items */}
-        <div className="mt-4 flex flex-col gap-4 md:p-4">
-          {userPosts.length > 0 ? (
-            userPosts.map((post, index) => (
-              <div key={index} className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                  {profilePic ? (
-                    <img
-                      src={profilePic}
-                      alt="Profile"
-                      className="rounded-full w-10 h-10 object-cover"
-                    />
-                  ) : (
-                    <Avatar size={30} className="rounded-full w-10 h-10" />
-                  )}
-                  <h3>{userName}</h3>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p>{post.post_text}</p>
-                  {post.post_image && (
-                    <img
-                      src={post.post_image}
-                      alt="Post Image"
-                      className="border rounded-md w-full"
-                    />
-                  )}
-                  <div className="flex gap-8 mt-4">
-                    <ActionButton Icon={HeartOutline} info={20} />
-                    <ActionButton Icon={Comment} info={24} />
-                    <AiOutlineRetweet size={20} />
-                    <GoPaperAirplane size={20} />
-                  </div>
-                </div>
-                <hr className="border-t border-gray-300" />
-              </div>
-            ))
-          ) : (
-            <div aria-hidden className="grid gap-3 animate-pulse">
-              <div className="space-y-2">
-                <div className="w-24 h-8 rounded-xl bg-gray-600" />
-                <div className="w-full h-8 rounded-xl bg-gray-700" />
-              </div>
-              <div className="w-full h-[500px] bg-gray-800 rounded-xl" />
-            </div>
-          )}
-        </div>
+        <FeedItems />
       </div>
-    </div>
-  );
-}
-
-function ActionButton({ Icon, info }) {
-  return (
-    <div className="flex cursor-pointer font-extralight text-base text-gray-300 items-center gap-2 py-1.5 px-2.5 rounded-full hover:bg-slate-800">
-      <Icon size={25} /> <div>{info}</div>
     </div>
   );
 }

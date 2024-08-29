@@ -1,12 +1,12 @@
-import { useApp } from '../AppContext';
-import { CiFileOn } from 'react-icons/ci';
-import { CgProfile } from 'react-icons/cg';
-import EmojiPicker from 'emoji-picker-react';
-import { supabase } from '../supabaseClient';
-import { BsFiletypeGif } from 'react-icons/bs';
-import { BiMenuAltLeft } from 'react-icons/bi';
-import { AiOutlineClose } from 'react-icons/ai';
-import { useState, useRef, useEffect } from 'react';
+import { useApp } from "../AppContext";
+import { CiFileOn } from "react-icons/ci";
+import EmojiPicker from "emoji-picker-react";
+import { BsFiletypeGif } from "react-icons/bs";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
+import { useState, useRef, useEffect } from "react";
+import { useUploadPost } from "./UploadPost";
+import { RenderProfilePic } from "./FeedItem";
 
 export default function ThreadForm({ toggleForm }) {
   const [file, setFile] = useState(null);
@@ -15,12 +15,13 @@ export default function ThreadForm({ toggleForm }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [pollOptions, setPollOptions] = useState(['Yes', 'No']);
+  const { threadText, userName, setThreadText } = useApp();
+  const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const { profilePic, userName, threadText, setThreadText } = useApp();
   const [dropdownOption, setDropdownOption] = useState(
-    'Anyone can reply & quote'
+    "Anyone can reply & quote"
   );
+  const uploadPost = useUploadPost(toggleForm);
 
   const pollRef = useRef(null);
   const formRef = useRef(null);
@@ -43,76 +44,26 @@ export default function ThreadForm({ toggleForm }) {
       reader.readAsDataURL(selectedFile);
     }
   };
+
   const handlePostClick = async () => {
-    console.log('Post button clicked');
-
     setShowUpload(true);
-
-    setShowUpload(true);
-
+    if (!threadText.trim()) {
+      console.error("Thread text cannot be empty");
+      return;
+    }
     if (!file) {
-      console.error('No file selected');
+      console.error("No file selected");
       return;
     }
 
-    try {
-      // Upload the file to the Supabase storage bucket
-      const { data: userData, error: userError } =
-        await supabase.auth.getUser();
-      const user = userData?.user;
-
-      if (userError || !user) {
-        console.error(
-          'User not authenticated or error getting user data:',
-          userError
-        );
-        return;
+    uploadPost.mutate(
+      { file, threadText },
+      {
+        onSuccess: () => {
+          setThreadText("");
+        },
       }
-
-      const filePath = `${user.id}_${Date.now()}_${file.name}`;
-      const { data, error } = await supabase.storage
-        .from('posts_images')
-        .upload(filePath, file);
-
-      if (error) {
-        console.error('Error uploading file:', error.message);
-        return;
-      }
-
-      console.log('File uploaded successfully:', data.Key);
-
-      // Get the public URL of the uploaded file
-      const { data: publicURLData, error: urlError } = supabase.storage
-        .from('posts_images')
-        .getPublicUrl(filePath);
-
-      if (urlError) {
-        console.error('Failed to generate public URL:', urlError.message);
-        return;
-      }
-      const publicURL = publicURLData?.publicUrl;
-      console.log('Public URL of the uploaded file:', publicURL);
-
-      if (!publicURL) {
-        console.error('Public URL is not available.');
-        return;
-      }
-
-      // Insert the file URL and thread text into the 'posts' table
-      const { data: postData, error: postError } = await supabase
-        .from('posts')
-        .insert([
-          { post_image: publicURL, post_text: threadText, user_id: user.id },
-        ]);
-
-      if (postError) {
-        console.error('Error inserting post:', postError.message);
-      } else {
-        console.log('Post added successfully:', postData);
-      }
-    } catch (err) {
-      console.error('Error during post creation:', err);
-    }
+    );
   };
 
   const handleEmojiClick = (emojiObject) => {
@@ -163,6 +114,7 @@ export default function ThreadForm({ toggleForm }) {
   const handleDiscardClick = () => {
     setShowConfirmation(false);
     toggleForm();
+    setThreadText("");
   };
 
   const handleConfirmationCancel = () => {
@@ -170,16 +122,16 @@ export default function ThreadForm({ toggleForm }) {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
 
   return (
     <div
       className={`fixed   inset-0 flex flex-col items-center justify-center md:bg-black md:bg-opacity-70 z-50  bg-neutral-900  ${
-        showPoll ? 'md:h-auto' : 'md:h-auto'
+        showPoll ? "md:h-auto" : "md:h-auto"
       }`}
     >
       <div className="flex items-center justify-between md:justify-center p-6 relative h-6 w-full ">
@@ -196,19 +148,12 @@ export default function ThreadForm({ toggleForm }) {
       <div
         ref={formRef}
         className={`bg-white p-6 md:rounded-2xl md:shadow-lg md:w-full md:max-w-[630px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${
-          showPoll ? 'md:h-auto' : 'md:h-auto'
+          showPoll ? "md:h-auto" : "md:h-auto"
         } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
       >
         <div className="flex gap-2 mb-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-10 h-10 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-10 h-10" />
-          )}
+          {RenderProfilePic("w-10 h-10")}
+
           <div className="flex flex-col m-0 p-0 items-start flex-grow">
             <h4 className="font-semibold">{userName}</h4>
             <textarea
@@ -245,12 +190,12 @@ export default function ThreadForm({ toggleForm }) {
                     type="text"
                     value={option}
                     onChange={(e) => handleOptionChange(index, e.target.value)}
-                    placeholder={index === 0 ? 'Yes' : 'No'}
+                    placeholder={index === 0 ? "Yes" : "No"}
                     className="block mt-2 w-[500px] p-2 border rounded-2xl outline-none text-gray-500 dark:bg-neutral-900 dark:border-neutral-700"
                   />
                 ))}
                 <button
-                  onClick={() => setPollOptions([...pollOptions, ''])}
+                  onClick={() => setPollOptions([...pollOptions, ""])}
                   className="mt-2 text-gray-500"
                 >
                   Add another option
@@ -271,7 +216,7 @@ export default function ThreadForm({ toggleForm }) {
               <div
                 ref={emojiPickerRef}
                 className="absolute z-50 dark:bg-black "
-                style={{ width: '200px', height: '200px' }}
+                style={{ width: "200px", height: "200px" }}
               >
                 <EmojiPicker onEmojiClick={handleEmojiClick} />
               </div>
@@ -298,15 +243,7 @@ export default function ThreadForm({ toggleForm }) {
           </div>
         </div>
         <div className="flex gap-2 m-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-6 h-6 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-6 h-6" />
-          )}
+          {RenderProfilePic("w-6 h-6")}
           <textarea
             className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
             rows={1}
@@ -331,7 +268,7 @@ export default function ThreadForm({ toggleForm }) {
               >
                 <button
                   onClick={() =>
-                    handleDropdownOptionSelect('Anyone can reply & quote')
+                    handleDropdownOptionSelect("Anyone can reply & quote")
                   }
                   className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
                 >
@@ -339,7 +276,7 @@ export default function ThreadForm({ toggleForm }) {
                 </button>
                 <button
                   onClick={() =>
-                    handleDropdownOptionSelect('Profiles you follow can reply')
+                    handleDropdownOptionSelect("Profiles you follow can reply")
                   }
                   className="block text-left items-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
                 >
@@ -348,7 +285,7 @@ export default function ThreadForm({ toggleForm }) {
                 <button
                   onClick={() =>
                     handleDropdownOptionSelect(
-                      'Profiles you mentioned can reply'
+                      "Profiles you mentioned can reply"
                     )
                   }
                   className="block text-left w-full p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-stone-800"
@@ -363,8 +300,8 @@ export default function ThreadForm({ toggleForm }) {
             <button
               className={`border border-gray-100  px-4 py-2 rounded-xl dark:border-neutral-700  ${
                 threadText.trim()
-                  ? 'text-black dark:text-white '
-                  : 'text-gray-700 cursor-not-allowed'
+                  ? "text-black dark:text-white "
+                  : "text-gray-700 cursor-not-allowed"
               }`}
               onClick={handlePostClick}
               disabled={!threadText.trim()}

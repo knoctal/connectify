@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useApp } from "../AppContext";
-import { CgProfile } from "react-icons/cg";
-import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
-import { GoPaperAirplane } from "react-icons/go";
-import { AiOutlineRetweet } from "react-icons/ai";
-import { MdOutlineModeComment } from "react-icons/md";
+import FeedItems, { RenderProfilePic } from "./FeedItem";
 
 export default function ProfileInfo({ onEditClick }) {
+  const [activeBtn, setActiveBtn] = useState("Thread");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { userName, fullName, bio, link, profilePic, userPosts } = useApp();
+  const { userName, fullName, bio, link, profilePic } = useApp();
 
   const handleImageClick = () => {
     setIsModalOpen(true);
@@ -20,7 +17,7 @@ export default function ProfileInfo({ onEditClick }) {
   };
 
   return (
-    <div className="width-height mt-0 dark:bg-gray-950 dark:text-white">
+    <div className="width-height mt-0 dark:text-white">
       <div className=" mt-0">
         <div className="flex md:p-4 justify-between md:gap-x-80">
           <div className="flex flex-col items-start ">
@@ -28,20 +25,7 @@ export default function ProfileInfo({ onEditClick }) {
             <p>{userName || "Loading..."}</p>
           </div>
           <div className="md:flex w-20 h-20">
-            {profilePic ? (
-              <img
-                src={profilePic}
-                alt="Profile"
-                onClick={handleImageClick}
-                className="rounded-full w-20 h-20 object-cover"
-              />
-            ) : (
-              <CgProfile
-                size={30}
-                onClick={handleImageClick}
-                className="rounded-full w-20 h-20 object-cover"
-              />
-            )}
+            {RenderProfilePic("w-20 h-20", handleImageClick)}
           </div>
         </div>
         <div className="flex flex-col gap-6 w-fit items-start md:w-96 md:ml-4">
@@ -67,66 +51,60 @@ export default function ProfileInfo({ onEditClick }) {
             Edit Profile
           </button>
         </div>
-        <div className="mt-4 p-3 font-semibold flex justify-between items-center md:justify-around text-x text-gray-500/80">
-          <div>Thread</div>
-          <div>Replies</div>
-          <div>Repost</div>
-        </div>
-        <hr className="border-t border-gray-300 w-full dark:border-neutral-700" />
-        <div className="mt-4 flex flex-col gap-4 md:p-4">
-          {userPosts.length > 0 ? (
-            userPosts.map((post, index) => (
-              <div key={index} className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                  {profilePic ? (
-                    <img
-                      src={profilePic}
-                      alt="Profile"
-                      className="rounded-full w-10 h-10 object-cover"
-                    />
-                  ) : (
-                    <CgProfile
-                      size={30}
-                      className="rounded-full w-10 h-10 object-cover"
-                    />
-                  )}
-                  <h3>{userName}</h3>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p>{post.post_text}</p>
-                  {post.post_image && (
-                    <img
-                      src={post.post_image}
-                      alt="Post Image"
-                      className="border rounded-md w-full"
-                    />
-                  )}
-                  <div className="flex gap-8 mt-4">
-                    <FaRegHeart size={20} />
-                    <MdOutlineModeComment size={20} />
-                    <AiOutlineRetweet size={20} />
-                    <GoPaperAirplane size={20} />
-                  </div>
-                </div>
-                <hr className="border-t border-gray-300" />
-              </div>
-            ))
-          ) : (
-            <p>No posts available</p>
-          )}
+        <div className="flex flex-col gap-2 w-full  p-3">
+          <div className="h-14 flex justify-around items-center ">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Thread"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Thread
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Replies"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Replies
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Repost"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Repost
+            </button>
+          </div>
         </div>
       </div>
+      <FeedItems />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-black bg-opacity-90">
-          {/* Close button positioned at the top-left corner of the screen */}
           <button
             className="absolute top-4 left-4 text-white"
             onClick={handleCloseModal}
           >
             <AiOutlineClose size={30} />
           </button>
-          {/* Centered image */}
           <div className="relative">
             <img
               src={profilePic}
