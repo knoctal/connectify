@@ -24,7 +24,7 @@
   }
 
   .appearence-btns {
-    @apply h-[60px] flex md:ml-0 ml-4 p-3 items-center justify-center rounded-md hover:bg-gray-300 dark:hover:bg-stone-900 md:w-[122px];
+    @apply h-[60px] flex md:ml-0 ml-4 p-2 items-center justify-center rounded-md hover:bg-gray-300 dark:hover:bg-stone-900 md:w-[122px];
   }
 
   .settings-pah-m-styles {
@@ -69,6 +69,7 @@
   width: 60px;
   height: 60px;
   display: flex;
+  border-radius: 25%;
   align-items: center;
   justify-content: center;
   transition: gray 0.3s ease;

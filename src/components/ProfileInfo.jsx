@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import FeedItems, { RenderProfilePic } from "./FeedItem";
 
 export default function ProfileInfo({ onEditClick }) {
+  const [activeBtn, setActiveBtn] = useState("Thread");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { userName, fullName, bio, link, profilePic } = useApp();
 
@@ -16,7 +17,7 @@ export default function ProfileInfo({ onEditClick }) {
   };
 
   return (
-    <div className="width-height mt-0  dark:text-white">
+    <div className="width-height mt-0 dark:text-white">
       <div className=" mt-0">
         <div className="flex md:p-4 justify-between md:gap-x-80">
           <div className="flex flex-col items-start ">
@@ -50,25 +51,60 @@ export default function ProfileInfo({ onEditClick }) {
             Edit Profile
           </button>
         </div>
-        <div className="mt-4 p-3 font-semibold flex justify-between items-center md:justify-around text-x text-gray-500/80">
-          <div>Thread</div>
-          <div>Replies</div>
-          <div>Repost</div>
+        <div className="flex flex-col gap-2 w-full  p-3">
+          <div className="h-14 flex justify-around items-center ">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Thread"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Thread
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Replies"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Replies
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveBtn("Privacy");
+              }}
+              className={`setting-buttons ${
+                activeBtn === "Repost"
+                  ? "text-black border-b-black dark:text-white dark:border-b-white"
+                  : ""
+              } `}
+            >
+              Repost
+            </button>
+          </div>
         </div>
-        <hr className="border-t border-gray-300 w-full dark:border-neutral-700" />
       </div>
       <FeedItems />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-black bg-opacity-90">
-          {/* Close button positioned at the top-left corner of the screen */}
           <button
             className="absolute top-4 left-4 text-white"
             onClick={handleCloseModal}
           >
             <AiOutlineClose size={30} />
           </button>
-          {/* Centered image */}
           <div className="relative">
             <img
               src={profilePic}

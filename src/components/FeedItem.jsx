@@ -33,23 +33,6 @@ export const RenderProfilePic = (
 export default function FeedItems() {
   const { userName, profilePic, userPosts } = useApp();
 
-  // const renderProfilePic = (size = "w-10 h-10", handleImageClick = null) => {
-  //   return profilePic ? (
-  //     <img
-  //       src={profilePic}
-  //       alt="Profile"
-  //       onClick={handleImageClick}
-  //       className={`rounded-full object-cover ${size}`}
-  //     />
-  //   ) : (
-  //     <Avatar
-  //       size={30}
-  //       onClick={handleImageClick}
-  //       className={`rounded-full object-cover ${size}`}
-  //     />
-  //   );
-  // };
-
   return (
     <div>
       {/* Feed items */}
@@ -75,7 +58,7 @@ export default function FeedItems() {
                   <img
                     src={post.post_image}
                     alt="Post Image"
-                    className="border rounded-md w-full"
+                    className=" rounded-md w-full"
                   />
                 )}
                 <div className="flex gap-1 mt-4">

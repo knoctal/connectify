@@ -36,20 +36,19 @@ export default function Feeds() {
       <Dropdown options={dropdownOptions} />
       <div className="width-height mt-0 ">
         {/* Hidden on mobile */}
-        <div className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white ">
+        <div
+          className="hidden  md:flex flex-row p-4 items-start justify-start gap-x-96 dark:bg-neutral-900 dark:text-white "
+          onClick={toggleForm}
+        >
           <div className="flex gap-4">
             {RenderProfilePic("w-10 h-10")}
-            <button
-              onClick={toggleForm}
-              className="outline-none w-full text-gray-500"
-            >
+            <button className="outline-none w-full text-gray-500">
               Start a thread...
             </button>
           </div>
           <div className="flex items-end justify-end">
             <button
-              onClick={toggleForm}
-              className="text-black font-semibold bg-white h-10 w-fit rounded-xl px-4 py-2 border border-gray-300 flex items-center justify-center dark:bg-black dark:text-white dark:border-neutral-700"
+              className="text-black font-semibold bg-white h-10 w-fit rounded-xl px-4 py-2 border border-gray-300 flex items-center justify-center dark:bg-neutral-900 dark:text-white dark:border-neutral-700"
               type="submit"
             >
               Post

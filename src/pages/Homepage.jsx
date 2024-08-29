@@ -9,7 +9,6 @@ export default function HomePage() {
         <div className="md:fixed md:flex md:flex-col items-center justify-center top-10 left-0 right-0 mt-4  dark:text-white">
           <Feeds />
         </div>
-        <div></div>
       </div>
     </div>
   );
