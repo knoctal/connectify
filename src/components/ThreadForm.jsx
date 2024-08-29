@@ -15,14 +15,9 @@ export default function ThreadForm({ toggleForm }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [file, setFile] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const [showUpload, setShowUpload] = useState(false);
   const { threadText, userName, setThreadText } = useApp();
-  const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const { profilePic, userName, threadText, setThreadText } = useApp();
   const [dropdownOption, setDropdownOption] = useState(
     "Anyone can reply & quote"
   );
