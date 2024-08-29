@@ -23,7 +23,7 @@ export default function Sidebar() {
   async function signOut() {
     let { error } = await supabase.auth.signOut();
     if (error) {
-      console.log("Error in logging out");
+      console.error("Error in logging out");
     } else {
       navigate("/");
     }

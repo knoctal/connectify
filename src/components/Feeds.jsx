@@ -37,7 +37,7 @@ export default function Feeds() {
   const dropdownOptions = ["For you", "Following", "Liked", "Saved"];
 
   return (
-    <div className="centered-div bg-white dark:bg-black dark:text-white ">
+    <div className="centered-div bg-white dark:bg-black dark:text-white">
       {/* Fixed height and scrollable content */}
       <Dropdown options={dropdownOptions} />
       <div className="width-height mt-0 ">
@@ -113,7 +113,7 @@ export default function Feeds() {
                     <img
                       src={post.post_image}
                       alt="Post Image"
-                      className="border rounded-md w-full"
+                      className="rounded-md w-full"
                     />
                   )}
                   <div className="flex gap-8 mt-4">
@@ -123,7 +123,7 @@ export default function Feeds() {
                     <GoPaperAirplane size={20} />
                   </div>
                 </div>
-                <hr className="border-t border-gray-300" />
+                <hr className="border-t border-neutral-700" />
               </div>
             ))
           ) : (

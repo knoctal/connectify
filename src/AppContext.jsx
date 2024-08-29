@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
+import { useQuery } from "react-query";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
@@ -30,96 +31,72 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  const fetchUserDetails = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      if (!user) return;
+    if (!user) return;
 
-      const { data, error } = await supabase
-        .from("usersDetails")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
+    const { data, error } = await supabase
+      .from("usersDetails")
+      .select("*")
+      .eq("user_id", user.id)
+      .single();
 
-      if (error) {
-        console.error("Error fetching user details:", error.message);
+    if (error) {
+      console.error("Error fetching user details:", error.message);
+    } else {
+      setUserName(data.user_name);
+      setFullName(data.full_name);
+      setBio(data.user_bio);
+      setLink(data.user_link);
+
+      const { publicURL, error: urlError } = supabase.storage
+        .from("profile_picture") // Replace with your actual bucket name
+        .getPublicUrl(data.profile_url);
+
+      if (urlError) {
+        console.error("Error fetching profile picture URL:", urlError.message);
       } else {
-        setUserName(data.user_name);
-        setFullName(data.full_name);
-        setBio(data.user_bio);
-        setLink(data.user_link);
-
-        const { publicURL, error: urlError } = supabase.storage
-          .from("profile_picture") // Replace with your actual bucket name
-          .getPublicUrl(data.profile_url);
-
-        if (urlError) {
-          console.error(
-            "Error fetching profile picture URL:",
-            urlError.message
-          );
-        } else {
-          setProfilePic(publicURL);
-          console.log("Profile Picture URL:", profilePic);
-        }
-      }
-    };
-
-    fetchUserDetails();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      const { data, error } = await supabase
-        .from("usersDetails")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
-
-      if (error) {
-        console.error("Error fetching user details:", error.message);
-      } else {
-        setUserName(data.user_name);
-        setFullName(data.full_name);
-        setBio(data.user_bio);
-        setLink(data.user_link);
         setProfilePic(data.profile_url);
-        console.log(data.profile_url);
       }
-    };
+    }
+    return data;
+  };
 
-    fetchUserDetails();
-  }, []);
+  const { data, isLoading, error } = useQuery("userDetails", fetchUserDetails, {
+    staleTime: 5000,
+  });
 
-  useEffect(() => {
-    const fetchUserPosts = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  const fetchUserPosts = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      if (!user) return;
+    if (!user) return;
 
-      const { data, error } = await supabase
-        .from("posts")
-        .select("post_text, post_image")
-        .eq("user_id", user.id);
+    const { data, error } = await supabase
+      .from("posts")
+      .select("post_text, post_image")
+      .eq("user_id", user.id);
 
-      if (error) {
-        console.error("Error fetching user posts:", error.message);
-      } else {
-        setUserPosts(data);
-      }
-    };
+    if (error) {
+      console.error("Error fetching user posts:", error.message);
+    } else {
+      setUserPosts(data);
+    }
+    return data;
+  };
 
-    fetchUserPosts();
-  }, []);
+  const {
+    data: postsData,
+    error: postError,
+    isLoading: postLoading,
+  } = useQuery("posts", fetchUserPosts);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <AppContext.Provider
