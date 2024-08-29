@@ -31,7 +31,6 @@ export default function LogIn() {
         setMessage({ type: "error", content: error.message, visible: true });
         document.getElementById("password-input").value = "";
       } else {
-        console.log("User logged in:", data);
         setMessage({
           type: "success",
           content: "Logged in successfully!",

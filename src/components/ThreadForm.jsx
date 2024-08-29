@@ -1,32 +1,32 @@
 import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
 import EmojiPicker from "emoji-picker-react";
-import { useUploadPost } from "./UploadPost";
-import { RenderProfilePic } from "./FeedItem";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
+import { useUploadPost } from "./UploadPost";
+import { RenderProfilePic } from "./FeedItem";
 
 export default function ThreadForm({ toggleForm }) {
   const [file, setFile] = useState(null);
-  const { userName, threadText, setThreadText } = useApp();
   const [showPoll, setShowPoll] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const { threadText, userName, setThreadText } = useApp();
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [dropdownOption, setDropdownOption] = useState(
     "Anyone can reply & quote"
   );
+  const uploadPost = useUploadPost(toggleForm);
 
   const pollRef = useRef(null);
   const formRef = useRef(null);
   const dropdownRef = useRef(null);
   const emojiPickerRef = useRef(null);
-  const uploadPost = useUploadPost(toggleForm);
 
   const handleTextChange = (e) => {
     setThreadText(e.target.value);
@@ -163,7 +163,25 @@ export default function ThreadForm({ toggleForm }) {
               value={threadText}
               onChange={handleTextChange}
             />
-
+            <div className=" mt-2 flex items-center gap-2  mb-2 ">
+              <div className="flex gap-2">
+                {imagePreviewUrl && (
+                  <div className="relative w-full flex justify-center mt-4">
+                    <img
+                      src={imagePreviewUrl}
+                      alt="Preview"
+                      className="w-full max-w-[450px] object-contain rounded-md"
+                    />
+                    <button
+                      className="absolute right-0 bg-black/80  text-white rounded-full p-2 "
+                      onClick={() => setImagePreviewUrl(null)}
+                    >
+                      <AiOutlineClose />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
             {showPoll && (
               <div ref={pollRef} className="mt-2">
                 {pollOptions.map((option, index) => (
@@ -186,26 +204,7 @@ export default function ThreadForm({ toggleForm }) {
             )}
           </div>
         </div>
-
-        <div className="flex gap-2">
-          {imagePreviewUrl && (
-            <div className="relative w-full flex justify-center mt-4">
-              <img
-                src={imagePreviewUrl}
-                alt="Preview"
-                className="w-full max-w-[450px] object-contain rounded-md"
-              />
-              <button
-                className="absolute right-1 bg-black/80 mr-14 text-white rounded-full p-2 "
-                onClick={() => setImagePreviewUrl(null)}
-              >
-                <AiOutlineClose />
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className=" mt-2 flex items-center gap-2 ml-12 mb-2">
+        <div className="flex items-center gap-2 ml-12 mb-2">
           <div className="relative flex items-center gap-2 h-auto">
             <button
               onClick={() => setShowEmojiPicker((prev) => !prev)}
@@ -228,7 +227,7 @@ export default function ThreadForm({ toggleForm }) {
               <CiFileOn size={22} />
               <input
                 type="file"
-                className="hidden "
+                className="hidden"
                 id="input-files"
                 onChange={handleFileChange}
               />
@@ -243,7 +242,6 @@ export default function ThreadForm({ toggleForm }) {
             </button>
           </div>
         </div>
-
         <div className="flex gap-2 m-2">
           {RenderProfilePic("w-6 h-6")}
           <textarea
@@ -300,10 +298,10 @@ export default function ThreadForm({ toggleForm }) {
 
           <div className="flex md:justify-between md:gap-4 md:mt-6">
             <button
-              className={`border border-gray-100 px-4 py-2 rounded-xl dark:border-neutral-700  ${
+              className={`border border-gray-100  px-4 py-2 rounded-xl dark:border-neutral-700  ${
                 threadText.trim()
-                  ? "text-white "
-                  : "text-gray-500 cursor-not-allowed"
+                  ? "text-black dark:text-white "
+                  : "text-gray-700 cursor-not-allowed"
               }`}
               onClick={handlePostClick}
               disabled={!threadText.trim()}
@@ -322,7 +320,7 @@ export default function ThreadForm({ toggleForm }) {
             <div className="mt-8 flex justify-around   ">
               <button
                 onClick={handleConfirmationCancel}
-                className="text-white "
+                className="text-black dark:text-white "
               >
                 Cancel
               </button>

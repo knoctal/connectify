@@ -28,8 +28,6 @@ export default function Signup() {
       if (error) {
         setMessage({ type: "error", content: error.message, visible: true });
       } else {
-        console.log("User signed up successfully:", data);
-
         const { user } = data; // Get the user object that includes the user ID
 
         // Insert only username and user_id into userDetail table
@@ -41,8 +39,6 @@ export default function Signup() {
 
         if (insertError) {
           console.error("Insert error:", insertError);
-        } else {
-          console.log("Username inserted successfully!");
         }
 
         setMessage({
