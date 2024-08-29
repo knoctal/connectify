@@ -1,12 +1,12 @@
 import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
-import { CgProfile } from "react-icons/cg";
 import EmojiPicker from "emoji-picker-react";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
 import { useUploadPost } from "./UploadPost";
+import { RenderProfilePic } from "./FeedItem";
 
 export default function ThreadForm({ toggleForm }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function ThreadForm({ toggleForm }) {
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
-  const { profilePic, userName, threadText, setThreadText } = useApp();
+  const { threadText, userName, setThreadText } = useApp();
   const [showPoll, setShowPoll] = useState(false);
   const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -56,7 +56,14 @@ export default function ThreadForm({ toggleForm }) {
       return;
     }
 
-    uploadPost.mutate({ file, threadText });
+    uploadPost.mutate(
+      { file, threadText },
+      {
+        onSuccess: () => {
+          setThreadText("");
+        },
+      }
+    );
   };
 
   const handleEmojiClick = (emojiObject) => {
@@ -107,6 +114,7 @@ export default function ThreadForm({ toggleForm }) {
   const handleDiscardClick = () => {
     setShowConfirmation(false);
     toggleForm();
+    setThreadText("");
   };
 
   const handleConfirmationCancel = () => {
@@ -144,17 +152,10 @@ export default function ThreadForm({ toggleForm }) {
         } w-full h-full md:h-fit flex flex-col overflow-y-auto max-h-[500px]`}
       >
         <div className="flex gap-2 mb-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-10 h-10 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-10 h-10" />
-          )}
+          {RenderProfilePic("w-10 h-10")}
+
           <div className="flex flex-col m-0 p-0 items-start flex-grow">
-            <h4 className="font-semibold">mansub_hafeez</h4>
+            <h4 className="font-semibold">{userName}</h4>
             <textarea
               className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
               rows={1}
@@ -244,15 +245,7 @@ export default function ThreadForm({ toggleForm }) {
         </div>
 
         <div className="flex gap-2 m-2">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-6 h-6 object-cover"
-            />
-          ) : (
-            <CgProfile size={30} className="rounded-full w-6 h-6" />
-          )}
+          {RenderProfilePic("w-6 h-6")}
           <textarea
             className="w-full font-gray-500 rounded-lg resize-none outline-none dark:text-white dark:bg-neutral-900"
             rows={1}

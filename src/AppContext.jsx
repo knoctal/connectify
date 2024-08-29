@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
 import { useQuery } from "react-query";
+import Skeleton from "./components/Skeleton";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
@@ -95,7 +96,12 @@ export const AppProvider = ({ children }) => {
     isLoading: postLoading,
   } = useQuery("posts", fetchUserPosts);
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading)
+  //   return (
+  //     <div>
+  //       <Skeleton />
+  //     </div>
+  //   );
   if (error) return <div>Error: {error.message}</div>;
 
   return (
