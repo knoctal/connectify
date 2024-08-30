@@ -1,20 +1,21 @@
-import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
-import { useQuery } from "react-query";
-import Skeleton from "./components/Skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useState, useEffect, useContext } from "react";
+
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [bio, setBio] = useState("");
   const [link, setLink] = useState("");
   const [theme, setTheme] = useState(null);
+  const [postPic, setPostPic] = useState("");
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [threadText, setThreadText] = useState("");
-  const [postPic, setPostPic] = useState("");
   const [userPosts, setUserPosts] = useState([]);
 
+  // Theme handling
   useEffect(() => {
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
@@ -32,12 +33,16 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
+  // Fetch user details
   const fetchUserDetails = async () => {
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) return;
+    if (userError || !user) {
+      throw new Error(userError?.message || "User not found");
+    }
 
     const { data, error } = await supabase
       .from("usersDetails")
@@ -46,63 +51,73 @@ export const AppProvider = ({ children }) => {
       .single();
 
     if (error) {
-      console.error("Error fetching user details:", error.message);
-    } else {
-      setUserName(data.user_name);
-      setFullName(data.full_name);
-      setBio(data.user_bio);
-      setLink(data.user_link);
-
-      const { publicURL, error: urlError } = supabase.storage
-        .from("profile_picture") // Replace with your actual bucket name
-        .getPublicUrl(data.profile_url);
-
-      if (urlError) {
-        console.error("Error fetching profile picture URL:", urlError.message);
-      } else {
-        setProfilePic(data.profile_url);
-      }
+      throw new Error(error.message);
     }
+
+    setUserName(data.user_name);
+    setFullName(data.full_name);
+    setBio(data.user_bio);
+    setLink(data.user_link);
+
+    const { publicURL, error: urlError } = supabase.storage
+      .from("profile_picture")
+      .getPublicUrl(data.profile_url);
+
+    if (urlError) {
+      throw new Error(urlError.message);
+    }
+
+    setProfilePic(data.profile_url);
     return data;
   };
 
-  const { data, isLoading, error } = useQuery("userDetails", fetchUserDetails, {
-    staleTime: 5000,
-  });
-
+  // Fetch user posts
   const fetchUserPosts = async () => {
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) return;
+    if (userError || !user) {
+      throw new Error(userError?.message || "User not found");
+    }
 
     const { data, error } = await supabase
       .from("posts")
       .select("post_text, post_image")
-      .eq("user_id", user.id);
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false }); // Order posts by created_at in descending order
 
     if (error) {
-      console.error("Error fetching user posts:", error.message);
-    } else {
-      setUserPosts(data);
+      throw new Error(error.message);
     }
+
+    setUserPosts(data);
     return data;
   };
 
   const {
-    data: postsData,
-    error: postError,
-    isLoading: postLoading,
-  } = useQuery("posts", fetchUserPosts);
+    data: userDetails,
+    isLoading: userLoading,
+    error: userError,
+  } = useQuery({
+    queryKey: ["userDetails"],
+    queryFn: fetchUserDetails,
+    staleTime: 5000,
+  });
 
-  // if (isLoading)
-  //   return (
-  //     <div>
-  //       <Skeleton />
-  //     </div>
-  //   );
-  if (error) return <div>Error: {error.message}</div>;
+  const {
+    data: postsData,
+    isLoading: postsLoading,
+    error: postsError,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchUserPosts,
+  });
+
+  if (userError || postsError) {
+    return <div>Error: {userError?.message || postsError?.message}</div>;
+  }
 
   return (
     <AppContext.Provider
@@ -133,9 +148,9 @@ export const AppProvider = ({ children }) => {
 };
 
 export function useApp() {
-  const data = useContext(AppContext);
-  if (!data) {
-    throw new Error("chin tapak dam dam");
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useApp must be used within an AppProvider");
   }
-  return data;
+  return context;
 }
