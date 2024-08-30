@@ -1,4 +1,3 @@
-import { QueryClient, QueryClientProvider } from "react-query";
 import Login from "./pages/LogInPage";
 import Signup from "./pages/SignUpPage";
 import Homepage from "./pages/Homepage";
@@ -10,6 +9,7 @@ import ThreadForm from "./components/ThreadForm";
 import Notifications from "./pages/Notifications";
 import Reportproblem from "./components/Reportproblem";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
