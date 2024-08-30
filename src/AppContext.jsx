@@ -37,9 +37,12 @@ export const AppProvider = ({ children }) => {
   const fetchUserDetails = async () => {
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) return null;
+    if (userError || !user) {
+      throw new Error(userError?.message || "User not found");
+    }
 
     const { data, error } = await supabase
       .from("usersDetails")
@@ -48,25 +51,23 @@ export const AppProvider = ({ children }) => {
       .single();
 
     if (error) {
-      console.error("Error fetching user details:", error.message);
-      return null;
-    } else {
-      setUserName(data.user_name);
-      setFullName(data.full_name);
-      setBio(data.user_bio);
-      setLink(data.user_link);
-
-      const { publicURL, error: urlError } = supabase.storage
-        .from("profile_picture") // Replace with your actual bucket name
-        .getPublicUrl(data.profile_url);
-
-      if (urlError) {
-        console.error("Error fetching profile picture URL:", urlError.message);
-        return null;
-      } else {
-        setProfilePic(data.profile_url);
-      }
+      throw new Error(error.message);
     }
+
+    setUserName(data.user_name);
+    setFullName(data.full_name);
+    setBio(data.user_bio);
+    setLink(data.user_link);
+
+    const { publicURL, error: urlError } = supabase.storage
+      .from("profile_picture")
+      .getPublicUrl(data.profile_url);
+
+    if (urlError) {
+      throw new Error(urlError.message);
+    }
+
+    setProfilePic(data.profile_url);
     return data;
   };
 
@@ -74,28 +75,31 @@ export const AppProvider = ({ children }) => {
   const fetchUserPosts = async () => {
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) return [];
+    if (userError || !user) {
+      throw new Error(userError?.message || "User not found");
+    }
 
     const { data, error } = await supabase
       .from("posts")
       .select("post_text, post_image")
-      .eq("user_id", user.id);
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false }); // Order posts by created_at in descending order
 
     if (error) {
-      console.error("Error fetching user posts:", error.message);
-      return [];
-    } else {
-      setUserPosts(data);
+      throw new Error(error.message);
     }
+
+    setUserPosts(data);
     return data;
   };
 
   const {
     data: userDetails,
-    isLoading,
-    error,
+    isLoading: userLoading,
+    error: userError,
   } = useQuery({
     queryKey: ["userDetails"],
     queryFn: fetchUserDetails,
@@ -104,19 +108,19 @@ export const AppProvider = ({ children }) => {
 
   const {
     data: postsData,
-    error: postError,
-    isLoading: postLoading,
+    isLoading: postsLoading,
+    error: postsError,
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchUserPosts,
   });
 
-  if (isLoading || postLoading) {
-    return <div></div>;
+  if (userLoading || postsLoading) {
+    return <div>Loading...</div>;
   }
 
-  if (error || postError) {
-    return <div>Error: {error?.message || postError?.message}</div>;
+  if (userError || postsError) {
+    return <div>Error: {userError?.message || postsError?.message}</div>;
   }
 
   return (

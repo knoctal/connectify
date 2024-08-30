@@ -53,7 +53,15 @@ export default function FeedItems() {
                 <h3>{userName}</h3>
               </div>
               <div className="flex flex-col gap-2">
-                <p>{post.post_text}</p>
+                <div className="post-content">
+                  <p
+                    className="whitespace-pre-wrap"
+                    style={{ whiteSpace: "pre-wrap" }}
+                  >
+                    {post.post_text}
+                  </p>
+                </div>
+
                 {post.post_image && (
                   <img
                     src={post.post_image}
