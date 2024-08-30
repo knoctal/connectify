@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabaseClient";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const handleFileUpload = async ({ file, threadText }) => {
-  if (!threadText) {
-    throw new Error("Thread text is required");
+  if (!threadText && !file) {
+    throw new Error("Thread text or file is required");
   }
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
@@ -13,32 +13,41 @@ const handleFileUpload = async ({ file, threadText }) => {
     throw new Error("User not authenticated or error getting user data.");
   }
 
-  const filePath = `${user.id}_${Date.now()}_${file.name}`;
-  const { data, error } = await supabase.storage
-    .from("posts_images")
-    .upload(filePath, file);
+  let publicURL = null;
 
-  if (error) {
-    throw new Error("Error uploading file: " + error.message);
-  }
+  if (file) {
+    const filePath = ` ${user.id}_${Date.now()}_${file.name}`; // Unique file path
+    const { data, error } = await supabase.storage
+      .from("posts_images")
+      .upload(filePath, file);
 
-  const { data: publicURLData, error: urlError } = supabase.storage
-    .from("posts_images")
-    .getPublicUrl(filePath);
+    if (error) {
+      throw new Error("Error uploading file: " + error.message);
+    }
 
-  if (urlError) {
-    throw new Error("Failed to generate public URL: " + urlError.message);
-  }
+    const { data: publicURLData, error: urlError } = supabase.storage
+      .from("posts_images")
+      .getPublicUrl(filePath);
 
-  const publicURL = publicURLData?.publicUrl;
-  if (!publicURL) {
-    throw new Error("Public URL is not available.");
+    if (urlError) {
+      throw new Error("Failed to generate public URL: " + urlError.message);
+    }
+
+    publicURL = publicURLData?.publicUrl;
+    if (!publicURL) {
+      throw new Error("Public URL is not available.");
+    }
   }
 
   const { data: postData, error: postError } = await supabase
     .from("posts")
     .insert([
-      { post_image: publicURL, post_text: threadText, user_id: user.id },
+      {
+        post_image: publicURL,
+        post_text: threadText,
+        user_id: user.id,
+        created_at: new Date().toISOString(),
+      },
     ]);
 
   if (postError) {
@@ -50,7 +59,6 @@ const handleFileUpload = async ({ file, threadText }) => {
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: handleFileUpload,
     onSuccess: () => {
