@@ -1,52 +1,52 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Login from './pages/LogInPage';
-import Signup from './pages/SignUpPage';
-import Homepage from './pages/Homepage';
-import { AppProvider } from './AppContext';
-import SearchPage from './pages/SearchPage';
-import Settings from './components/Settings';
-import ProfilePage from './pages/ProfilePage';
-import ThreadForm from './components/ThreadForm';
-import Notifications from './pages/Notifications';
-import Reportproblem from './components/Reportproblem';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from "./pages/LogInPage";
+import Signup from "./pages/SignUpPage";
+import Homepage from "./pages/Homepage";
+import { AppProvider } from "./AppContext";
+import SearchPage from "./pages/SearchPage";
+import Settings from "./components/Settings";
+import ProfilePage from "./pages/ProfilePage";
+import ThreadForm from "./components/ThreadForm";
+import Notifications from "./pages/Notifications";
+import Reportproblem from "./components/Reportproblem";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Login />,
   },
   {
-    path: '/home',
+    path: "/home",
     element: <Homepage />,
   },
   {
-    path: '/signup',
+    path: "/signup",
     element: <Signup />,
   },
   {
-    path: '/profile',
+    path: "/profile",
     element: <ProfilePage />,
   },
   {
-    path: '/search',
+    path: "/search",
     element: <SearchPage />,
   },
   {
-    path: '/notifications',
+    path: "/notifications",
     element: <Notifications />,
   },
   {
-    path: '/report',
+    path: "/report",
     element: <Reportproblem />,
   },
   {
-    path: '/settings',
+    path: "/settings",
     element: <Settings />,
   },
   {
-    path: '/post',
+    path: "/post",
     element: <ThreadForm />,
   },
 ]);
