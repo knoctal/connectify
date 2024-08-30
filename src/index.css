@@ -15,18 +15,16 @@
     @apply border rounded-full p-2 dark:bg-black dark:text-white dark:border-gray-600;
   }
 
-
-
   .centered-div {
-    @apply dark:bg-black dark:text-white dark:border-neutral-700 w-full h-full flex justify-center p-4 scrollbar-hidden;
+    @apply dark:bg-black dark:text-white dark:border-neutral-700 h-full flex justify-center p-4 scrollbar-hidden;
   }
 
   .width-height {
-    @apply md:dark:bg-neutral-900 dark:bg-black dark:text-white dark:border-neutral-700 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
+    @apply md:dark:bg-neutral-900 scrollable-container dark:bg-black dark:text-white dark:border-neutral-700 mt-14 top-0 left-0 w-full max-w-[650px] md:h-[90vh] bg-white flex flex-col md:relative md:border-gray-300 md:border md:shadow-lg overflow-y-auto scrollbar-hidden md:rounded-3xl;
   }
 
   .appearence-btns {
-    @apply h-[60px] flex md:ml-0 ml-4 p-3 items-center justify-center rounded-md hover:bg-gray-300 dark:hover:bg-stone-900 md:w-[122px];
+    @apply h-[60px] flex md:ml-0 ml-4 p-2 items-center justify-center rounded-md hover:bg-gray-300 dark:hover:bg-stone-900 md:w-[122px];
   }
 
   .settings-pah-m-styles {
@@ -41,9 +39,8 @@
     @apply flex h-10 items-center justify-between p-3 rounded-md;
   }
 
-
   .centered-div {
-    @apply dark:bg-black dark:text-white dark:border-gray-800 w-full h-full flex justify-center p-4 scrollbar-hidden;
+    @apply dark:bg-black dark:text-white dark:border-gray-800 w-full h-full flex justify-center p-4 overflow-y-auto scrollbar-hidden;
   }
 
   .width-height {
@@ -72,6 +69,7 @@
   width: 60px;
   height: 60px;
   display: flex;
+  border-radius: 25%;
   align-items: center;
   justify-content: center;
   transition: gray 0.3s ease;
@@ -88,4 +86,8 @@
 .scrollbar-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.scrollable-container {
+  overflow-y: auto;
 }

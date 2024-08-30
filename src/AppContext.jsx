@@ -16,6 +16,7 @@ export const AppProvider = ({ children }) => {
   const [userPosts, setUserPosts] = useState([]);
 
   // Theme handling
+  // Theme handling
   useEffect(() => {
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
@@ -33,6 +34,7 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
+  // Fetch user details
   // Fetch user details
   const fetchUserDetails = async () => {
     const {
@@ -71,6 +73,7 @@ export const AppProvider = ({ children }) => {
     return data;
   };
 
+  // Fetch user posts
   // Fetch user posts
   const fetchUserPosts = async () => {
     const {

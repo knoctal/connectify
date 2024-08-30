@@ -20,7 +20,7 @@ export default function SidebarDesktop({ toggleForm }) {
         </div>
       </div>
 
-      <div className="md:flex hidden flex-col gap-5 mt-auto pl-4 fixed  bottom-7 z-50">
+      <div className="md:flex hidden flex-col gap-5 mt-auto pl-4 fixed bottom-7 z-50">
         <Pinned size={30} />
         {renderMenuButton()}
       </div>

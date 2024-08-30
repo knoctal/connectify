@@ -59,9 +59,9 @@ export default function Signup() {
     }
   }
   return (
-    <div className=" min-h-screen flex flex-col items-center justify-center  bg-slate-50 dark:bg-black dark:text-white ">
-      <div className="block md:hidden">
-        <FaConnectdevelop size={40} />
+    <div className=" flex flex-col items-center justify-center h-screen md:min-h-screen relative  bg-slate-50 dark:bg-neutral-900 text-black object-cover dark:text-white ">
+      <div className="block p-4 md:hidden">
+        <FaConnectdevelop size={50} />
       </div>
       <div className="flex flex-col items-center gap-2 md:w-2/5 min-h-1 md:min-h-[90svh] p-5 mt-4">
         <h1 className="font-bold p-2 text-2xl">SignUp</h1>
@@ -100,15 +100,16 @@ export default function Signup() {
             Sign Up
           </button>
         </form>
-        <div className="flex items-center w-auto mt-4 ">
+
+        <div className="flex items-center w-auto mt-4">
           <hr className="border-t border-gray-300 w-32" />
           <span className="px-2 text-gray-500">OR</span>
           <hr className="border-t border-gray-300 w-32" />
         </div>
-        <div className="md:h-14 md:w-80 md:rounded-md md:p-4 md:justify-between bg-gray-200 h-14 w-72 rounded-xl p-2 flex flex-row gap-2 justify-center dark:bg-black dark:text-white dark:border dark:border-neutral-700">
-          <h5 className=" ">Already have an account?</h5>
-          <Link className="text-blue-500" to="/">
-            Log In
+        <div className="border border-neutral-700 text-xs md:text-sm p-5 w-fit rounded-xl  flex flex-row gap-2 justify-center md:h-14 md:w-80 md:rounded-xl md:p-4 md:justify-between">
+          <h5 className=" dark:text-white">Already have an account?</h5>
+          <Link to="/">
+            <h4 className="text-blue-500">Login</h4>
           </Link>
         </div>
       </div>
