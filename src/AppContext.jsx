@@ -1,6 +1,7 @@
+import { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useState, useEffect, useContext } from "react";
+import Skeleton from "./components/Skeleton";
 
 const AppContext = createContext();
 
@@ -8,11 +9,11 @@ export const AppProvider = ({ children }) => {
   const [bio, setBio] = useState("");
   const [link, setLink] = useState("");
   const [theme, setTheme] = useState(null);
-  const [postPic, setPostPic] = useState("");
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [threadText, setThreadText] = useState("");
+  const [postPic, setPostPic] = useState("");
   const [userPosts, setUserPosts] = useState([]);
 
   // Theme handling
@@ -112,7 +113,11 @@ export const AppProvider = ({ children }) => {
   });
 
   if (isLoading || postLoading) {
-    return <div></div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
 
   if (error || postError) {

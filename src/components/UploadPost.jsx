@@ -1,5 +1,5 @@
-import { supabase } from "../supabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "../supabaseClient";
 
 const handleFileUpload = async ({ file, threadText }) => {
   if (!threadText) {
