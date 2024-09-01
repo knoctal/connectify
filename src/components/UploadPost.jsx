@@ -4,8 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const handleFileUpload = async ({ file, threadText }) => {
   if (!threadText && !file) {
     throw new Error("Thread text or file is required");
-  if (!threadText && !file) {
-    throw new Error("Thread text or file is required");
   }
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
@@ -26,13 +24,7 @@ const handleFileUpload = async ({ file, threadText }) => {
     if (error) {
       throw new Error("Error uploading file: " + error.message);
     }
-    if (error) {
-      throw new Error("Error uploading file: " + error.message);
-    }
 
-    const { data: publicURLData, error: urlError } = supabase.storage
-      .from("posts_images")
-      .getPublicUrl(filePath);
     const { data: publicURLData, error: urlError } = supabase.storage
       .from("posts_images")
       .getPublicUrl(filePath);
@@ -40,14 +32,7 @@ const handleFileUpload = async ({ file, threadText }) => {
     if (urlError) {
       throw new Error("Failed to generate public URL: " + urlError.message);
     }
-    if (urlError) {
-      throw new Error("Failed to generate public URL: " + urlError.message);
-    }
 
-    publicURL = publicURLData?.publicUrl;
-    if (!publicURL) {
-      throw new Error("Public URL is not available.");
-    }
     publicURL = publicURLData?.publicUrl;
     if (!publicURL) {
       throw new Error("Public URL is not available.");
@@ -57,12 +42,6 @@ const handleFileUpload = async ({ file, threadText }) => {
   const { data: postData, error: postError } = await supabase
     .from("posts")
     .insert([
-      {
-        post_image: publicURL,
-        post_text: threadText,
-        user_id: user.id,
-        created_at: new Date().toISOString(),
-      },
       {
         post_image: publicURL,
         post_text: threadText,
@@ -80,6 +59,7 @@ const handleFileUpload = async ({ file, threadText }) => {
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: handleFileUpload,
     onSuccess: () => {
