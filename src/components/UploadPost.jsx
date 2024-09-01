@@ -16,7 +16,7 @@ const handleFileUpload = async ({ file, threadText }) => {
   let publicURL = null;
 
   if (file) {
-    const filePath = ` ${user.id}_${Date.now()}_${file.name}`; // Unique file path
+    const filePath = `${user.id}_${Date.now()}_${file.name}`; // Unique file path
     const { data, error } = await supabase.storage
       .from("posts_images")
       .upload(filePath, file);
@@ -59,6 +59,7 @@ const handleFileUpload = async ({ file, threadText }) => {
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: handleFileUpload,
     onSuccess: () => {

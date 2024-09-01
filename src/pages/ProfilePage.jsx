@@ -1,3 +1,5 @@
+//Changed
+
 import { useState } from "react";
 import { useApp } from "../AppContext";
 import Sidebar from "../components/Sidebar";
@@ -7,7 +9,7 @@ import ProfileForm from "../components/ProfileForm";
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editSection, setEditSection] = useState("profile");
-  const { userName, fullName, bio, link } = useApp();
+  const { usersDetails } = useApp();
   const handleEditClick = () => {
     setIsEditing(true);
     setEditSection("profile");
@@ -33,20 +35,20 @@ export default function ProfilePage() {
           <div className="width-height mt-0">
             <ProfileInfo
               onEditClick={handleEditClick}
-              userName={userName}
-              fullName={fullName}
-              bio={bio}
-              link={link}
+              userName={usersDetails?.userName}
+              fullName={usersDetails?.fullName}
+              bio={usersDetails?.bio}
+              link={usersDetails?.link}
             />
             {isEditing && (
               <ProfileForm
                 section={editSection}
                 onClose={closeForm}
                 onSectionChange={handleSectionClick}
-                userName={userName}
-                fullName={fullName}
-                bio={bio}
-                link={link}
+                userName={usersDetails?.userName}
+                fullName={usersDetails?.fullName}
+                bio={usersDetails?.bio}
+                link={usersDetails?.link}
               />
             )}
           </div>

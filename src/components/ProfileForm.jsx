@@ -1,33 +1,44 @@
+import { useRef, useEffect, useState } from "react";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
-import { useRef, useEffect, useState } from "react";
 import UpdateProfile from "../components/UpdateProfile";
 
 export default function ProfileForm({ section, onClose, onSectionChange }) {
   const formRef = useRef(null);
-  const { userName, fullName, bio, link, setBio, setLink } = useApp();
   const [loading, setLoading] = useState(false);
+  const [bio, setBioState] = useState("");
+  const [link, setLinkState] = useState("");
+
+  const { userDetails, setBio: updateBio, setLink: updateLink } = useApp();
+  const userName = userDetails?.user_name || "Loading";
+  const fullName = userDetails?.full_name || "Loading";
+  const initialBio = userDetails?.user_bio || "Loading";
+  const initialLink = userDetails?.user_link || "Loading";
+
+  useEffect(() => {
+    setBioState(initialBio);
+    setLinkState(initialLink);
+  }, [initialBio, initialLink]);
 
   const handleClickOutside = (event) => {
     if (formRef.current && !formRef.current.contains(event.target)) {
       onClose();
     }
   };
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [section]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
     const formData = new FormData(event.target);
-    const updatedBio = formData.get("bio");
-    const updatedLink = formData.get("link");
+    const updatedBio = formData.get("bio") || bio;
+    const updatedLink = formData.get("link") || link;
 
     try {
       const {
@@ -37,13 +48,15 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
       const updates = {};
       if (section === "bio") {
         updates.user_bio = updatedBio;
-        setBio(updatedBio);
+        setBioState(updatedBio);
+        updateBio(updatedBio);
       } else if (section === "link") {
         updates.user_link = updatedLink;
-        setLink(updatedLink);
+        setLinkState(updatedLink);
+        updateLink(updatedLink);
       }
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("usersDetails")
         .update(updates)
         .eq("user_id", user.id);
@@ -52,7 +65,13 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
         throw error;
       }
 
-      onSectionChange("profile"); // Update the profile view after saving
+      if (section === "bio" || section === "link") {
+        onSectionChange("profile");
+      }
+      if (section === "profile") {
+        onSectionChange("profile");
+        onClose();
+      }
     } catch (error) {
       console.error("Error updating user details:", error.message);
     } finally {
@@ -67,6 +86,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
           <form
             ref={formRef}
             className="w-full h-full md:p-4 rounded-2xl md:max-w-lg bg-white dark:bg-neutral-900 dark:text-white"
+            onSubmit={handleSubmit}
           >
             <div className="p-2 flex items-center justify-between mb-4 border-b border-gray-400 md:mb-0 md:border-none">
               <button
@@ -87,8 +107,8 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
               </button>
             </div>
             <div className="m-8 w-fit border rounded-3xl p-4 md:m-0 md:border-none md:rounded-none dark:border-neutral-700">
-              <div className="flex flex-row gap-14 md:flex-row ">
-                <div className="flex flex-col gap-4 mb-4 md:mb-0 md:w-80 ">
+              <div className="flex flex-row gap-14 md:flex-row">
+                <div className="flex flex-col gap-4 mb-4 md:mb-0 md:w-80">
                   <label
                     className="block text-gray-700 font-semibold mb-2 dark:text-white"
                     htmlFor="fullName"
@@ -100,7 +120,6 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   </label>
                   <hr className="md:hidden mt-4 border-t border-gray-600 w-[120px] md:w-[500px]" />
                 </div>
-
                 <UpdateProfile className="rounded-full w-10 h-10 object-cover" />
               </div>
               <div className="my-4">
@@ -167,12 +186,13 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
             </div>
             <form id="bioForm" onSubmit={handleSubmit}>
               <div className="mb-4 pb-6 bg-white md:rounded-3xl dark:bg-black">
-                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
+                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black">
                   <input
                     className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="text"
                     name="bio"
-                    defaultValue={bio || ""}
+                    value={bio}
+                    onChange={(e) => setBioState(e.target.value)}
                     placeholder="Enter your bio"
                   />
                 </div>
@@ -204,12 +224,13 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
             </div>
             <form id="linkForm" onSubmit={handleSubmit}>
               <div className="mb-4 pb-6 bg-white md:rounded-3xl dark:bg-black">
-                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black ">
+                <div className="rounded-3xl md:overflow-x-auto bg-white p-4 dark:bg-black">
                   <input
                     className="md:w-[200%] w-full h-full outline-none dark:bg-black"
                     type="url"
                     name="link"
-                    defaultValue={link || ""}
+                    value={link}
+                    onChange={(e) => setLinkState(e.target.value)}
                     placeholder="Enter your link"
                   />
                 </div>
