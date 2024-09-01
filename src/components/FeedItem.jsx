@@ -12,8 +12,8 @@ export const RenderProfilePic = (
   size = "w-10 h-10",
   handleImageClick = null
 ) => {
-  const { profilePic } = useApp();
-
+  const { userDetails } = useApp();
+  const profilePic = userDetails?.profile_url;
   return profilePic ? (
     <img
       src={profilePic}
@@ -31,11 +31,12 @@ export const RenderProfilePic = (
 };
 
 export default function FeedItems() {
-  const { userName, profilePic, userPosts } = useApp();
+  const { userDetails, userPosts } = useApp();
+  const userName = userDetails?.user_name || "Loading";
+  const profilePic = userDetails?.profile_url;
 
   return (
     <div>
-      {/* Feed items */}
       <div className="mt-4 flex flex-col gap-4 md:p-4">
         {userPosts.length > 0 ? (
           userPosts.map((post, index) => (
@@ -61,12 +62,11 @@ export default function FeedItems() {
                     {post.post_text}
                   </p>
                 </div>
-
                 {post.post_image && (
                   <img
                     src={post.post_image}
                     alt="Post Image"
-                    className=" rounded-md w-full"
+                    className="rounded-md w-full"
                   />
                 )}
                 <div className="flex gap-1 mt-4">

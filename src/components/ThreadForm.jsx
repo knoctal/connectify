@@ -1,12 +1,14 @@
+//Changed
+
 import { useApp } from "../AppContext";
 import { CiFileOn } from "react-icons/ci";
 import EmojiPicker from "emoji-picker-react";
+import { useUploadPost } from "./UploadPost";
+import { RenderProfilePic } from "./FeedItem";
 import { BsFiletypeGif } from "react-icons/bs";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
-import { useUploadPost } from "./UploadPost";
-import { RenderProfilePic } from "./FeedItem";
 
 export default function ThreadForm({ toggleForm }) {
   const [file, setFile] = useState(null);
@@ -29,6 +31,8 @@ export default function ThreadForm({ toggleForm }) {
   const dropdownRef = useRef(null);
   const emojiPickerRef = useRef(null);
 
+  const [uploadStatus, setUploadStatus] = useState(""); // New state for upload status
+
   const handleTextChange = (e) => {
     setThreadText(e.target.value);
   };
@@ -47,22 +51,26 @@ export default function ThreadForm({ toggleForm }) {
   };
 
   const handlePostClick = async () => {
+    setUploadStatus("Uploading...");
     setShowUpload(true);
 
     if (!file) {
       setFile(null);
     }
-
     uploadPost.mutate(
       { file, threadText },
+
       {
         onSuccess: () => {
+          setUploadStatus("Post uploaded successfully!");
+          setTimeout(() => setUploadStatus(""), 9000); // Clear the status after 3 seconds
           setThreadText("");
           setFile(null);
         },
         onError: (error) => {
           console.error("Error during post creation:", error);
-          // Handle error if needed
+          setUploadStatus(`Error: ${error.message}`);
+          setTimeout(() => setUploadStatus(""), 3000); // Clear the status after 3 seconds
         },
       }
     );
@@ -313,7 +321,11 @@ export default function ThreadForm({ toggleForm }) {
 
           <div className="flex i md:justify-between md:gap-4 ">
             <button
-              className="border border-gray-100  px-4 py-2 rounded-xl dark:border-neutral-700  "
+              className={`border border-gray-100 px-4 py-2 rounded-xl dark:border-neutral-700  ${
+                !threadText || !file
+                  ? "text-white "
+                  : "text-gray-500 cursor-not-allowed"
+              }`}
               onClick={handlePostClick}
             >
               Post
@@ -345,6 +357,7 @@ export default function ThreadForm({ toggleForm }) {
           </div>
         </div>
       )}
+      {uploadStatus && <div className="message">{uploadStatus}</div>}
     </div>
   );
 }

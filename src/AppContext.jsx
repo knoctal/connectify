@@ -1,22 +1,20 @@
-import { supabase } from "./supabaseClient";
+//CHANGED
+
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useState, useEffect, useContext } from "react";
+import { fetchUserDetails, fetchUserPosts } from "./supabaseClient";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const [theme, setTheme] = useState(null);
+  const [threadText, setThreadText] = useState("");
+  const [postPic, setPostPic] = useState("");
   const [bio, setBio] = useState("");
   const [link, setLink] = useState("");
-  const [theme, setTheme] = useState(null);
-  const [postPic, setPostPic] = useState("");
-  const [userName, setUserName] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [profilePic, setProfilePic] = useState("");
-  const [threadText, setThreadText] = useState("");
-  const [userPosts, setUserPosts] = useState([]);
 
-  // Theme handling
   useEffect(() => {
+    // Apply theme based on state
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
     } else if (theme === "dark") {
@@ -33,69 +31,6 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
-  // Fetch user details
-  const fetchUserDetails = async () => {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      throw new Error(userError?.message || "User not found");
-    }
-
-    const { data, error } = await supabase
-      .from("usersDetails")
-      .select("*")
-      .eq("user_id", user.id)
-      .single();
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    setUserName(data.user_name);
-    setFullName(data.full_name);
-    setBio(data.user_bio);
-    setLink(data.user_link);
-
-    const { publicURL, error: urlError } = supabase.storage
-      .from("profile_picture")
-      .getPublicUrl(data.profile_url);
-
-    if (urlError) {
-      throw new Error(urlError.message);
-    }
-
-    setProfilePic(data.profile_url);
-    return data;
-  };
-
-  // Fetch user posts
-  const fetchUserPosts = async () => {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      throw new Error(userError?.message || "User not found");
-    }
-
-    const { data, error } = await supabase
-      .from("posts")
-      .select("post_text, post_image")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false }); // Order posts by created_at in descending order
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    setUserPosts(data);
-    return data;
-  };
-
   const {
     data: userDetails,
     isLoading: userLoading,
@@ -107,7 +42,7 @@ export const AppProvider = ({ children }) => {
   });
 
   const {
-    data: postsData,
+    data: userPosts = [],
     isLoading: postsLoading,
     error: postsError,
   } = useQuery({
@@ -116,7 +51,7 @@ export const AppProvider = ({ children }) => {
   });
 
   if (userLoading || postsLoading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   if (userError || postsError) {
@@ -128,22 +63,16 @@ export const AppProvider = ({ children }) => {
       value={{
         theme,
         setTheme,
-        userName,
-        setUserName,
-        fullName,
-        setFullName,
-        bio,
-        setBio,
-        link,
-        setLink,
-        profilePic,
-        setProfilePic,
+        userDetails,
         threadText,
         setThreadText,
         postPic,
         setPostPic,
+        bio,
+        setBio,
+        link,
+        setLink,
         userPosts,
-        setUserPosts,
       }}
     >
       {children}
