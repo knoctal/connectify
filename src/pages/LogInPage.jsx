@@ -1,3 +1,5 @@
+//Changed
+
 import { useState } from "react";
 import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
@@ -14,6 +16,7 @@ export default function LogIn() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     setMessage({ type: "", content: "", visible: false });
@@ -36,7 +39,9 @@ export default function LogIn() {
           content: "Logged in successfully!",
           visible: true,
         });
-        navigate("/Home");
+        setTimeout(() => {
+          navigate("/Home");
+        }, 1000);
       }
     } catch (error) {
       console.error("Unexpected error:", error.message);
@@ -50,8 +55,9 @@ export default function LogIn() {
       setTimeout(() => setMessage({ ...message, visible: false }), 3000);
     }
   }
+
   return (
-    <div className=" flex flex-col items-center justify-center h-screen md:min-h-screen relative  bg-slate-50 dark:bg-neutral-900 text-black object-cover dark:text-white ">
+    <div className="flex flex-col items-center justify-center h-screen md:min-h-screen relative bg-slate-50 dark:bg-neutral-900 text-black object-cover dark:text-white">
       <div className="block p-4 md:hidden">
         <FaConnectdevelop size={50} />
       </div>
@@ -62,8 +68,12 @@ export default function LogIn() {
       <div className="flex flex-col items-center justify-center gap-4 z-10 md:w-2/5 md:min-h-[90svh] mr-2">
         <h1 className="font-bold text-xl md:block">Log in</h1>
         {message.visible && (
-          <div className="message">
-            {message.content ? `${message.content}` : message.type}
+          <div
+            className={`message ${
+              message.type === "success" ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {message.content}
           </div>
         )}
         <form
@@ -81,7 +91,7 @@ export default function LogIn() {
             id="password-input"
             name="password"
             placeholder="Password"
-            className="input   "
+            className="input"
           />
 
           <button

@@ -7,7 +7,7 @@ export default function SidebarDesktop({ toggleForm }) {
 
   return (
     <div className=" md:pt-3 md:pl-2 flex flex-col gap-20 relative dark:bg-black dark:text-white">
-      <div className="flex md:h-0 items-center justify-between md:justify-start pb-3 md:relative w-full fixed dark:bg-black dark:bg-opacity-90 bg-white md:dark:bg-black dark:text-white dark:border-neutral-700">
+      <div className="hidden md:flex md:h-0 items-center justify-between md:justify-start pb-3 md:relative w-full fixed dark:bg-black dark:bg-opacity-90 bg-white md:dark:bg-black dark:text-white dark:border-neutral-700">
         <FaConnectdevelop
           size={35}
           className="md:fixed md:mt-3 md:ml-3 mx-auto"
