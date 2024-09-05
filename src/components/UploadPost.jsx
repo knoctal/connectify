@@ -1,16 +1,16 @@
+import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const handleFileUpload = async ({ file, threadText }) => {
+const handleFileUpload = async ({
+  file,
+  threadText,
+  user,
+  username,
+  profilePic,
+}) => {
   if (!threadText && !file) {
     throw new Error("Thread text or file is required");
-  }
-
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  const user = userData?.user;
-
-  if (userError || !user) {
-    throw new Error("User not authenticated or error getting user data.");
   }
 
   let publicURL = null;
@@ -46,6 +46,8 @@ const handleFileUpload = async ({ file, threadText }) => {
         post_image: publicURL,
         post_text: threadText,
         user_id: user.id,
+        post_author: username,
+        profile_author: profilePic,
         created_at: new Date().toISOString(),
       },
     ]);
@@ -59,9 +61,26 @@ const handleFileUpload = async ({ file, threadText }) => {
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
+  const { userDetails } = useApp();
 
   return useMutation({
-    mutationFn: handleFileUpload,
+    mutationFn: async ({ file, threadText }) => {
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      const user = userData?.user;
+
+      if (userError || !user) {
+        throw new Error("User not authenticated or error getting user data.");
+      }
+
+      return handleFileUpload({
+        file,
+        threadText,
+        user,
+        username: userDetails?.user_name,
+        profilePic: userDetails?.profile_url,
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
       toggleForm();
