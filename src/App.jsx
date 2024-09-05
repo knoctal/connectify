@@ -8,22 +8,27 @@ import ProfilePage from "./pages/ProfilePage";
 import ThreadForm from "./components/ThreadForm";
 import Notifications from "./pages/Notifications";
 import Reportproblem from "./components/Reportproblem";
+import UserSession from "./components/UserSession";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
-  },
-  {
-    path: "/home",
-    element: <Homepage />,
   },
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/",
+    element: <UserSession />,
+  },
+  {
+    path: "/home",
+    element: <Homepage />,
   },
   {
     path: "/profile",

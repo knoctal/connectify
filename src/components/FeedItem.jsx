@@ -4,9 +4,10 @@ import {
   Comment,
   HeartOutline,
   Repost,
-  Share,
   ActionButton,
 } from "../../lib/data/Icons";
+import Like from "./ActionButtons/Like";
+import SharePost from "./ActionButtons/SharePost";
 
 export const RenderProfilePic = (
   size = "w-10 h-10",
@@ -70,10 +71,12 @@ export default function FeedItems() {
                   />
                 )}
                 <div className="flex gap-1 mt-4">
-                  <ActionButton Icon={HeartOutline} info={20} />
+                  <Like postId={post.post_id} />
                   <ActionButton Icon={Comment} info={24} />
                   <ActionButton Icon={Repost} info={24} />
-                  <ActionButton Icon={Share} info={null} />
+                  <SharePost
+                    postUrl={`https://connectifi.netlify.app/post/${post.post_id}`}
+                  />
                 </div>
               </div>
               <hr className="border-t border-gray-300 dark:border-t-neutral-800" />

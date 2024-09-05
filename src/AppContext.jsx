@@ -50,14 +50,6 @@ export const AppProvider = ({ children }) => {
     queryFn: fetchUserPosts,
   });
 
-  if (userLoading || postsLoading) {
-    return <div></div>;
-  }
-
-  if (userError || postsError) {
-    return <div>Error: {userError?.message || postsError?.message}</div>;
-  }
-
   return (
     <AppContext.Provider
       value={{

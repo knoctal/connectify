@@ -6,6 +6,7 @@ import { VscPinned } from "react-icons/vsc";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { GoPaperAirplane } from "react-icons/go";
+import { VscHeartFilled } from "react-icons/vsc";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { MdOutlineModeComment } from "react-icons/md";
 import { FaRegHeart, FaRegUser, FaRegEdit } from "react-icons/fa";
@@ -58,6 +59,9 @@ export function Repost({ ...rest }) {
 
 export function Comment({ ...rest }) {
   return <MdOutlineModeComment size={20} {...rest} color="gray" />;
+}
+export function RedHeart() {
+  return <VscHeartFilled size={18} color="red" />;
 }
 
 export function ActionButton({ Icon, info }) {
