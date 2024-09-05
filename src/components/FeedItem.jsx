@@ -1,18 +1,15 @@
 import { useApp } from "../AppContext";
-import {
-  Avatar,
-  Comment,
-  HeartOutline,
-  Repost,
-  Share,
-  ActionButton,
-} from "../../lib/data/Icons";
+import Like from "./ActionButtons/Like";
+import Comments from "./ActionButtons/Comments";
+import SharePost from "./ActionButtons/SharePost";
+import { Avatar, Repost, ActionButton } from "../../lib/data/Icons";
 
 export const RenderProfilePic = (
   size = "w-10 h-10",
   handleImageClick = null
 ) => {
   const { userDetails } = useApp();
+
   const profilePic = userDetails?.profile_url;
   return profilePic ? (
     <img
@@ -31,9 +28,7 @@ export const RenderProfilePic = (
 };
 
 export default function FeedItems() {
-  const { userDetails, userPosts } = useApp();
-  const userName = userDetails?.user_name || "Loading";
-  const profilePic = userDetails?.profile_url;
+  const { userPosts } = useApp();
 
   return (
     <div>
@@ -42,16 +37,16 @@ export default function FeedItems() {
           userPosts.map((post, index) => (
             <div key={index} className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                {profilePic ? (
+                {post.profile_author ? (
                   <img
-                    src={profilePic}
+                    src={post.profile_author}
                     alt="Profile"
                     className="rounded-full w-10 h-10 object-cover"
                   />
                 ) : (
                   <Avatar size={30} className="rounded-full w-10 h-10" />
                 )}
-                <h3>{userName}</h3>
+                <h3>{post.post_author}</h3>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="post-content">
@@ -70,10 +65,12 @@ export default function FeedItems() {
                   />
                 )}
                 <div className="flex gap-1 mt-4">
-                  <ActionButton Icon={HeartOutline} info={20} />
-                  <ActionButton Icon={Comment} info={24} />
+                  <Like postId={post.post_id} />
+                  <Comments postId={post.post_id} />
                   <ActionButton Icon={Repost} info={24} />
-                  <ActionButton Icon={Share} info={null} />
+                  <SharePost
+                    postUrl={`https://connectifi.netlify.app/post/${post.post_id}`}
+                  />
                 </div>
               </div>
               <hr className="border-t border-gray-300 dark:border-t-neutral-800" />

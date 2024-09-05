@@ -6,6 +6,7 @@ import { VscPinned } from "react-icons/vsc";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMoonOutline } from "react-icons/io5";
 import { GoPaperAirplane } from "react-icons/go";
+import { VscHeartFilled } from "react-icons/vsc";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { MdOutlineModeComment } from "react-icons/md";
 import { FaRegHeart, FaRegUser, FaRegEdit } from "react-icons/fa";
@@ -60,9 +61,13 @@ export function Comment({ ...rest }) {
   return <MdOutlineModeComment size={20} {...rest} color="gray" />;
 }
 
+export function RedHeart() {
+  return <VscHeartFilled size={18} color="red" />;
+}
+
 export function ActionButton({ Icon, info }) {
   return (
-    <div className="flex cursor-pointer font-extralight text-base text-gray-400 items-center gap-1 py-1.5 px-1 rounded-full hover:bg-slate-800 ">
+    <div className="flex cursor-pointer font-extralight text-base text-gray-400 items-center gap-1 py-1.5 px-1 rounded-full  hover:bg-slate-600 ">
       <Icon size={25} className="p-1" /> <div>{info}</div>
     </div>
   );

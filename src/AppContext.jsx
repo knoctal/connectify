@@ -1,5 +1,3 @@
-//CHANGED
-
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useState, useEffect, useContext } from "react";
 import { fetchUserDetails, fetchUserPosts } from "./supabaseClient";
@@ -49,14 +47,6 @@ export const AppProvider = ({ children }) => {
     queryKey: ["posts"],
     queryFn: fetchUserPosts,
   });
-
-  if (userLoading || postsLoading) {
-    return <div></div>;
-  }
-
-  if (userError || postsError) {
-    return <div>Error: {userError?.message || postsError?.message}</div>;
-  }
 
   return (
     <AppContext.Provider
