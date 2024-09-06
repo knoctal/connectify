@@ -1,14 +1,9 @@
 import { useApp } from "../AppContext";
+import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const handleFileUpload = async ({
-  file,
-  threadText,
-  user,
-  username,
-  profilePic,
-}) => {
+const handleFileUpload = async ({ file, threadText, user, username }) => {
   if (!threadText && !file) {
     throw new Error("Thread text or file is required");
   }
@@ -47,7 +42,6 @@ const handleFileUpload = async ({
         post_text: threadText,
         user_id: user.id,
         post_author: username,
-        profile_author: profilePic,
         created_at: new Date().toISOString(),
       },
     ]);
@@ -61,6 +55,7 @@ const handleFileUpload = async ({
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
+  const { userDetails } = useApp();
   const { userDetails } = useApp();
 
   return useMutation({
@@ -78,7 +73,6 @@ export const useUploadPost = (toggleForm) => {
         threadText,
         user,
         username: userDetails?.user_name,
-        profilePic: userDetails?.profile_url,
       });
     },
     onSuccess: () => {
