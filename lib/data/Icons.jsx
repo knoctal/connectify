@@ -60,9 +60,6 @@ export function Repost({ ...rest }) {
 export function Comment({ ...rest }) {
   return <MdOutlineModeComment size={20} {...rest} color="gray" />;
 }
-export function RedHeart() {
-  return <VscHeartFilled size={18} color="red" />;
-}
 
 export function RedHeart() {
   return <VscHeartFilled size={20} color="red" />;
