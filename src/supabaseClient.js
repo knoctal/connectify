@@ -1,5 +1,3 @@
-// //Changed
-
 // import { createClient } from "@supabase/supabase-js";
 
 // const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -42,7 +40,7 @@
 
 //   const { data, error } = await supabase
 //     .from("posts")
-//     .select("post_id,post_text, post_image,like_count")
+//     .select(" post_id , like_count, post_text, post_image, post_author")
 //     .order("created_at", { ascending: false });
 
 //   if (error) throw new Error(error.message);
@@ -92,7 +90,9 @@ export const fetchUserPosts = async () => {
 
   const { data, error } = await supabase
     .from("posts")
-    .select(" post_id , like_count, post_text, post_image, post_author")
+    .select(
+      " post_id , like_count, post_text, post_image, post_author, profile_author"
+    )
     .order("created_at", { ascending: false });
 
   if (error) throw new Error(error.message);
