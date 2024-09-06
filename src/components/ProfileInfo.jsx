@@ -1,5 +1,3 @@
-//Changed
-
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import FeedItems from "./FeedItem";
