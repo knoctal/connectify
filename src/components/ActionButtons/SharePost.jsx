@@ -26,7 +26,10 @@ export default function SharePost({ postUrl }) {
   };
 
   return (
-    <div onClick={handleShareClick} style={{ cursor: "pointer" }}>
+    <div
+      onClick={handleShareClick}
+      className="flex items-center w-fit hover:bg-stone-300 cursor-pointer dark:hover:bg-slate-900 rounded-full p-1"
+    >
       <ActionButton Icon={Share} info={null} />
     </div>
   );
