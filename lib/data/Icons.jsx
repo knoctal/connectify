@@ -64,9 +64,13 @@ export function RedHeart() {
   return <VscHeartFilled size={18} color="red" />;
 }
 
+export function RedHeart() {
+  return <VscHeartFilled size={18} color="red" />;
+}
+
 export function ActionButton({ Icon, info }) {
   return (
-    <div className="flex cursor-pointer font-extralight text-base text-gray-400 items-center gap-1 py-1.5 px-1 rounded-full hover:bg-slate-800 ">
+    <div className="flex cursor-pointer font-extralight text-base text-gray-400 items-center gap-1 py-1.5 px-1 rounded-full  hover:bg-slate-600 ">
       <Icon size={25} className="p-1" /> <div>{info}</div>
     </div>
   );

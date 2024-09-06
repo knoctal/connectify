@@ -1,4 +1,5 @@
 import { useApp } from "../AppContext";
+import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -54,6 +55,7 @@ const handleFileUpload = async ({ file, threadText, user, username }) => {
 
 export const useUploadPost = (toggleForm) => {
   const queryClient = useQueryClient();
+  const { userDetails } = useApp();
   const { userDetails } = useApp();
 
   return useMutation({
