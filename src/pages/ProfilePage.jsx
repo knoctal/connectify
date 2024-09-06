@@ -1,5 +1,3 @@
-//Changed
-
 import { useState } from "react";
 import { useApp } from "../AppContext";
 import Sidebar from "../components/Sidebar";

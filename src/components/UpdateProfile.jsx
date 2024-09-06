@@ -1,5 +1,3 @@
-//Changed
-
 import { useState } from "react";
 import { useApp } from "../AppContext";
 import { Avatar } from "../../lib/data/Icons";

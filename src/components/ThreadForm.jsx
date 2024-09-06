@@ -229,11 +229,19 @@ export default function ThreadForm({ toggleForm }) {
           />
         </div>
         <div className="mt-2 relative flex flex-row items-center justify-between md:justify-between md:gap-4 md:top-0 md:bottom-0 ">
-          <DropdownPostButton
-            handlePostClick={handlePostClick}
-            threadText={threadText}
-            file={file}
-          />
+          <DropdownPostButton />
+          <div className="flex  md:justify-between md:gap-4 ">
+            <button
+              className={`border border-gray-300 md:px-4 md:py-2 px-3 py-1  rounded-xl dark:border-neutral-700 mt-48 md:mt-0 ${
+                !threadText || !file
+                  ? "dark:text-white text-black "
+                  : "text-gray-500 "
+              }`}
+              onClick={handlePostClick}
+            >
+              Post
+            </button>
+          </div>
         </div>
       </div>
       {showConfirmation && (

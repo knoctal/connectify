@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function DropdownPostButton({
-  handlePostClick,
-  threadText,
-  file,
-}) {
+export default function DropdownPostButton({}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOption, setDropdownOption] = useState(
     "Anyone can reply & quote"
@@ -34,7 +30,7 @@ export default function DropdownPostButton({
   }, []);
 
   return (
-    <div className="relative flex flex-row  items-center md:gap-x-64 md:mt-0 mt-48 ">
+    <div className="relative flex flex-row items-center md:gap-x-64 md:mt-0  mt-48 ">
       <button
         onClick={handleDropdownToggle}
         className="dark:text-gray-500 w-56 md:w-[250px] text-black "
@@ -44,7 +40,7 @@ export default function DropdownPostButton({
       {dropdownOpen && (
         <div
           ref={dropdownRef}
-          className="absolute md:top-12 left-0 mt-2 border rounded-2xl bg-white p-4 border-stone-200 dark:bg-neutral-900 dark:border-gray-800"
+          className="absolute md:-top-32 left-0 mt-2 border rounded-2xl bg-white p-4 border-stone-200 dark:bg-neutral-900 dark:border-gray-800"
         >
           <button
             onClick={() =>
@@ -72,19 +68,6 @@ export default function DropdownPostButton({
           </button>
         </div>
       )}
-
-      <div className="flex  md:justify-between md:gap-4 ">
-        <button
-          className={`border border-gray-300 md:px-4 md:py-2 px-3 py-1  rounded-xl dark:border-neutral-700  ${
-            !threadText || !file
-              ? "dark:text-white text-black "
-              : "text-gray-500 "
-          }`}
-          onClick={handlePostClick}
-        >
-          Post
-        </button>
-      </div>
     </div>
   );
 }
