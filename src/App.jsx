@@ -6,6 +6,7 @@ import SearchPage from "./pages/SearchPage";
 import Settings from "./components/Settings";
 import ProfilePage from "./pages/ProfilePage";
 import ThreadForm from "./components/ThreadForm";
+import FeedPage from "./pages/FeedPage";
 import Notifications from "./pages/Notifications";
 import Reportproblem from "./components/Reportproblem";
 import UserSession from "./components/UserSession";
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/post",
     element: <ThreadForm />,
+  },
+  {
+    path: "/feed/:postId",
+    element: <FeedPage />,
   },
 ]);
 

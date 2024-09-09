@@ -1,42 +1,122 @@
 import Modal from "../Modal";
 import { useApp } from "../../AppContext";
-import PollComponent from "../Picker/Poll";
 import { IoArrowBack } from "react-icons/io5";
 import FilePicker from "../Picker/FilePicker";
 import { RenderProfilePic } from "../FeedItem";
 import { BiMenuAltLeft } from "react-icons/bi";
-import { supabase } from "../../supabaseClient";
+import { fetchPostDetails, supabase } from "../../supabaseClient";
 import { AiOutlineClose } from "react-icons/ai";
-import { useState, useEffect, useRef } from "react";
-import EmojiPickerComponent from "../Picker/EmojiPicker";
+import { useState, useRef } from "react";
 import DropdownPostButton from "../Picker/DropdownComponent";
 import { Avatar, Comment, ActionButton } from "../../../lib/data/Icons";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+const addComment = async (commentData) => {
+  const {
+    postId,
+    commentText,
+    user_id,
+    profileUrl,
+    userName,
+    postAuthor,
+    selectedFile,
+  } = commentData;
+
+  let fileUrl = null;
+
+  if (selectedFile) {
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("Comment_pictures")
+      .upload(`files/${selectedFile.name}`, selectedFile);
+
+    if (uploadError) throw uploadError;
+
+    const { data: publicUrlData } = supabase.storage
+      .from("Comment_pictures")
+      .getPublicUrl(uploadData.path);
+
+    fileUrl = publicUrlData.publicUrl;
+    console.log("File uploaded at:", fileUrl);
+  }
+
+  const { error: commentError } = await supabase.from("Comments").insert({
+    post_id: postId,
+    comment_text: commentText,
+    user_id: user_id,
+    profile_pic: profileUrl || "",
+    username: userName || "",
+    reply_to_user: postAuthor,
+    file_url: fileUrl,
+  });
+  if (commentError) throw commentError;
+
+  const { data: post, error: fetchError } = await supabase
+    .from("posts")
+    .select("comment_count")
+    .eq("post_id", postId)
+    .single();
+
+  if (fetchError) throw fetchError;
+
+  const newCommentCount = (post.comment_count || 0) + 1;
+
+  const { error: postError } = await supabase
+    .from("posts")
+    .update({ comment_count: newCommentCount })
+    .eq("post_id", postId);
+
+  if (postError) throw postError;
+};
 
 export default function Comments({ postId }) {
   const { userDetails } = useApp();
   const [file, setFile] = useState(null);
-  const [user, setUser] = useState(null);
-  const [pollData, setPollData] = useState(null);
-  const [showPoll, setShowPoll] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [postDetails, setPostDetails] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [dropdownValue, setDropdownValue] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const pollRef = useRef(null);
-  const emojiPickerRef = useRef(null);
-  const userName = userDetails?.user_name;
+  const commentFormRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  const queryClient = useQueryClient();
+  const { data: postDetails, isError } = useQuery({
+    queryKey: ["postDetails", postId],
+    queryFn: () => fetchPostDetails(postId),
+    enabled: !!postId,
+  });
+
+  const { mutate: submitComment } = useMutation({
+    mutationFn: addComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["postDetails", postId]);
+      queryClient.invalidateQueries(["posts"]);
+
+      setCommentText("");
+      setSelectedFile(null);
+      setImagePreviewUrl(null);
+      setShowPoll(false);
+      setIsUploading(false);
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        setIsSuccess(false);
+        setIsCommentFormVisible(false);
+      }, 2000);
+    },
+    onError: (error) => {
+      console.error("Error submitting comment:", error);
+      setIsUploading(false);
+    },
+  });
 
   const handlePollToggle = () => setShowPoll((prev) => !prev);
-  const handleEmojiClick = (emoji) => setCommentText((prev) => prev + emoji);
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
+      setSelectedFile(selectedFile);
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -46,67 +126,49 @@ export default function Comments({ postId }) {
     }
   };
 
-  const fetchUserAndPostDetails = async () => {
-    try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-      if (userError) throw userError;
-      setUser(user);
-
-      const { data: postData, error: postError } = await supabase
-        .from("posts")
-        .select("*")
-        .eq("post_id", postId)
-        .single();
-
-      if (postError) throw postError;
-
-      if (!postData) {
-        console.error("No post found for the provided postId:", postId);
-      } else {
-        setPostDetails(postData);
-      }
-    } catch (error) {
-      console.error("Error fetching details:", error);
-    }
-  };
-
-  const handleSubmitComment = async () => {
-    if (!user) {
+  const handleSubmitComment = () => {
+    if (!userDetails) {
       console.error("User not logged in.");
       return;
     }
 
-    try {
-      const { error } = await supabase.from("comments").insert({
-        post_id: postId,
-        comment_text: commentText,
-        user_id: user.id,
-        profile_pic: user.user_metadata?.profile_url || "",
-        username: user.user_metadata?.user_name || "",
-        reply_to_user: postDetails?.post_author,
-        file_url: selectedFile,
-        poll: pollData,
-      });
-      if (error) throw error;
-
-      // Reset fields after successful comment submission
-      setCommentText("");
-      setSelectedFile(null);
-      setPollData(null);
-      setDropdownValue("");
-    } catch (error) {
-      console.error("Error submitting comment:", error);
+    if (!commentText.trim() && !selectedFile) {
+      alert("Please enter a comment or select a file.");
+      return;
     }
+
+    setIsUploading(true);
+
+    console.log({
+      postId,
+      commentText,
+      user_id: userDetails.user_id,
+      profileUrl: userDetails.profile_url,
+      userName: userDetails.user_name,
+      postAuthor: postDetails?.post_author,
+      selectedFile: selectedFile,
+      pollData: showPoll ? pollOptions : null,
+    });
+
+    submitComment({
+      postId,
+      commentText,
+      user_id: userDetails.user_id,
+      profileUrl: userDetails.profile_url,
+      userName: userDetails.user_name,
+      postAuthor: postDetails?.post_author,
+      selectedFile: selectedFile,
+      pollData: showPoll ? pollOptions : null,
+    });
   };
 
+  const GoBack = () => {
+    setCommentText("");
+    setSelectedFile(null);
+    setIsCommentFormVisible(false);
+  };
   const toggleCommentForm = () => {
     setIsCommentFormVisible((prev) => !prev);
-    if (!postDetails) {
-      fetchUserAndPostDetails();
-    }
   };
 
   return (
@@ -115,17 +177,23 @@ export default function Comments({ postId }) {
         className="flex items-center w-fit hover:bg-stone-300 cursor-pointer dark:hover:bg-slate-900 rounded-full p-1"
         onClick={toggleCommentForm}
       >
-        <ActionButton Icon={Comment} info={null} />
+        <ActionButton
+          Icon={Comment}
+          info={postDetails?.comment_count || null}
+        />
       </div>
 
       <Modal isOpen={isCommentFormVisible}>
-        <div className="overflow-y-auto max-h-[370px]">
-          <button className="text-xl p-1">
-            <IoArrowBack
-              size={24}
-              onClick={() => setIsCommentFormVisible(false)}
-            />
-          </button>
+        <div
+          className="overflow-y-auto md:max-h-[360px] max-h-[400px]"
+          ref={commentFormRef}
+        >
+          <div className="flex items-start gap-x-24 ">
+            <button className="text-xl p-1">
+              <IoArrowBack size={24} onClick={GoBack} />
+            </button>
+            <h1 className="md:hidden text-lg font-semibold ">Reply</h1>
+          </div>
           <div className="flex flex-row p-2">
             {postDetails && (
               <>
@@ -158,7 +226,7 @@ export default function Comments({ postId }) {
             <div className="flex gap-2 items-center p-0 m-0">
               {RenderProfilePic("w-10 h-10")}
               <div className="flex flex-col mt-5">
-                <p>{userName}</p>
+                <p>{userDetails?.user_name}</p>
                 <textarea
                   className="bg-neutral-900 text-white resize-none outline-none"
                   placeholder={`Reply to ${postDetails?.post_author || ""}`}
@@ -171,7 +239,7 @@ export default function Comments({ postId }) {
 
           <div className="ml-3">
             <div className="flex items-center gap-2">
-              <div className="flex gap-2">
+              <div className="flex gap-2 ml-8">
                 {imagePreviewUrl && (
                   <div className="relative w-full flex justify-center">
                     <img
@@ -180,8 +248,9 @@ export default function Comments({ postId }) {
                       className="w-full max-w-[450px] object-contain rounded-md"
                     />
                     <button
-                      className="absolute right-0 bg-black/80 text-white rounded-full p-2"
+                      className="absolute top-2 right-2 bg-black/80 text-white rounded-full p-2"
                       onClick={() => setImagePreviewUrl(null)}
+                      aria-label="Remove preview"
                     >
                       <AiOutlineClose />
                     </button>
@@ -190,42 +259,43 @@ export default function Comments({ postId }) {
               </div>
             </div>
 
-            {showPoll && (
-              <PollComponent
-                pollOptions={pollOptions}
-                setPollOptions={setPollOptions}
-                pollRef={pollRef}
-              />
-            )}
-
             <div className="flex mt-2 ml-8 flex-row items-center gap-2">
-              <EmojiPickerComponent
-                showEmojiPicker={showEmojiPicker}
-                handleEmojiClick={handleEmojiClick}
-                setShowEmojiPicker={setShowEmojiPicker}
-                emojiPickerRef={emojiPickerRef}
-              />
               <FilePicker handleFileChange={handleFileChange} />
               <button
                 onClick={handlePollToggle}
                 className="text-gray-400 dark:bg-neutral-900"
+                ref={dropdownRef}
               >
                 <BiMenuAltLeft size={22} />
               </button>
             </div>
           </div>
         </div>
-        <div className="flex flex-row gap-x-52 p-4 ">
+
+        <div className="flex flex-row md:gap-x-52 md:p-4 ">
           <DropdownPostButton />
-          <div className="flex  md:justify-between md:gap-4 ">
+          <div className="flex md:justify-between md:gap-4 ">
             <button
-              className={`border border-gray-300 md:px-4 md:py-2 px-3 py-1  rounded-xl dark:border-neutral-700 mt-48 md:mt-0
-                `}
+              onClick={handleSubmitComment}
+              className={`border border-gray-300 md:px-4 md:py-2 px-3 py-1 rounded-xl dark:border-neutral-700 mt-14 md:mt-0 ${
+                !commentText.trim() && !selectedFile
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={!commentText.trim() && !selectedFile}
             >
               Post
             </button>
           </div>
         </div>
+
+        {isUploading && (
+          <div className="message">Uploading your comment...</div>
+        )}
+
+        {isSuccess && (
+          <div className="message">Comment successfully added!</div>
+        )}
       </Modal>
     </div>
   );

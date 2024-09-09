@@ -113,31 +113,31 @@ export function useSidebar() {
       <>
         <div
           onClick={() => navigate("/home")}
-          className="hover-effect dark:hover:bg-stone-900"
+          className="hover-effect dark:hover:bg-stone-800"
         >
           <Home />
         </div>
         <div
           onClick={() => navigate("/search")}
-          className="hover-effect dark:hover:bg-stone-900"
+          className="hover-effect dark:hover:bg-stone-800"
         >
           <Search />
         </div>
         <div
           onClick={toggleForm}
-          className="hover-effect md:hidden dark:hover:bg-stone-900"
+          className="hover-effect md:hidden dark:hover:bg-stone-800"
         >
           <Post size={26} />
         </div>
         <div
           onClick={() => navigate("/notifications")}
-          className="hover-effect dark:hover:bg-stone-900"
+          className="hover-effect dark:hover:bg-stone-800"
         >
           <HeartOutline size={24} />
         </div>
         <div
           onClick={() => navigate("/profile")}
-          className="hover-effect dark:hover:bg-stone-900"
+          className="hover-effect dark:hover:bg-stone-800"
         >
           <Profile size={24} />
         </div>

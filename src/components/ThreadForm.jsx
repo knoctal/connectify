@@ -1,9 +1,7 @@
 import { useApp } from "../AppContext";
-import PollComponent from "./Picker/Poll";
 import FilePicker from "./Picker/FilePicker";
 import { useUploadPost } from "./UploadPost";
 import { RenderProfilePic } from "./FeedItem";
-import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef, useEffect } from "react";
 import EmojiPickerComponent from "./Picker/EmojiPicker";
@@ -11,16 +9,13 @@ import DropdownPostButton from "./Picker/DropdownComponent";
 
 export default function ThreadForm({ toggleForm }) {
   const [file, setFile] = useState(null);
-  const [showPoll, setShowPoll] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { threadText, setThreadText, userDetails } = useApp();
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [pollOptions, setPollOptions] = useState(["Yes", "No"]);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const pollRef = useRef(null);
   const formRef = useRef(null);
   const textareaRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -77,17 +72,12 @@ export default function ThreadForm({ toggleForm }) {
     setShowEmojiPicker(false);
   };
 
-  const handlePollToggle = () => {
-    setShowPoll((prev) => !prev);
-  };
-
   const handleOutsideClick = (e) => {
     if (
       formRef.current &&
       !formRef.current.contains(e.target) &&
       (!emojiPickerRef.current || !emojiPickerRef.current.contains(e.target)) &&
-      (!dropdownRef.current || !dropdownRef.current.contains(e.target)) &&
-      (!pollRef.current || !pollRef.current.contains(e.target))
+      (!dropdownRef.current || !dropdownRef.current.contains(e.target))
     ) {
       setShowConfirmation(true); // Show confirmation when clicking outside
     } else if (
@@ -97,8 +87,6 @@ export default function ThreadForm({ toggleForm }) {
       setShowEmojiPicker(false);
     } else if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       setDropdownOpen(false);
-    } else if (pollRef.current && !pollRef.current.contains(e.target)) {
-      setShowPoll(false);
     }
   };
 
@@ -131,9 +119,7 @@ export default function ThreadForm({ toggleForm }) {
 
   return (
     <div
-      className={`fixed  inset-0 flex flex-col items-center justify-center md:bg-black md:bg-opacity-70 z-50  bg-neutral-900  ${
-        showPoll ? "md:h-auto" : "md:h-auto"
-      }`}
+      className={`fixed  inset-0 flex flex-col items-center justify-center md:bg-black md:bg-opacity-70 z-50  bg-neutral-900  ${"md:h-auto"}`}
     >
       <div className="flex items-center justify-between md:justify-center p-6 relative h-6 w-full ">
         <button
@@ -148,9 +134,7 @@ export default function ThreadForm({ toggleForm }) {
       </div>
       <div
         ref={formRef}
-        className={`bg-white p-6  md:rounded-2xl md:shadow-lg md:w-full md:max-w-[620px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${
-          showPoll ? "md:h-[250px]" : "md:h-auto "
-        }  w-full h-full md:h-fit flex flex-col `}
+        className={`bg-white p-6  md:rounded-2xl md:shadow-lg md:w-full md:max-w-[620px] dark:text-white dark:bg-neutral-900 dark:border dark:border-gray-800 ${"md:h-[250px]"}  w-full h-full md:h-fit flex flex-col `}
       >
         <div className="flex gap-2 mb-1  overflow-y-auto max-h-[400px]">
           {RenderProfilePic("w-10 h-10")}
@@ -187,14 +171,6 @@ export default function ThreadForm({ toggleForm }) {
               </div>
             </div>
 
-            {showPoll && (
-              <PollComponent
-                pollOptions={pollOptions}
-                setPollOptions={setPollOptions}
-                pollRef={pollRef}
-              />
-            )}
-
             <div className="flex mt-2 flex-row  items-center gap-2 ">
               <div>
                 <EmojiPickerComponent
@@ -206,14 +182,7 @@ export default function ThreadForm({ toggleForm }) {
               </div>
               <FilePicker handleFileChange={handleFileChange} />
               <div>
-                <div className=" flex items-center gap-2">
-                  <button
-                    onClick={handlePollToggle}
-                    className="text-gray-400 dark:bg-neutral-900 "
-                  >
-                    <BiMenuAltLeft size={22} />
-                  </button>
-                </div>
+                <div className=" flex items-center gap-2"></div>
               </div>
             </div>
           </div>

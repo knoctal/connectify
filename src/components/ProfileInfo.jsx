@@ -2,12 +2,14 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import FeedItems from "./FeedItem";
 import { useApp } from "../AppContext";
+import { Avatar } from "../../lib/data/Icons";
 
 export default function ProfileInfo({ onEditClick }) {
   const [activeBtn, setActiveBtn] = useState("Thread");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { userDetails } = useApp();
+  const userId = userDetails?.user_id;
   const userName = userDetails?.user_name || "Loading";
   const fullName = userDetails?.full_name || "Loading";
   const bio = userDetails?.user_bio || "Loading";
@@ -31,12 +33,18 @@ export default function ProfileInfo({ onEditClick }) {
             <p>{userName}</p>
           </div>
           <div className="md:flex w-20 h-20">
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="rounded-full w-20 h-20 object-cover cursor-pointer"
-              onClick={handleImageClick}
-            />
+            {profilePic ? (
+              <img
+                src={profilePic}
+                onClick={() => setShowFileInput((prev) => !prev)} // Show file input on image click
+                className="w-20 h-20 rounded-full object-cover cursor-pointer"
+              />
+            ) : (
+              <Avatar
+                size={50}
+                onClick={() => setShowFileInput((prev) => !prev)}
+              />
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-6 w-fit items-start md:w-96 md:ml-4">
@@ -100,7 +108,7 @@ export default function ProfileInfo({ onEditClick }) {
           </div>
         </div>
       </div>
-      <FeedItems />
+      <FeedItems filterByUser={true} userId={userId} />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">

@@ -2,7 +2,13 @@ import { useApp } from "../AppContext";
 import { supabase } from "../supabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const handleFileUpload = async ({ file, threadText, user, username }) => {
+const handleFileUpload = async ({
+  file,
+  threadText,
+  user,
+  username,
+  profile_author,
+}) => {
   if (!threadText && !file) {
     throw new Error("Thread text or file is required");
   }
@@ -41,6 +47,7 @@ const handleFileUpload = async ({ file, threadText, user, username }) => {
         post_text: threadText,
         user_id: user.id,
         post_author: username,
+        profile_author: profile_author,
         created_at: new Date().toISOString(),
       },
     ]);
@@ -71,6 +78,7 @@ export const useUploadPost = (toggleForm) => {
         threadText,
         user,
         username: userDetails?.user_name,
+        profile_author: userDetails?.profile_url,
       });
     },
     onSuccess: () => {

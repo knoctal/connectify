@@ -134,7 +134,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   className="text-black dark:text-white"
                   onClick={() => onSectionChange("bio")}
                 >
-                  {bio || "Loading ..."}
+                  {bio || "Add Bio ..."}
                 </button>
                 <hr className="mt-4 mr-2 border-t border-gray-600 w-full md:w-[480px]" />
               </div>
@@ -150,7 +150,7 @@ export default function ProfileForm({ section, onClose, onSectionChange }) {
                   onClick={() => onSectionChange("link")}
                   className="text-blue-500"
                 >
-                  {link || "Loading ..."}
+                  {link || "Add Link ..."}
                 </button>
               </div>
             </div>
