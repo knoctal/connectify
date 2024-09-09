@@ -89,7 +89,7 @@ export default function UpdateProfile() {
           className="w-14 h-14 rounded-full object-cover cursor-pointer"
         />
       ) : (
-        <Avatar size={30} />
+        <Avatar size={30} onClick={() => setShowFileInput((prev) => !prev)} />
       )}
 
       {/* Conditionally render the file input */}

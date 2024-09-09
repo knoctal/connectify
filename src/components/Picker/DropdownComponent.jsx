@@ -30,7 +30,7 @@ export default function DropdownPostButton({}) {
   }, []);
 
   return (
-    <div className="relative flex flex-row items-center md:gap-x-64 md:mt-0  mt-48 ">
+    <div className="relative flex flex-row items-center md:gap-x-64 md:mt-0  mt-14 ">
       <button
         onClick={handleDropdownToggle}
         className="dark:text-gray-500 w-56 md:w-[250px] text-black "

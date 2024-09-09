@@ -158,7 +158,10 @@ export default function Like({ postId }) {
   }, [data]);
 
   return (
-    <div onClick={handleLikeClick} style={{ cursor: "pointer" }}>
+    <div
+      onClick={handleLikeClick}
+      className="flex items-center w-fit hover:bg-stone-300 cursor-pointer dark:hover:bg-slate-900 rounded-full p-1"
+    >
       <ActionButton
         Icon={state.liked ? RedHeart : HeartOutline}
         info={state.count > 0 ? state.count : ""}

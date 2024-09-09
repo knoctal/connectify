@@ -26,7 +26,12 @@ export function Light() {
 export function Search() {
   return <FiSearch size={30} color="gray" />;
 }
-
+export function SimpleRepost({ ...rest }) {
+  return <AiOutlineRetweet size={20} {...rest} color="gray" />;
+}
+export function FilledRepost({ ...rest }) {
+  return <AiOutlineRetweet size={20} {...rest} color="green" />;
+}
 export function Pinned() {
   return <VscPinned size={30} color="gray" />;
 }
@@ -52,9 +57,6 @@ export function HeartOutline({ ...rest }) {
 
 export function Share({ ...rest }) {
   return <GoPaperAirplane size={20} {...rest} color="gray" />;
-}
-export function Repost({ ...rest }) {
-  return <AiOutlineRetweet size={20} {...rest} color="gray" />;
 }
 
 export function Comment({ ...rest }) {
