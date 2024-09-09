@@ -1,3 +1,4 @@
+import { useNavigate} from "react-router-dom" 
 import { useSidebar } from "./SidebarShared";
 import { FaConnectdevelop } from "react-icons/fa";
 import {
@@ -19,7 +20,7 @@ export default function SidebarMobile({ toggleForm }) {
     setMenuOpen,
     renderIcons,
   } = useSidebar();
-
+ const navigate = useNavigate(); 
   return (
     <>
       <div className="flex md:h-0 items-center justify-between md:justify-start pb-3 md:relative w-full fixed dark:bg-black dark:bg-opacity-90 bg-white md:dark:bg-black dark:text-white dark:border-neutral-700">
