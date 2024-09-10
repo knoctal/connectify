@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabaseClient";
-import Repost from "../components/ActionButtons/Repost";
 import Sidebar from "../components/Sidebar";
 import Like from "../components/ActionButtons/Like";
 import Comments from "../components/ActionButtons/Comments";
@@ -126,7 +125,6 @@ export default function FeedPage() {
                 <div className="flex items-center gap-1 mt-2">
                   <Like postId={post.post_id} />
                   <Comments postId={post.post_id} />
-                  <ActionButton Icon={Repost} info={null} />
                   <SharePost
                     postUrl={`https://connectifi.netlify.app/post/${post.post_id}`}
                   />

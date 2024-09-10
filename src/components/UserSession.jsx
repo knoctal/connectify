@@ -14,10 +14,8 @@ export default function UserSession() {
         } = await supabase.auth.getUser();
 
         if (error || !user) {
-          console.log("Session expired directing to login");
           navigate("/login");
         } else {
-          console.log("Session exists directing to homepage");
           navigate("/home");
         }
       } catch (err) {

@@ -8,7 +8,6 @@ export default function Sidebar() {
 
   const toggleForm = () => {
     setIsFormVisible(!isFormVisible);
-    console.log("Plus button clicked, isFormVisible:", !isFormVisible);
   };
 
   return (

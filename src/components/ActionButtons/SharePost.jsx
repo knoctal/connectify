@@ -3,15 +3,12 @@ import { Share, ActionButton } from "../../../lib/data/Icons";
 
 export default function SharePost({ postUrl }) {
   const handleShareClick = async () => {
-    console.log("Sharing the post...");
-
     if (navigator.share) {
       try {
         await navigator.share({
           title: "Check out this post!",
           url: postUrl,
         });
-        console.log("Post shared successfully");
       } catch (error) {
         console.error("Error sharing:", error);
       }

@@ -37,7 +37,7 @@ export default function Settings() {
             <div className=" hidden md:flex items-center md:justify-between h-12 w-[650px] p-3 rounded-lg">
               <div className=" flex justify-between items-center w-[600px] ">
                 <div>
-                  <div className="h-5 w-5 flex items-center rounded-full  border border-gray-400">
+                  <div className="h-5 w-5 flex items-center rounded-full  border border-gray-400 dark:border-stone-700">
                     <IoIosArrowRoundBack
                       onClick={() => {
                         navigate("/Home");
@@ -53,7 +53,7 @@ export default function Settings() {
             </div>
             {/* for beneath */}
 
-            <div className="flex flex-col gap-2 h-[685px] w-full md:w-[650px] p-3 md:border md:rounded-xl md:border-gray-200 ">
+            <div className="flex flex-col gap-2 h-[685px] w-full md:w-[650px] p-3 md:border md:rounded-xl md:border-gray-200 dark:border-stone-700">
               <div className="h-14 flex justify-around items-center ">
                 <button
                   type="button"
