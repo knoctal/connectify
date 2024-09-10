@@ -1,5 +1,5 @@
-import { useSidebar } from "./SidebarShared";
 import { useNavigate } from "react-router-dom";
+import { useSidebar } from "./SidebarShared";
 import { FaConnectdevelop } from "react-icons/fa";
 import {
   Home,
@@ -18,7 +18,6 @@ export default function SidebarMobile({ toggleForm }) {
     handleMenuItems,
     handleMenuItemClick,
     setMenuOpen,
-    renderIcons,
   } = useSidebar();
   const navigate = useNavigate();
 
