@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { useSidebar } from "./SidebarShared";
 import { FaConnectdevelop } from "react-icons/fa";
 import {
@@ -18,9 +18,9 @@ export default function SidebarMobile({ toggleForm }) {
     handleMenuItems,
     handleMenuItemClick,
     setMenuOpen,
-    renderIcons,
   } = useSidebar();
-const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="flex md:h-0 items-center justify-between md:justify-start pb-3 md:relative w-full fixed dark:bg-black dark:bg-opacity-90 bg-white md:dark:bg-black dark:text-white dark:border-neutral-700">
@@ -43,31 +43,31 @@ const navigate = useNavigate();
       <div className="fixed bottom-0 h-[40px]  left-0 right-0  flex justify-around items-center bg-white py-0 md:hidden z-50 border-t border-gray-200 dark:bg-black/60 md:dark:bg-black dark:text-white dark:border-neutral-700">
         <div
           onClick={() => navigate("/home")}
-          className="hover-effect  dark:hover:bg-stone-800"
+          className="mobile-hover  dark:hover:bg-stone-800"
         >
           <Home size={17} />
         </div>
         <div
           onClick={() => navigate("/search")}
-          className="hover-effect  dark:hover:bg-stone-800"
+          className="mobile-hover  dark:hover:bg-stone-800"
         >
           <Search size={17} />
         </div>
         <div
           onClick={toggleForm}
-          className="hover-effect md:hidden dark:hover:bg-stone-800"
+          className="mobile-hover md:hidden dark:hover:bg-stone-800"
         >
           <Post size={17} />
         </div>
         <div
           onClick={() => navigate("/notifications")}
-          className="hover-effect dark:hover:bg-stone-800"
+          className="mobile-hover dark:hover:bg-stone-800"
         >
           <HeartOutline size={24} />
         </div>
         <div
           onClick={() => navigate("/profile")}
-          className="hover-effect dark:hover:bg-stone-800"
+          className="mobile-hover dark:hover:bg-stone-800"
         >
           <Profile size={17} />
         </div>

@@ -1,6 +1,5 @@
 import { useApp } from "../AppContext";
 import { useNavigate } from "react-router";
-import Repost from "./ActionButtons/Repost";
 import { Avatar } from "../../lib/data/Icons";
 import Like from "./ActionButtons/Like";
 import Comments from "./ActionButtons/Comments";
@@ -83,11 +82,6 @@ export default function FeedItems({ filterByUser = false, userId = null }) {
                   <Like postId={post.post_id} />
                   <Comments postId={post.post_id} />
 
-                  {/* <Repost
-                    postId={post.post_id}
-                    userId={userDetails?.user_id}
-                    userName={userDetails?.user_name}
-                  /> */}
                   <SharePost
                     postUrl={`https://connectifi.netlify.app/post/${post.post_id}`}
                   />

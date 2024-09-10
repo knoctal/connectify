@@ -3,7 +3,6 @@ import { useApp } from "../../AppContext";
 import { IoArrowBack } from "react-icons/io5";
 import FilePicker from "../Picker/FilePicker";
 import { RenderProfilePic } from "../FeedItem";
-import { BiMenuAltLeft } from "react-icons/bi";
 import { fetchPostDetails, supabase } from "../../supabaseClient";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState, useRef } from "react";
@@ -36,7 +35,6 @@ const addComment = async (commentData) => {
       .getPublicUrl(uploadData.path);
 
     fileUrl = publicUrlData.publicUrl;
-    console.log("File uploaded at:", fileUrl);
   }
 
   const { error: commentError } = await supabase.from("Comments").insert({
@@ -97,7 +95,6 @@ export default function Comments({ postId }) {
       setCommentText("");
       setSelectedFile(null);
       setImagePreviewUrl(null);
-      setShowPoll(false);
       setIsUploading(false);
       setIsSuccess(true);
 
@@ -112,7 +109,6 @@ export default function Comments({ postId }) {
     },
   });
 
-  const handlePollToggle = () => setShowPoll((prev) => !prev);
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -139,17 +135,6 @@ export default function Comments({ postId }) {
 
     setIsUploading(true);
 
-    console.log({
-      postId,
-      commentText,
-      user_id: userDetails.user_id,
-      profileUrl: userDetails.profile_url,
-      userName: userDetails.user_name,
-      postAuthor: postDetails?.post_author,
-      selectedFile: selectedFile,
-      pollData: showPoll ? pollOptions : null,
-    });
-
     submitComment({
       postId,
       commentText,
@@ -158,7 +143,6 @@ export default function Comments({ postId }) {
       userName: userDetails.user_name,
       postAuthor: postDetails?.post_author,
       selectedFile: selectedFile,
-      pollData: showPoll ? pollOptions : null,
     });
   };
 
@@ -228,7 +212,7 @@ export default function Comments({ postId }) {
               <div className="flex flex-col mt-5">
                 <p>{userDetails?.user_name}</p>
                 <textarea
-                  className="bg-neutral-900 text-white resize-none outline-none"
+                  className="dark:bg-neutral-900 bg-white text-black dark:text-white resize-none outline-none"
                   placeholder={`Reply to ${postDetails?.post_author || ""}`}
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
@@ -261,13 +245,6 @@ export default function Comments({ postId }) {
 
             <div className="flex mt-2 ml-8 flex-row items-center gap-2">
               <FilePicker handleFileChange={handleFileChange} />
-              <button
-                onClick={handlePollToggle}
-                className="text-gray-400 dark:bg-neutral-900"
-                ref={dropdownRef}
-              >
-                <BiMenuAltLeft size={22} />
-              </button>
             </div>
           </div>
         </div>
